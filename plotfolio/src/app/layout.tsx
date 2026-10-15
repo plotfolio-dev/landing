@@ -8,9 +8,9 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Plotfolio AI — AI Software for Every Stage of a Building's Life",
+  title: "Plotfolio AI — AI Software for Every Stage of a Built Asset's Life",
   description:
-    "Plotfolio AI builds AI software for every stage of a building's life. Milestone and Keeper help builders and facility teams turn messy field updates into money and decisions.",
+    "Plotfolio AI builds AI software for every stage of a built asset's life. Milestone and Keeper help developers and facility teams turn messy field updates into money and decisions.",
 };
 
 export default function RootLayout({

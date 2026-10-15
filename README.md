@@ -1,12 +1,12 @@
 # Plotfolio AI
 
-Landing page for Plotfolio AI — AI software for every stage of a building's life.
+Landing page for Plotfolio AI — AI software for every stage of a built asset's life.
 
 ## Products
 
 **Milestone** — helps builders turn construction progress into collected payments. Captures field updates, ties them to milestones, and unlocks invoices without the paperwork chase.
 
-**Keeper** — helps facility teams keep buildings running with less downtime and clear costs. Turns work orders, complaints, and repairs into records owners can act on.
+**Keeper** — helps facility teams keep assets running with less downtime and clear costs. Turns work orders, complaints, and repairs into records owners can act on.
 
 Both products are coming soon.
 
