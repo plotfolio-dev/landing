@@ -1,38 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-
-// ── Animated logo ─────────────────────────────────────────────────────────────
-
-function PlotfolioLogo({ small = false }: { small?: boolean }) {
-  const sz = small ? 28 : 32;
-  return (
-    <div className={`flex items-center ${small ? "gap-2" : "gap-2.5"}`}>
-      <svg width={sz} height={sz} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="#3E7BFA"/>
-        <polyline
-          points="6,24 11,17 16,20 23,10"
-          stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"
-        />
-        <circle cx="6"  cy="24" r="2"   fill="white" opacity="0.45"/>
-        <circle cx="11" cy="17" r="2"   fill="white" opacity="0.6"/>
-        <circle cx="16" cy="20" r="2"   fill="white" opacity="0.6"/>
-        <circle cx="23" cy="10" r="2.5" fill="#FF6B35">
-          <animate attributeName="r"       values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="1;0.5;1"   dur="2s" repeatCount="indefinite"/>
-        </circle>
-        <circle cx="23" cy="10" r="5" fill="none" stroke="#FF6B35" strokeWidth="1.5">
-          <animate attributeName="r"       values="3.5;9;3.5"   dur="2s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.7;0;0.7"   dur="2s" repeatCount="indefinite"/>
-        </circle>
-      </svg>
-      <span className={`${small ? "text-[14px]" : "text-[16px]"} font-bold tracking-tight text-[#111]`}>
-        Plotfolio<span className="text-[#FF6B35]"> AI</span>
-      </span>
-    </div>
-  );
-}
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
@@ -49,9 +17,9 @@ export default function Home() {
     <div className="bg-[#FBF7F0] text-[#111] font-(family-name:--font-space-grotesk) overflow-x-hidden">
 
       {/* ── Nav ── */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-[#FBF7F0]/92 backdrop-blur-xl border-b border-[#111]/6">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <PlotfolioLogo/>
+      <nav className="fixed top-0 inset-x-0 z-50 bg-[#FBF7F0]/92 backdrop-blur-xl border-b border-[#111]/6 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <img src="/images/plotfolio-ai-static-dark-ink.svg" alt="Plotfolio AI" className="h-10 w-auto logo-drop" />
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline text-xs font-semibold text-[#111] bg-[#FFC93C] px-3 py-1 rounded-full">
               Soon™
@@ -67,10 +35,8 @@ export default function Home() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-14 bg-[#FBF7F0] canvas-dots">
-        <p className="text-[13px] font-semibold tracking-widest uppercase text-[#3E7BFA] mb-5">
-          Plotfolio AI
-        </p>
+      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16 bg-[#FBF7F0] canvas-dots">
+        <img src="/images/plotfolio-ai-static-dark-ink.svg" alt="Plotfolio AI" className="h-14 w-auto mb-5 logo-drop" />
         <h1 className="text-[clamp(2.8rem,8vw,6rem)] font-black leading-[1.05] tracking-[-0.03em] text-[#111] max-w-4xl mb-7">
           AI that works as hard as{" "}
           <span className="bg-gradient-to-r from-[#3E7BFA] to-[#FF6B35] bg-clip-text text-transparent">
@@ -152,67 +118,49 @@ export default function Home() {
             </span>
           </div>
 
-          {/* Mock UI */}
-          <div className="relative w-full aspect-[4/3] rounded-3xl bg-gradient-to-br from-[#EBF0FE] via-white to-[#F7C6EE] border-2 border-[#3E7BFA]/10 flex flex-col items-center justify-center gap-6 overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_35%,#3E7BFA_0%,transparent_55%)] opacity-[0.05]"/>
-            <div className="relative z-10 w-64 bg-white rounded-2xl border border-[#111]/6 p-5 text-left shadow-lg">
-              <p className="text-[11px] text-[#5E6672] mb-1 font-medium uppercase tracking-wide">Milestone 3 of 5</p>
-              <p className="text-[#111] font-bold text-lg mb-3">Foundation Complete</p>
-              <div className="h-1.5 w-full bg-[#EBF0FE] rounded-full overflow-hidden mb-3">
+          {/* Product preview cards */}
+          <div className="w-full rounded-3xl bg-linear-to-br from-[#EBF0FE] via-white to-[#F7C6EE] border-2 border-[#3E7BFA]/10 p-10 flex flex-col gap-6">
+            {/* Progress card */}
+            <div className="w-full bg-white/95 backdrop-blur-sm rounded-2xl border border-[#111]/6 p-7 shadow-xl">
+              <p className="text-[12px] text-[#5E6672] mb-2 font-medium uppercase tracking-wide">Milestone 3 of 5</p>
+              <p className="text-[#111] font-bold text-[18px] mb-4">Foundation Complete</p>
+              <div className="h-2 w-full bg-[#EBF0FE] rounded-full overflow-hidden mb-3">
                 <div className="h-full w-3/5 bg-[#3E7BFA] rounded-full"/>
               </div>
-              <div className="flex justify-between text-[12px]">
+              <div className="flex justify-between text-[14px]">
                 <span className="text-[#5E6672]">Progress</span>
                 <span className="text-[#3E7BFA] font-semibold">60%</span>
               </div>
             </div>
-            <div className="relative z-10 w-52 bg-white rounded-2xl border border-[#111]/6 p-4 text-left shadow-md">
-              <p className="text-[11px] text-[#5E6672] mb-1">Invoice unlocked</p>
-              <p className="text-[#111] font-black text-2xl">$84,500</p>
-              <p className="text-[#FF6B35] text-[12px] font-semibold mt-1">AI released automatically ↗</p>
+            {/* Invoice card */}
+            <div className="w-full bg-white/95 backdrop-blur-sm rounded-2xl border border-[#111]/6 p-7 shadow-xl">
+              <p className="text-[13px] text-[#5E6672] mb-2">Invoice unlocked</p>
+              <p className="text-[#111] font-black text-[36px]">$84,500</p>
+              <p className="text-[#FF6B35] text-[14px] font-semibold mt-2">AI released automatically ↗</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── People ── */}
-      <section className="bg-[#FDF3FB] canvas-dots py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-[13px] font-semibold tracking-widest uppercase text-[#FF6B35] text-center mb-3">
-            The people who make it happen
-          </p>
-          <h2 className="text-[clamp(1.6rem,3.5vw,2.4rem)] font-black leading-tight tracking-[-0.03em] text-[#111] text-center mb-12">
-            Built for the professionals who keep assets running and deals closing.
-          </h2>
-          <div className="w-full max-w-5xl mx-auto rounded-3xl overflow-hidden border-2 border-[#F7C6EE] shadow-md">
-            <Image
-              src="/property-people-illustration.svg"
-              alt="Maya the developer and Ravi the property supervisor"
-              width={1600}
-              height={900}
-              className="w-full h-auto"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── Product: Keeper ── */}
+{/* ── Product: Keeper ── */}
       <section className="bg-[#FBF7F0] canvas-dots-paper py-32 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          {/* Mock UI */}
-          <div className="order-2 md:order-1 relative w-full aspect-[4/3] rounded-3xl bg-gradient-to-br from-[#F7C6EE] to-[#FFD98F] border-2 border-[#FF6B35]/15 flex flex-col items-center justify-center gap-5 overflow-hidden">
-            <div className="relative z-10 w-64 bg-white rounded-2xl border border-[#111]/6 p-5 shadow-lg text-left">
+          {/* Product preview cards */}
+          <div className="order-2 md:order-1 w-full rounded-3xl bg-linear-to-br from-[#F7C6EE] to-[#FFD98F] border-2 border-[#FF6B35]/15 p-10 flex flex-col gap-6">
+            {/* Work order card */}
+            <div className="w-full bg-white/95 backdrop-blur-sm rounded-2xl border border-[#111]/6 p-7 shadow-xl text-left">
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-2 h-2 bg-[#FFC93C] rounded-full"/>
+                <span className="w-2.5 h-2.5 bg-[#FFC93C] rounded-full shrink-0"/>
                 <p className="text-[12px] text-[#5E6672] font-medium">Open · HVAC Unit 4B</p>
               </div>
-              <p className="text-[#111] font-bold text-[15px] mb-1">Abnormal noise: inspection required</p>
-              <p className="text-[#5E6672] text-[12px] leading-relaxed">Dispatched to Mech Team · Est. $320</p>
+              <p className="text-[#111] font-bold text-[17px] mb-2">Abnormal noise: inspection required</p>
+              <p className="text-[#5E6672] text-[14px]">Dispatched to Mech Team · Est. $320</p>
             </div>
-            <div className="relative z-10 w-56 bg-white rounded-2xl border border-[#111]/6 p-4 shadow-md text-left">
-              <p className="text-[11px] text-[#5E6672] mb-1">This month · Maintenance</p>
-              <p className="text-[#111] font-black text-2xl">$4,210</p>
-              <p className="text-[#2FA866] text-[12px] font-semibold mt-1">↓ 18% vs prior month</p>
+            {/* Cost card */}
+            <div className="w-full bg-white/95 backdrop-blur-sm rounded-2xl border border-[#111]/6 p-7 shadow-xl text-left">
+              <p className="text-[13px] text-[#5E6672] mb-2">This month · Maintenance</p>
+              <p className="text-[#111] font-black text-[36px]">$4,210</p>
+              <p className="text-[#2FA866] text-[14px] font-semibold mt-2">↓ 18% vs prior month</p>
             </div>
           </div>
 
@@ -352,7 +300,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-8 mb-10">
             <div>
-              <PlotfolioLogo small/>
+              <img src="/images/plotfolio-ai-static-dark-ink.svg" alt="Plotfolio AI" className="h-6 w-auto" />
               <p className="text-[13px] text-[#5E6672] max-w-xs leading-relaxed mt-2">
                 AI software for every stage of a built asset&apos;s life.
               </p>
