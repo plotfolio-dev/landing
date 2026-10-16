@@ -21,6 +21,17 @@ body {
   background-size: 28px 28px;
 }
 
+@keyframes logo-drop {
+  0%   { transform: translateY(-120%); opacity: 0; }
+  65%  { transform: translateY(6px);   opacity: 1; }
+  82%  { transform: translateY(-3px);  opacity: 1; }
+  100% { transform: translateY(0);     opacity: 1; }
+}
+
+.logo-drop {
+  animation: logo-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+
 .canvas-dots-paper {
   background-image: radial-gradient(circle, rgba(255, 107, 53, 0.09) 1.5px, transparent 1.5px);
   background-size: 28px 28px;
