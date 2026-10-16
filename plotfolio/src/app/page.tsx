@@ -20,99 +20,168 @@ function useInView(threshold = 0.25) {
 // ── Milestone product wireframe ───────────────────────────────────────────────
 function MilestoneWireframe() {
   const [ref, inView] = useInView();
-  const c = "#3E7BFA", cL = "#EBF0FE", o = "#FF6B35";
-  const W = 340, H = 490;
+  const c = "#3E7BFA", cL = "#EBF0FE", o = "#FF6B35", g = "#2FA866";
+  const W = 340, H = 640;
+  const f = (d: number) => ({ animation: `wire-fade-in 0.35s ease ${d}s both` });
 
   return (
     <div ref={ref} className={inView ? "wf-running" : "wf-paused"}>
       <svg viewBox={`0 0 ${W} ${H}`} fill="none" className="w-full h-auto drop-shadow-xl">
         {/* Phone frame */}
-        <rect x="2" y="2" width={W - 4} height={H - 4} rx="26"
+        <rect x="2" y="2" width={W - 4} height={H - 4} rx="28"
           fill="white" stroke={c} strokeWidth="2.5"
-          style={{ strokeDasharray: 1700, strokeDashoffset: 1700, animation: "wire-stroke 1.3s ease forwards" }} />
+          style={{ strokeDasharray: 2100, strokeDashoffset: 2100, animation: "wire-stroke 1.4s ease forwards" }} />
 
         {/* Status bar */}
-        <rect x="2" y="2" width={W - 4} height="54" rx="26" fill={cL} />
-        <rect x="2" y="30" width={W - 4} height="26" fill={cL} />
-        <rect x={W / 2 - 32} y="14" width="64" height="8" rx="4" fill={c} opacity="0.18" />
+        <rect x="2" y="2" width={W - 4} height="52" rx="28" fill={cL} />
+        <rect x="2" y="30" width={W - 4} height="24" fill={cL} />
+        <rect x="18" y="16" width="32" height="9" rx="4.5" fill={c} opacity="0.28" />
+        <rect x={W - 68} y="16" width="16" height="9" rx="4.5" fill={c} opacity="0.18" />
+        <rect x={W - 44} y="16" width="16" height="9" rx="4.5" fill={c} opacity="0.18" />
+        <rect x={W - 20} y="18" width="12" height="7" rx="3.5" fill={c} opacity="0.18" />
 
-        {/* App header title */}
-        <rect x={W / 2 - 52} y="21" width="104" height="11" rx="5.5"
-          fill={c} opacity="0.28"
-          style={{ animation: "wire-fade-in 0.4s ease 0.45s both" }} />
-
-        {/* Project title block */}
-        <rect x="20" y="68" width="190" height="12" rx="6"
-          fill={c} opacity="0.32"
-          style={{ animation: "wire-fade-in 0.4s ease 0.55s both" }} />
-        <rect x="20" y="87" width="110" height="9" rx="4.5"
-          fill={c} opacity="0.18"
-          style={{ animation: "wire-fade-in 0.4s ease 0.6s both" }} />
-
-        {/* Section divider */}
-        <line x1="20" y1="110" x2={W - 20} y2="110" stroke={c} strokeWidth="1" opacity="0.18"
-          style={{ animation: "wire-fade-in 0.3s ease 0.65s both" }} />
-
-        {/* Milestone row 1 — done */}
-        <g style={{ animation: "wire-fade-in 0.35s ease 0.7s both" }}>
-          <circle cx="38" cy="132" r="11" fill={cL} stroke={c} strokeWidth="1.5" />
-          <polyline points="32,132 36,136 44,128" stroke={c} strokeWidth="2.2"
-            strokeLinecap="round" strokeLinejoin="round"
-            style={{ strokeDasharray: 30, strokeDashoffset: 30, animation: "wire-check 0.35s ease 1.1s forwards" }} />
-          <rect x="60" y="126" width="172" height="11" rx="5.5" fill={c} opacity="0.22" />
-          <rect x={W - 78} y="126" width="58" height="11" rx="5.5" fill={c} opacity="0.16" />
+        {/* App nav bar */}
+        <g style={f(0.4)}>
+          <rect x="18" y="61" width="22" height="9" rx="4.5" fill={c} opacity="0.35" />
+          <rect x={W / 2 - 58} y="61" width="116" height="12" rx="6" fill={c} opacity="0.28" />
+          <circle cx={W - 28} cy="66" r="3" fill={c} opacity="0.28" />
+          <circle cx={W - 20} cy="66" r="3" fill={c} opacity="0.28" />
+          <circle cx={W - 12} cy="66" r="3" fill={c} opacity="0.28" />
         </g>
 
-        {/* Milestone row 2 — done */}
-        <g style={{ animation: "wire-fade-in 0.35s ease 0.85s both" }}>
-          <circle cx="38" cy="168" r="11" fill={cL} stroke={c} strokeWidth="1.5" />
-          <polyline points="32,168 36,172 44,164" stroke={c} strokeWidth="2.2"
-            strokeLinecap="round" strokeLinejoin="round"
-            style={{ strokeDasharray: 30, strokeDashoffset: 30, animation: "wire-check 0.35s ease 1.25s forwards" }} />
-          <rect x="60" y="162" width="196" height="11" rx="5.5" fill={c} opacity="0.22" />
-          <rect x={W - 78} y="162" width="58" height="11" rx="5.5" fill={c} opacity="0.16" />
+        {/* Project header */}
+        <g style={f(0.5)}>
+          <rect x="20" y="84" width="185" height="13" rx="6.5" fill={c} opacity="0.32" />
+          <rect x="20" y="103" width="120" height="9" rx="4.5" fill={c} opacity="0.18" />
+          <rect x={W - 98} y="83" width="78" height="17" rx="8.5" fill={cL} stroke={c} strokeWidth="1" />
+          <rect x={W - 87} y="88" width="56" height="7" rx="3.5" fill={c} opacity="0.35" />
         </g>
 
-        {/* Milestone row 3 — in progress */}
-        <g style={{ animation: "wire-fade-in 0.35s ease 1.0s both" }}>
-          <circle cx="38" cy="204" r="11" fill="#FFF0EB" stroke={o} strokeWidth="1.5" />
-          <circle cx="38" cy="204" r="4" fill={o}
-            style={{ animation: "wire-dot-pulse 1.6s ease-in-out 1.0s infinite" }} />
-          <rect x="60" y="198" width="205" height="11" rx="5.5" fill={o} opacity="0.28" />
-          <rect x={W - 78} y="198" width="58" height="11" rx="5.5" fill={o} opacity="0.22" />
+        {/* Divider + column headers */}
+        <line x1="20" y1="124" x2={W - 20} y2="124" stroke={c} strokeWidth="1" opacity="0.14" style={f(0.58)} />
+        <g style={f(0.62)}>
+          <rect x="58" y="132" width="72" height="8" rx="4" fill={c} opacity="0.18" />
+          <rect x={W - 110} y="132" width="44" height="8" rx="4" fill={c} opacity="0.18" />
+          <rect x={W - 58} y="132" width="38" height="8" rx="4" fill={c} opacity="0.18" />
         </g>
 
-        {/* Milestone row 4 — pending */}
-        <g style={{ animation: "wire-fade-in 0.35s ease 1.15s both" }}>
-          <circle cx="38" cy="240" r="11" fill="white" stroke={c} strokeWidth="1.5" opacity="0.4" />
-          <rect x="60" y="234" width="152" height="11" rx="5.5" fill={c} opacity="0.12" />
-          <rect x={W - 78} y="234" width="58" height="11" rx="5.5" fill={c} opacity="0.1" />
+        {/* Row 1 — done */}
+        <g style={f(0.68)}>
+          <circle cx="37" cy="160" r="12" fill={cL} stroke={c} strokeWidth="1.5" />
+          <polyline points="31,160 35,164 43,156" stroke={c} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+            style={{ strokeDasharray: 30, strokeDashoffset: 30, animation: "wire-check 0.35s ease 1.12s forwards" }} />
+          <rect x="58" y="152" width="155" height="10" rx="5" fill={c} opacity="0.24" />
+          <rect x="58" y="168" width="90" height="8" rx="4" fill={c} opacity="0.12" />
+          <rect x={W - 108} y="152" width="54" height="10" rx="5" fill={g} opacity="0.38" />
+          <rect x={W - 108} y="168" width="38" height="8" rx="4" fill={c} opacity="0.12" />
+          <rect x={W - 46} y="152" width="26" height="10" rx="5" fill={c} opacity="0.14" />
+        </g>
+
+        {/* Row 2 — done */}
+        <g style={f(0.83)}>
+          <circle cx="37" cy="200" r="12" fill={cL} stroke={c} strokeWidth="1.5" />
+          <polyline points="31,200 35,204 43,196" stroke={c} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+            style={{ strokeDasharray: 30, strokeDashoffset: 30, animation: "wire-check 0.35s ease 1.28s forwards" }} />
+          <rect x="58" y="192" width="170" height="10" rx="5" fill={c} opacity="0.24" />
+          <rect x="58" y="208" width="100" height="8" rx="4" fill={c} opacity="0.12" />
+          <rect x={W - 108} y="192" width="54" height="10" rx="5" fill={g} opacity="0.38" />
+          <rect x={W - 108} y="208" width="38" height="8" rx="4" fill={c} opacity="0.12" />
+          <rect x={W - 46} y="192" width="26" height="10" rx="5" fill={c} opacity="0.14" />
+        </g>
+
+        {/* Row 3 — in progress */}
+        <g style={f(0.98)}>
+          <circle cx="37" cy="243" r="12" fill="#FFF0EB" stroke={o} strokeWidth="1.5" />
+          <circle cx="37" cy="243" r="5" fill={o} style={{ animation: "wire-dot-pulse 1.6s ease-in-out 1.0s infinite" }} />
+          <rect x="58" y="235" width="188" height="10" rx="5" fill={o} opacity="0.28" />
+          <rect x="58" y="251" width="108" height="8" rx="4" fill={o} opacity="0.17" />
+          <rect x={W - 108} y="235" width="54" height="10" rx="5" fill={o} opacity="0.38" />
+          <rect x={W - 108} y="251" width="38" height="8" rx="4" fill={o} opacity="0.17" />
+          <rect x={W - 46} y="235" width="26" height="10" rx="5" fill={o} opacity="0.2" />
+          {/* Photo attachment */}
+          <rect x="58" y="265" width="26" height="20" rx="5" fill={o} opacity="0.15" stroke={o} strokeWidth="1" />
+          <rect x="58" y="265" width="26" height="20" rx="5" fill={o} opacity="0.08" />
+          <circle cx="65" cy="272" r="3" fill={o} opacity="0.35" />
+          <rect x="92" y="269" width="86" height="8" rx="4" fill={o} opacity="0.2" />
+          <rect x="92" y="280" width="54" height="6" rx="3" fill={o} opacity="0.13" />
+        </g>
+
+        {/* Row 4 — pending */}
+        <g style={f(1.13)}>
+          <circle cx="37" cy="308" r="12" fill="white" stroke={c} strokeWidth="1.5" opacity="0.35" />
+          <rect x="58" y="300" width="140" height="10" rx="5" fill={c} opacity="0.1" />
+          <rect x="58" y="316" width="80" height="8" rx="4" fill={c} opacity="0.07" />
+          <rect x={W - 108} y="300" width="54" height="10" rx="5" fill={c} opacity="0.09" />
+          <rect x={W - 46} y="300" width="26" height="10" rx="5" fill={c} opacity="0.07" />
         </g>
 
         {/* Divider */}
-        <line x1="20" y1="265" x2={W - 20} y2="265" stroke={c} strokeWidth="1" opacity="0.14"
-          style={{ animation: "wire-fade-in 0.3s ease 1.25s both" }} />
+        <line x1="20" y1="336" x2={W - 20} y2="336" stroke={c} strokeWidth="1" opacity="0.12" style={f(1.2)} />
 
-        {/* Progress label + track */}
-        <g style={{ animation: "wire-fade-in 0.4s ease 1.3s both" }}>
-          <rect x="20" y="280" width="72" height="9" rx="4.5" fill={c} opacity="0.22" />
-          <rect x={W - 82} y="280" width="62" height="9" rx="4.5" fill={c} opacity="0.32" />
-          <rect x="20" y="298" width={W - 40} height="10" rx="5" fill={cL} />
+        {/* Overall progress */}
+        <g style={f(1.25)}>
+          <rect x="20" y="348" width="96" height="9" rx="4.5" fill={c} opacity="0.22" />
+          <rect x={W - 72} y="348" width="52" height="9" rx="4.5" fill={c} opacity="0.36" />
+          <rect x="20" y="364" width={W - 40} height="10" rx="5" fill={cL} />
         </g>
-        {/* Progress fill */}
-        <rect x="20" y="298" width="186" height="10" rx="5" fill={c} opacity="0.72"
-          style={{ transformOrigin: "left center", transform: "scaleX(0)", animation: "wire-progress-fill 0.9s ease 1.55s both" }} />
+        <rect x="20" y="364" width="186" height="10" rx="5" fill={c} opacity="0.72"
+          style={{ transformOrigin: "left center", transform: "scaleX(0)", animation: "wire-progress-fill 0.9s ease 1.52s both" }} />
+
+        {/* Collected / Outstanding summary */}
+        <g style={f(1.38)}>
+          <rect x="20" y="386" width={(W - 48) / 2} height="36" rx="10" fill={cL} />
+          <rect x="30" y="393" width="60" height="8" rx="4" fill={c} opacity="0.2" />
+          <rect x="30" y="406" width="46" height="10" rx="5" fill={g} opacity="0.45" />
+          <rect x={20 + (W - 48) / 2 + 8} y="386" width={(W - 48) / 2} height="36" rx="10" fill="#FFF0EB" />
+          <rect x={28 + (W - 48) / 2 + 8} y="393" width="60" height="8" rx="4" fill={o} opacity="0.2" />
+          <rect x={28 + (W - 48) / 2 + 8} y="406" width="46" height="10" rx="5" fill={o} opacity="0.45" />
+        </g>
 
         {/* Invoice card */}
-        <g style={{ animation: "wire-slide-up 0.65s cubic-bezier(0.34,1.56,0.64,1) 1.9s both" }}>
-          <rect x="14" y="328" width={W - 28} height="150" rx="18"
-            fill={cL} stroke={c} strokeWidth="1.5" />
-          <rect x="30" y="348" width="136" height="10" rx="5" fill={c} opacity="0.26" />
-          <rect x="30" y="367" width="168" height="22" rx="11" fill={c} opacity="0.44" />
-          <rect x="30" y="402" width="94" height="10" rx="5" fill={o} opacity="0.45" />
-          <rect x={W - 134} y="392" width="110" height="32" rx="16" fill={c} opacity="0.85" />
-          <rect x="30" y="432" width="188" height="8" rx="4" fill={c} opacity="0.14" />
-          <rect x="30" y="447" width="130" height="8" rx="4" fill={c} opacity="0.1" />
+        <g style={{ animation: "wire-slide-up 0.65s cubic-bezier(0.34,1.56,0.64,1) 1.88s both" }}>
+          <rect x="14" y="434" width={W - 28} height="172" rx="18" fill={cL} stroke={c} strokeWidth="1.5" />
+          {/* Header row */}
+          <rect x="30" y="452" width="110" height="9" rx="4.5" fill={c} opacity="0.26" />
+          <rect x={W - 122} y="452" width="94" height="9" rx="4.5" fill={c} opacity="0.14" />
+          {/* Amount */}
+          <rect x="30" y="469" width="162" height="26" rx="13" fill={c} opacity="0.45" />
+          {/* Trigger label */}
+          <rect x="30" y="505" width="148" height="9" rx="4.5" fill={o} opacity="0.42" />
+          {/* Send button */}
+          <rect x={W - 140} y="495" width="112" height="32" rx="16" fill={c} opacity="0.85" />
+          {/* Divider */}
+          <line x1="30" y1="537" x2={W - 30} y2="537" stroke={c} strokeWidth="1" opacity="0.14" />
+          {/* Sent to row */}
+          <rect x="30" y="547" width="62" height="8" rx="4" fill={c} opacity="0.18" />
+          <rect x="100" y="547" width="118" height="8" rx="4" fill={c} opacity="0.13" />
+          {/* Status chip */}
+          <rect x="30" y="561" width="70" height="18" rx="9" fill={g} opacity="0.18" />
+          <rect x="43" y="565" width="44" height="10" rx="5" fill={g} opacity="0.5" />
+          {/* Timestamp */}
+          <rect x={W - 130} y="565" width="96" height="8" rx="4" fill={c} opacity="0.1" />
+        </g>
+
+        {/* Bottom tab bar */}
+        <g style={f(0.42)}>
+          <rect x="2" y={H - 58} width={W - 4} height="56" rx="0" fill="white" />
+          <line x1="2" y1={H - 58} x2={W - 2} y2={H - 58} stroke={c} strokeWidth="1" opacity="0.1" />
+          <rect x="2" y={H - 4} width={W - 4} height="4" rx="0" fill="white" />
+          {[0, 1, 2, 3].map(i => {
+            const tx = 34 + i * 68;
+            const active = i === 1;
+            return (
+              <g key={i}>
+                <rect x={tx - 14} y={H - 50} width="28" height="20" rx="6"
+                  fill={active ? cL : "transparent"} />
+                <rect x={tx - 10} y={H - 47} width="20" height="10" rx="5"
+                  fill={active ? c : "#bbb"} opacity={active ? 0.45 : 0.2} />
+                <rect x={tx - 10} y={H - 32} width="20" height="7" rx="3.5"
+                  fill={active ? c : "#bbb"} opacity={active ? 0.3 : 0.12} />
+              </g>
+            );
+          })}
+          {/* Home indicator */}
+          <rect x={W / 2 - 40} y={H - 8} width="80" height="4" rx="2" fill={c} opacity="0.2" />
         </g>
       </svg>
     </div>
@@ -122,94 +191,207 @@ function MilestoneWireframe() {
 // ── Keeper product wireframe ──────────────────────────────────────────────────
 function KeeperWireframe() {
   const [ref, inView] = useInView();
-  const c = "#FF6B35", cB = "#3E7BFA", cL = "#FFF4EE", cLB = "#EBF0FE";
-  const W = 520, H = 390;
-  const barHeights = [52, 72, 44, 80, 62];
+  const c = "#FF6B35", cB = "#3E7BFA", cL = "#FFF4EE", cLB = "#EBF0FE", g = "#2FA866";
+  const W = 640, H = 460;
+  const SB = 82; // sidebar width
+  const f = (d: number) => ({ animation: `wire-fade-in 0.35s ease ${d}s both` });
+
+  const barHeights = [48, 68, 40, 82, 58, 72];
+  const orders = [
+    { dot: "#FFC93C", pri: "#FFC93C", w: 148, asset: 72, date: 44, av: "#3E7BFA" },
+    { dot: c,         pri: c,         w: 172, asset: 60, date: 44, av: "#FF6B35" },
+    { dot: g,         pri: g,         w: 132, asset: 80, date: 44, av: "#2FA866" },
+    { dot: c,         pri: c,         w: 158, asset: 68, date: 44, av: "#FFC93C" },
+  ];
 
   return (
     <div ref={ref} className={inView ? "wf-running" : "wf-paused"}>
       <svg viewBox={`0 0 ${W} ${H}`} fill="none" className="w-full h-auto drop-shadow-xl">
-        {/* Tablet frame */}
+
+        {/* ── Outer frame ── */}
         <rect x="2" y="2" width={W - 4} height={H - 4} rx="22"
           fill="white" stroke={cB} strokeWidth="2.5"
-          style={{ strokeDasharray: 1900, strokeDashoffset: 1900, animation: "wire-stroke 1.4s ease forwards" }} />
+          style={{ strokeDasharray: 2200, strokeDashoffset: 2200, animation: "wire-stroke 1.5s ease forwards" }} />
 
-        {/* Header bar */}
-        <rect x="2" y="2" width={W - 4} height="46" rx="22" fill={cLB} />
-        <rect x="2" y="26" width={W - 4} height="22" fill={cLB} />
-        <rect x="18" y="16" width="108" height="13" rx="6.5"
-          fill={cB} opacity="0.28"
-          style={{ animation: "wire-fade-in 0.4s ease 0.4s both" }} />
-        <rect x={W - 148} y="16" width="44" height="13" rx="6.5"
-          fill={cB} opacity="0.18"
-          style={{ animation: "wire-fade-in 0.4s ease 0.45s both" }} />
-        <rect x={W - 96} y="16" width="78" height="13" rx="6.5"
-          fill={c} opacity="0.55"
-          style={{ animation: "wire-fade-in 0.4s ease 0.5s both" }} />
+        {/* ── Sidebar ── */}
+        <rect x="2" y="2" width={SB} height={H - 4} rx="22" fill={cLB} />
+        <rect x={SB} y="2" width="1" height={H - 4} fill={cB} opacity="0.12" />
+        <rect x="2" y="2" width={SB - 1} height={H - 4} rx="22" fill={cLB} />
+        <rect x={SB} y="2" width="2" height={H - 4} fill={cB} opacity="0.08" />
 
-        {/* 3 metric cards */}
-        {[0, 1, 2].map(i => (
-          <g key={i} style={{ animation: `wire-fade-in 0.4s ease ${0.55 + i * 0.1}s both` }}>
-            <rect x={18 + i * 166} y="60" width="152" height="82" rx="12"
-              fill={i === 1 ? cL : cLB}
-              stroke={i === 1 ? c : cB}
-              strokeWidth="1.2" />
-            <rect x={30 + i * 166} y="74" width="84" height="10" rx="5"
-              fill={i === 1 ? c : cB} opacity="0.22" />
-            <rect x={30 + i * 166} y="93" width="60" height="20" rx="10"
-              fill={i === 1 ? c : cB} opacity="0.45" />
-            <rect x={30 + i * 166} y="120" width="95" height="9" rx="4.5"
-              fill={i === 1 ? c : cB} opacity="0.14" />
-          </g>
-        ))}
+        {/* Sidebar logo */}
+        <g style={f(0.38)}>
+          <rect x="18" y="18" width="46" height="18" rx="9" fill={cB} opacity="0.35" />
+        </g>
 
-        {/* Alert badge on 2nd card */}
-        <circle cx={18 + 166 + 152 - 10} cy="60" r="12" fill={c}
-          style={{ animation: "wire-fade-in 0.3s ease 1.5s both, wire-dot-pulse 1.8s ease-in-out 1.5s infinite" }} />
+        {/* Sidebar nav items */}
+        {[0, 1, 2, 3, 4].map(i => {
+          const active = i === 0;
+          const ty = 52 + i * 44;
+          return (
+            <g key={i} style={f(0.42 + i * 0.06)}>
+              <rect x="12" y={ty} width={SB - 24} height="30" rx="8"
+                fill={active ? cB : "transparent"} opacity={active ? 0.12 : 1} />
+              <circle cx="30" cy={ty + 15} r="7"
+                fill={active ? cB : cB} opacity={active ? 0.5 : 0.18} />
+              <rect x="44" y={ty + 11} width="28" height="8" rx="4"
+                fill={active ? cB : cB} opacity={active ? 0.45 : 0.15} />
+            </g>
+          );
+        })}
 
-        {/* Work orders label */}
-        <rect x="18" y="158" width="84" height="10" rx="5"
-          fill={cB} opacity="0.28"
-          style={{ animation: "wire-fade-in 0.4s ease 0.85s both" }} />
+        {/* Sidebar bottom avatar */}
+        <g style={f(0.62)}>
+          <circle cx={SB / 2} cy={H - 30} r="16" fill={cB} opacity="0.2" stroke={cB} strokeWidth="1.2" />
+          <rect x={SB / 2 - 14} y={H - 25} width="28" height="8" rx="4" fill={cB} opacity="0.25" />
+        </g>
+
+        {/* ── Top header bar ── */}
+        <rect x={SB + 1} y="2" width={W - SB - 3} height="46" rx="0" fill={cLB} />
+        <rect x={W - 18} y="2" width="18" height="46" rx="22" fill={cLB} />
+        <line x1={SB} y1="48" x2={W - 2} y2="48" stroke={cB} strokeWidth="1" opacity="0.12" />
+
+        {/* Breadcrumb */}
+        <g style={f(0.45)}>
+          <rect x={SB + 16} y="17" width="54" height="10" rx="5" fill={cB} opacity="0.2" />
+          <rect x={SB + 78} y="19" width="6" height="6" rx="3" fill={cB} opacity="0.18" />
+          <rect x={SB + 92} y="17" width="72" height="10" rx="5" fill={cB} opacity="0.3" />
+        </g>
+
+        {/* Search bar */}
+        <g style={f(0.48)}>
+          <rect x={W - 230} y="12" width="138" height="24" rx="12" fill="white" stroke={cB} strokeWidth="1" opacity="0.5" />
+          <rect x={W - 220} y="18" width="80" height="8" rx="4" fill={cB} opacity="0.15" />
+        </g>
+
+        {/* Notification + avatar */}
+        <g style={f(0.5)}>
+          <circle cx={W - 70} cy="24" r="12" fill="white" stroke={cB} strokeWidth="1" opacity="0.5" />
+          <circle cx={W - 38} cy="24" r="14" fill={cB} opacity="0.2" />
+          <circle cx={W - 70} cy="12" r="5" fill={c} style={{ animation: "wire-dot-pulse 1.8s ease-in-out 1.5s infinite" }} />
+        </g>
+
+        {/* ── Metric cards ── */}
+        {[0, 1, 2].map(i => {
+          const x = SB + 16 + i * 176;
+          const accent = i === 1 ? c : cB;
+          const bg = i === 1 ? cL : cLB;
+          return (
+            <g key={i} style={f(0.55 + i * 0.1)}>
+              <rect x={x} y="62" width="162" height="90" rx="12" fill={bg} stroke={accent} strokeWidth="1.2" />
+              {/* Icon circle */}
+              <circle cx={x + 20} cy="82" r="10" fill={accent} opacity="0.25" />
+              <rect x={x + 13} y="78" width="14" height="8" rx="4" fill={accent} opacity="0.45" />
+              {/* Label */}
+              <rect x={x + 38} y="76" width="80" height="9" rx="4.5" fill={accent} opacity="0.22" />
+              {/* Value */}
+              <rect x={x + 14} y="96" width="64" height="22" rx="11" fill={accent} opacity="0.45" />
+              {/* Trend */}
+              <rect x={x + 14} y="126" width="36" height="8" rx="4" fill={i === 2 ? g : accent} opacity="0.35" />
+              <rect x={x + 56} y="126" width="60" height="8" rx="4" fill={accent} opacity="0.13" />
+            </g>
+          );
+        })}
+
+        {/* Alert badge */}
+        <circle cx={SB + 16 + 1 * 176 + 162 - 6} cy="62" r="12" fill={c}
+          style={{ animation: "wire-fade-in 0.3s ease 1.4s both, wire-dot-pulse 1.8s ease-in-out 1.4s infinite" }} />
+        <rect x={SB + 16 + 1 * 176 + 162 - 12} cy="58" width="12" height="8" rx="3" fill="white" opacity="0.85" />
+
+        {/* ── Work orders section ── */}
+        {/* Label + view-all */}
+        <g style={f(0.88)}>
+          <rect x={SB + 16} y="168" width="88" height="10" rx="5" fill={cB} opacity="0.3" />
+          <rect x={W - 100} y="168" width="72" height="10" rx="5" fill={cB} opacity="0.16" />
+        </g>
+
+        {/* Filter chips */}
+        <g style={f(0.92)}>
+          {[0, 1, 2, 3].map(i => (
+            <rect key={i} x={SB + 16 + i * 78} y="184" width="68" height="20" rx="10"
+              fill={i === 0 ? cB : "white"} stroke={i === 0 ? cB : cB}
+              strokeWidth="1" opacity={i === 0 ? 0.15 : 0.12} />
+          ))}
+          {[0, 1, 2, 3].map(i => (
+            <rect key={i} x={SB + 28 + i * 78} y="190" width="44" height="8" rx="4"
+              fill={i === 0 ? cB : cB} opacity={i === 0 ? 0.45 : 0.18} />
+          ))}
+        </g>
+
+        {/* Table header row */}
+        <g style={f(0.96)}>
+          <line x1={SB + 16} y1="212" x2={W - 16} y2="212" stroke={cB} strokeWidth="1" opacity="0.1" />
+          <rect x={SB + 36} y="216" width="60" height="8" rx="4" fill={cB} opacity="0.18" />
+          <rect x={SB + 202} y="216" width="50" height="8" rx="4" fill={cB} opacity="0.18" />
+          <rect x={SB + 302} y="216" width="40" height="8" rx="4" fill={cB} opacity="0.18" />
+          <rect x={SB + 382} y="216" width="40" height="8" rx="4" fill={cB} opacity="0.18" />
+          <rect x={SB + 452} y="216" width="30" height="8" rx="4" fill={cB} opacity="0.18" />
+          <line x1={SB + 16} y1="230" x2={W - 16} y2="230" stroke={cB} strokeWidth="1" opacity="0.08" />
+        </g>
 
         {/* Work order rows */}
-        {[
-          { dot: "#FFC93C", w1: 164, w2: 82 },
-          { dot: c,         w1: 196, w2: 70 },
-          { dot: "#2FA866", w1: 144, w2: 90 },
-          { dot: c,         w1: 178, w2: 78 },
-        ].map((row, i) => (
-          <g key={i} style={{ animation: `wire-fade-in 0.35s ease ${0.95 + i * 0.1}s both` }}>
-            <circle cx="32" cy={178 + i * 31} r="6" fill={row.dot} opacity="0.75" />
-            <rect x="48" y={172 + i * 31} width={row.w1} height="10" rx="5" fill={cB} opacity="0.2" />
-            <rect x={48 + row.w1 + 12} y={172 + i * 31} width={row.w2} height="10" rx="5" fill={cB} opacity="0.12" />
-          </g>
+        {orders.map((row, i) => {
+          const ry = 238 + i * 38;
+          return (
+            <g key={i} style={f(1.02 + i * 0.1)}>
+              <circle cx={SB + 26} cy={ry + 10} r="6" fill={row.dot} opacity="0.75" />
+              {/* Title */}
+              <rect x={SB + 40} y={ry + 5} width={row.w} height="10" rx="5" fill={cB} opacity="0.22" />
+              <rect x={SB + 40} y={ry + 20} width={row.w - 30} height="8" rx="4" fill={cB} opacity="0.12" />
+              {/* Asset chip */}
+              <rect x={SB + 202} y={ry + 4} width={row.asset} height="18" rx="9"
+                fill={cLB} stroke={cB} strokeWidth="1" opacity="0.7" />
+              <rect x={SB + 210} y={ry + 9} width={row.asset - 16} height="8" rx="4" fill={cB} opacity="0.28" />
+              {/* Priority chip */}
+              <rect x={SB + 302} y={ry + 4} width="44" height="18" rx="9"
+                fill={row.pri} opacity="0.12" />
+              <rect x={SB + 310} y={ry + 9} width="28" height="8" rx="4" fill={row.pri} opacity="0.45" />
+              {/* Date */}
+              <rect x={SB + 382} y={ry + 8} width={row.date} height="8" rx="4" fill={cB} opacity="0.15" />
+              {/* Assignee avatar */}
+              <circle cx={SB + 468} cy={ry + 12} r="11" fill={row.av} opacity="0.25" stroke={row.av} strokeWidth="1" />
+              <rect x={SB + 460} y={ry + 8} width="16" height="8" rx="4" fill={row.av} opacity="0.35" />
+              <line x1={SB + 16} y1={ry + 34} x2={W - 16} y2={ry + 34} stroke={cB} strokeWidth="1" opacity="0.06" />
+            </g>
+          );
+        })}
+
+        {/* ── Chart panel (right column) ── */}
+        {/* Panel bg — overlaps the work orders area on the right */}
+        <g style={f(0.9)}>
+          <rect x={W - 162} y="162" width="146" height={H - 180} rx="14"
+            fill={cL} stroke={c} strokeWidth="1" opacity="0.55" />
+          <rect x={W - 150} y="174" width="80" height="10" rx="5" fill={cB} opacity="0.24" />
+          <rect x={W - 64} y="174" width="40" height="10" rx="5" fill={c} opacity="0.28" />
+        </g>
+
+        {/* Chart baseline + labels */}
+        <line x1={W - 150} y1={H - 32} x2={W - 22} y2={H - 32}
+          stroke={cB} strokeWidth="1" opacity="0.2"
+          style={f(1.0)} />
+        {barHeights.map((_, i) => (
+          <rect key={i} x={W - 148 + i * 22} y={H - 26} width="14" height="7" rx="3.5"
+            fill={cB} opacity="0.14"
+            style={f(1.05 + i * 0.04)} />
         ))}
-
-        {/* Chart panel */}
-        <rect x="362" y="154" width={W - 382} height={H - 174} rx="12"
-          fill={cL} stroke={c} strokeWidth="1" opacity="0.6"
-          style={{ animation: "wire-fade-in 0.4s ease 0.9s both" }} />
-        <rect x="374" y="165" width="84" height="10" rx="5"
-          fill={cB} opacity="0.24"
-          style={{ animation: "wire-fade-in 0.4s ease 0.95s both" }} />
-
-        {/* Chart baseline */}
-        <line x1="372" y1={H - 34} x2={W - 22} y2={H - 34}
-          stroke={cB} strokeWidth="1" opacity="0.22"
-          style={{ animation: "wire-fade-in 0.3s ease 1.0s both" }} />
 
         {/* Chart bars */}
         {barHeights.map((h, i) => (
-          <rect key={i}
-            x={378 + i * 26} y={H - 34 - h} width="18" height={h} rx="5"
-            fill={i === 3 ? c : cB}
-            opacity={i === 3 ? 0.62 : 0.3}
-            style={{
-              transformOrigin: `${378 + i * 26 + 9}px ${H - 34}px`,
-              transform: "scaleY(0)",
-              animation: `wire-bar-rise 0.55s ease ${1.2 + i * 0.08}s both`,
-            }} />
+          <g key={i}>
+            {/* Value label above bar */}
+            <rect x={W - 148 + i * 22} y={H - 34 - h - 12} width="14" height="7" rx="3.5"
+              fill={i === 3 ? c : cB} opacity={i === 3 ? 0.45 : 0.18}
+              style={f(1.28 + i * 0.06)} />
+            <rect
+              x={W - 148 + i * 22} y={H - 32 - h} width="14" height={h} rx="4"
+              fill={i === 3 ? c : cB}
+              opacity={i === 3 ? 0.65 : 0.28}
+              style={{
+                transformOrigin: `${W - 148 + i * 22 + 7}px ${H - 32}px`,
+                transform: "scaleY(0)",
+                animation: `wire-bar-rise 0.55s ease ${1.22 + i * 0.08}s both`,
+              }} />
+          </g>
         ))}
       </svg>
     </div>
