@@ -1,38 +1,61 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #121826;
+@theme {
+  --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
+  --font-display: var(--font-poppins), 'Poppins', sans-serif;
+
+  --color-canvas: #f7f5f0;
+  --color-surface: #f1eef4;
+  --color-ink: #21152f;
+  --color-plum: #28123d;
+  --color-violet: #6d3bf5;
+  --color-violet-soft: #e9e0ff;
+  --color-lime: #b8f51e;
+  --color-lime-soft: #efffc9;
+  --color-olive: #48620c;
+  --color-mint: #88ead9;
+  --color-mint-soft: #daf7f1;
+  --color-keeper: #13b89e;
+  --color-coral: #ff7b63;
+  --color-muted: #756d7b;
+
+  --shadow-soft: 0 20px 60px rgba(40, 18, 61, 0.1);
+  --shadow-dashboard: 0 35px 90px rgba(40, 18, 61, 0.16);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 320px;
+    background: var(--color-canvas);
+    font-family: var(--font-sans);
+  }
+
+  button,
+  a {
+    cursor: pointer;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid var(--color-mint);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-plum);
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
-
-/* Plotted canvas — dot grid inspired by graph paper and plot coordinates */
-.canvas-dots {
-  background-image: radial-gradient(circle, rgba(62, 123, 250, 0.11) 1.5px, transparent 1.5px);
-  background-size: 28px 28px;
-}
-
+/* wireframe animations kept from prior build (used nowhere in new design, harmless) */
 @keyframes logo-drop {
   0%   { transform: translateY(-120%); opacity: 0; }
   65%  { transform: translateY(6px);   opacity: 1; }
   82%  { transform: translateY(-3px);  opacity: 1; }
   100% { transform: translateY(0);     opacity: 1; }
 }
-
-.logo-drop {
-  animation: logo-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
-}
-
-.canvas-dots-paper {
-  background-image: radial-gradient(circle, rgba(255, 107, 53, 0.09) 1.5px, transparent 1.5px);
-  background-size: 28px 28px;
-}
+.logo-drop { animation: logo-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
