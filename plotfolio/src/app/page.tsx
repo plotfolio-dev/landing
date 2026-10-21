@@ -1,6 +1,6 @@
 "use client";
-import { useState, type ReactNode } from "react"
-import { Receipt, Layers, Users, Banknote, Globe, Cpu } from "lucide-react"
+import { useState, useEffect, type ReactNode } from "react"
+import { Receipt, Layers, Users, Banknote, Globe, Cpu, Map, BarChart2, IndianRupee, KeyRound, Wrench, LineChart } from "lucide-react"
 
 type ButtonProps = {
   children: ReactNode
@@ -110,8 +110,7 @@ function HeroDashboard() {
             ["Lakeview Villas", "14 active assets", "68%", "bg-keeper"],
           ].map(([name, meta, value, color]) => (
             <div className="rounded-2xl border border-plum/8 p-4" key={name}>
-              <div className="mb-4 flex items-center justify-between">
-                <span className={`size-2.5 rounded-full ${color}`} />
+              <div className="mb-4 flex items-center justify-end">
                 <span className="text-xs font-bold text-plum">{value}</span>
               </div>
               <p className="font-display text-sm font-semibold text-plum">
@@ -256,11 +255,539 @@ function ProductPreview({ product }: { product: "milestone" | "keeper" }) {
   )
 }
 
+function WireBrowser({ path }: { path: string }) {
+  return (
+    <div className="flex items-center gap-2 border-b border-plum/8 bg-surface px-3 py-2">
+      <div className="flex gap-1">
+        <span className="size-1.5 rounded-full bg-plum/15" />
+        <span className="size-1.5 rounded-full bg-plum/15" />
+        <span className="size-1.5 rounded-full bg-plum/15" />
+      </div>
+      <div className="min-w-0 flex-1 rounded bg-plum/6 px-2 py-0.5 text-center">
+        <span className="font-mono text-[0.52rem] text-muted">{path}</span>
+      </div>
+    </div>
+  )
+}
+
+function WireCard({ children }: { children: ReactNode }) {
+  return (
+    <div className="overflow-hidden rounded-[1.1rem] border border-plum/10 bg-white shadow-dashboard">
+      {children}
+    </div>
+  )
+}
+
+const milestoneFlow: { label: string; desc: string; card: ReactNode }[] = [
+  {
+    label: "Site engineer logs the milestone",
+    desc: "Suresh marks Slab Cast complete on-site. No phone calls, no paper forms.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / green-acres" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Green Acres · Phase 2</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">LIVE</span>
+        </div>
+        <div className="p-4">
+          <p className="text-[0.58rem] font-bold uppercase tracking-wider text-violet">Stage update</p>
+          <div className="mt-2 rounded-xl border border-plum/8 p-3">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="font-display text-sm font-semibold text-plum">Slab Cast</p>
+                <p className="text-[0.58rem] text-muted">Block A · Foundation level</p>
+              </div>
+              <span className="flex size-5 items-center justify-center rounded-full bg-lime text-[0.6rem] font-bold text-plum">✓</span>
+            </div>
+            <div className="mt-2">
+              <span className="text-[0.58rem] text-muted">Suresh M · Site Engineer · Today 14:32</span>
+            </div>
+          </div>
+          <div className="mt-2 rounded-xl bg-surface p-2.5">
+            <div className="mb-1 flex justify-between text-[0.58rem]">
+              <span className="text-muted">Project progress</span>
+              <span className="font-semibold text-plum">7 / 10 stages</span>
+            </div>
+            <div className="h-1 overflow-hidden rounded-full bg-plum/8">
+              <div className="h-full w-[70%] rounded-full bg-violet" />
+            </div>
+          </div>
+          <div className="mt-2 flex gap-1.5">
+            <div className="flex-1 rounded-lg bg-violet py-1.5 text-center text-[0.58rem] font-semibold text-white">Add proof</div>
+            <div className="flex-1 rounded-lg border border-plum/10 py-1.5 text-center text-[0.58rem] font-semibold text-plum">Notify PM</div>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Proof submitted automatically",
+    desc: "The site photo sent via WhatsApp is auto-imported. No manual upload needed.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / proof-submission" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Proof · Slab Cast</span>
+          <span className="rounded-full bg-violet-soft px-2 py-0.5 text-[0.52rem] font-bold text-violet">Pending review</span>
+        </div>
+        <div className="p-4">
+          <div className="rounded-xl border border-plum/8 bg-surface p-3">
+            <div className="flex items-center gap-2">
+              <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-plum/6 text-base">📷</div>
+              <div>
+                <p className="text-xs font-semibold text-plum">slab_cast_blkA.jpg</p>
+                <p className="text-[0.58rem] text-muted">Auto-imported from WhatsApp · 14:33</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 rounded-xl border border-plum/8 bg-surface p-3">
+            <div className="flex items-center gap-2">
+              <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-plum/6 text-base">📷</div>
+              <div>
+                <p className="text-xs font-semibold text-plum">slab_cast_blkA_2.jpg</p>
+                <p className="text-[0.58rem] text-muted">Auto-imported from WhatsApp · 14:35</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-3 flex items-center justify-between rounded-xl bg-violet-soft px-3 py-2">
+            <span className="text-[0.58rem] font-semibold text-violet">Sent to PM for review</span>
+            <span className="text-[0.58rem] text-violet/60">Just now</span>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Project manager approves in one click",
+    desc: "Rajesh reviews the proof and milestone details, then approves without leaving the app.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / pm-review / WO-482" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">PM Review</span>
+          <span className="text-[0.58rem] font-semibold text-plum">Rajesh K</span>
+        </div>
+        <div className="p-4">
+          <p className="text-[0.58rem] text-muted">Milestone · Green Acres · Slab Cast</p>
+          <div className="mt-2 space-y-1.5">
+            {["Proof verified (2 photos)", "Stage matches schedule", "No open punch items"].map((item) => (
+              <div className="flex items-center gap-2 rounded-lg bg-lime-soft px-3 py-1.5" key={item}>
+                <span className="text-[0.6rem] font-bold text-olive">✓</span>
+                <span className="text-[0.58rem] font-medium text-plum">{item}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 flex gap-1.5">
+            <div className="flex-1 rounded-lg bg-lime py-2 text-center text-[0.6rem] font-bold text-plum">Approve milestone</div>
+            <div className="flex-1 rounded-lg border border-plum/10 py-2 text-center text-[0.6rem] font-semibold text-muted">Request more info</div>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Architect certifies and uploads",
+    desc: "Inspection is scheduled in-app. The completion certificate goes straight into the milestone record.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / certification / slab-cast" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Architect Certification</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">Uploaded</span>
+        </div>
+        <div className="p-4">
+          <div className="flex items-center justify-between rounded-xl bg-surface p-3">
+            <span className="text-[0.58rem] text-muted">Inspection date</span>
+            <span className="text-[0.58rem] font-semibold text-plum">Thu 24 Oct · 10:00 AM</span>
+          </div>
+          <div className="mt-2 flex items-center gap-2 rounded-xl border border-plum/8 p-3">
+            <div className="grid size-8 place-items-center rounded-lg bg-violet-soft text-sm">📄</div>
+            <div>
+              <p className="text-xs font-semibold text-plum">completion_cert_A3.pdf</p>
+              <p className="text-[0.58rem] text-muted">Uploaded by Arch. Menon · Today</p>
+            </div>
+            <span className="ml-auto text-[0.6rem] font-bold text-violet">✓</span>
+          </div>
+          <div className="mt-3 flex items-center justify-center rounded-xl bg-lime py-2.5">
+            <span className="text-[0.65rem] font-bold text-plum">Milestone UNLOCKED — Demand letter ready</span>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Demand letter auto-generated and sent",
+    desc: "The moment the milestone is certified, Milestone generates the letter and sends it via email and WhatsApp.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / demand-letter / DL-1204" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Demand Letter · DL-1204</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">Sent</span>
+        </div>
+        <div className="p-4 space-y-2">
+          {[
+            ["Buyer", "Sharma Family · Unit 4B"],
+            ["Milestone", "Foundation Complete"],
+            ["Amount due", "₹24,60,000"],
+            ["Due date", "15 Nov 2024"],
+          ].map(([label, value]) => (
+            <div className="flex items-center justify-between border-b border-plum/6 pb-1.5" key={label}>
+              <span className="text-[0.58rem] text-muted">{label}</span>
+              <span className="text-[0.58rem] font-semibold text-plum">{value}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-1.5 pt-1">
+            <span className="rounded-full bg-mint-soft px-2 py-0.5 text-[0.52rem] font-bold text-keeper">Email ✓</span>
+            <span className="rounded-full bg-mint-soft px-2 py-0.5 text-[0.52rem] font-bold text-keeper">WhatsApp ✓</span>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Buyer pays — bank disbursal tracked",
+    desc: "Payment is logged the moment it arrives. If a loan is involved, Milestone tracks the bank query and disbursal too.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / payments / unit-4B" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Payment Received</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">Confirmed</span>
+        </div>
+        <div className="p-4">
+          <div className="rounded-xl bg-plum p-4 text-white">
+            <p className="text-[0.58rem] text-white/50">Amount received</p>
+            <p className="mt-1 font-display text-2xl font-semibold text-lime">₹24,60,000</p>
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-3 text-[0.58rem]">
+              <div><span className="text-white/45">Mode</span><br /><span className="font-semibold">NEFT</span></div>
+              <div><span className="text-white/45">Ref</span><br /><span className="font-semibold">TXN9283742</span></div>
+              <div><span className="text-white/45">Date</span><br /><span className="font-semibold">12 Nov 2024</span></div>
+              <div><span className="text-white/45">Receipt</span><br /><span className="font-semibold text-lime">Auto-issued ✓</span></div>
+            </div>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Owner sees the full collection picture",
+    desc: "Every payment, every outstanding balance, every buyer's status — in one dashboard updated in real time.",
+    card: (
+      <WireCard>
+        <WireBrowser path="milestone.plotfolio.ai / dashboard" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Collection Overview · Nov 2024</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">9/10 on track</span>
+        </div>
+        <div className="p-4 space-y-2.5">
+          {[
+            ["Billed", "₹4.1 Cr", "83%", "bg-violet"],
+            ["Collected", "₹3.6 Cr", "73%", "bg-keeper"],
+            ["Outstanding", "₹50 L", "10%", "bg-coral"],
+          ].map(([label, amount, pct, color]) => (
+            <div key={label}>
+              <div className="mb-1 flex justify-between text-[0.58rem]">
+                <span className="text-muted">{label}</span>
+                <span className="font-semibold text-plum">{amount}</span>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-plum/8">
+                <div className={`h-full rounded-full ${color}`} style={{ width: pct }} />
+              </div>
+            </div>
+          ))}
+          <div className="mt-1 rounded-xl bg-surface px-3 py-2 text-[0.58rem] text-muted">
+            Next milestone payment due in <span className="font-semibold text-plum">3 days</span>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+]
+
+const keeperFlow: { label: string; desc: string; card: ReactNode }[] = [
+  {
+    label: "Tenant reports an issue",
+    desc: "Priya submits from the resident portal. The request lands in Keeper instantly with location and asset context.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / issues / new" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Issue Logged</span>
+          <span className="rounded-full bg-coral/15 px-2 py-0.5 text-[0.52rem] font-bold text-coral">High priority</span>
+        </div>
+        <div className="p-4 space-y-2">
+          {[
+            ["Property", "Skyview Residences · Tower B"],
+            ["Unit", "Floor 4 · Unit 12C"],
+            ["Asset", "AC Unit — main split"],
+            ["Issue", "No cooling since yesterday"],
+            ["Reported by", "Priya S · Resident portal · 09:14"],
+          ].map(([label, value]) => (
+            <div className="flex items-start justify-between border-b border-plum/6 pb-1.5" key={label}>
+              <span className="text-[0.58rem] text-muted">{label}</span>
+              <span className="max-w-[55%] text-right text-[0.58rem] font-semibold text-plum">{value}</span>
+            </div>
+          ))}
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Supervisor creates a work order with asset history",
+    desc: "The asset is tagged, the full service history is visible, and Ravi is assigned in under a minute.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / work-orders / WO-4821" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">WO-4821 · AC Unit</span>
+          <span className="rounded-full bg-violet-soft px-2 py-0.5 text-[0.52rem] font-bold text-violet">Assigned</span>
+        </div>
+        <div className="p-4">
+          <div className="rounded-xl bg-surface p-3 space-y-1.5">
+            {[
+              ["Asset", "AC-TowerB-F4 · Split unit"],
+              ["Prior services", "2 · Last: 3 months ago"],
+              ["Warranty", "Valid until Mar 2025"],
+              ["Assigned to", "Ravi K · Technician"],
+            ].map(([label, value]) => (
+              <div className="flex justify-between text-[0.58rem]" key={label}>
+                <span className="text-muted">{label}</span>
+                <span className="font-semibold text-plum">{value}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 flex items-center gap-1.5 rounded-xl border border-keeper/20 bg-mint-soft px-3 py-2">
+            <span className="text-[0.6rem] font-bold text-keeper">Service manual attached ✓</span>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Technician diagnoses on-site — with full history",
+    desc: "Ravi arrives with the WO on his phone, the asset's full history, and the service manual. No guesswork.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / mobile / WO-4821" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">On-site · WO-4821</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">In progress</span>
+        </div>
+        <div className="p-4 space-y-2">
+          <div className="rounded-xl bg-plum p-3 text-white">
+            <p className="text-[0.58rem] text-white/45">Asset</p>
+            <p className="font-display text-sm font-semibold">AC Unit · Tower B Fl 4</p>
+            <p className="mt-2 text-[0.58rem] text-white/45">Diagnosis</p>
+            <p className="text-[0.6rem] text-white/80">Low refrigerant — same as last service</p>
+          </div>
+          <div className="grid grid-cols-2 gap-1.5">
+            {[["Parts in stock", "✓ R-22 gas"], ["Manual", "✓ Attached"], ["Photos", "3 taken"], ["Est. fix", "1 hr"]].map(([l, v]) => (
+              <div className="rounded-lg bg-surface p-2" key={l}>
+                <p className="text-[0.52rem] text-muted">{l}</p>
+                <p className="text-[0.6rem] font-semibold text-plum">{v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Job closed out on-site — instantly in the record",
+    desc: "Ravi closes the WO from his phone. Notes, photos, and time are captured before he leaves the building.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / mobile / WO-4821 / close" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Close-out · WO-4821</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">Closed</span>
+        </div>
+        <div className="p-4">
+          <div className="rounded-xl border border-plum/8 p-3 space-y-1.5">
+            {[
+              ["Resolution", "Refrigerant recharged"],
+              ["Parts used", "R-22 gas · 500g"],
+              ["Labour time", "2 hrs 15 min"],
+              ["Closed by", "Ravi K · Today 11:28"],
+            ].map(([l, v]) => (
+              <div className="flex justify-between border-b border-plum/6 pb-1.5 text-[0.58rem]" key={l}>
+                <span className="text-muted">{l}</span>
+                <span className="font-semibold text-plum">{v}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 flex items-center justify-between rounded-xl bg-lime py-2 px-3">
+            <span className="text-[0.6rem] font-bold text-plum">Asset record updated</span>
+            <span className="text-[0.6rem] font-bold text-plum">Cost posted ✓</span>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Vendor invoice auto-matched to the work order",
+    desc: "CoolTech's invoice arrives and Keeper matches it to WO-4821 automatically. FM approves in one click.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / invoices / INV-8821" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Invoice · CoolTech Services</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">Matched</span>
+        </div>
+        <div className="p-4 space-y-2">
+          {[
+            ["Invoice no.", "INV-8821"],
+            ["Vendor", "CoolTech Services"],
+            ["Amount", "₹8,400"],
+            ["Linked WO", "WO-4821 · AC Unit"],
+            ["PO match", "✓ Matched to PO-2391"],
+          ].map(([l, v]) => (
+            <div className="flex justify-between border-b border-plum/6 pb-1.5 text-[0.58rem]" key={l}>
+              <span className="text-muted">{l}</span>
+              <span className={`font-semibold ${v.startsWith("✓") ? "text-keeper" : "text-plum"}`}>{v}</span>
+            </div>
+          ))}
+          <div className="flex gap-1.5 pt-1">
+            <div className="flex-1 rounded-lg bg-keeper py-1.5 text-center text-[0.58rem] font-bold text-white">Approve payment</div>
+            <div className="flex-1 rounded-lg border border-plum/10 py-1.5 text-center text-[0.58rem] font-semibold text-muted">Dispute</div>
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Cost posted to the asset — full lifetime record",
+    desc: "Every rupee spent on this AC unit is in the record. Keeper builds a cost history that informs every future decision.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / assets / AC-TowerB-F4" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Asset · AC Unit · Tower B Fl 4</span>
+          <span className="rounded-full bg-mint-soft px-2 py-0.5 text-[0.52rem] font-bold text-keeper">Healthy</span>
+        </div>
+        <div className="p-4">
+          <div className="rounded-xl bg-surface p-3 space-y-1.5">
+            {[
+              ["Installed", "Jan 2022"],
+              ["Warranty", "Valid until Mar 2025"],
+              ["Today's cost", "₹8,400 (recharged)"],
+              ["Lifetime cost", "₹24,200 total"],
+              ["Services", "3 logged · next due Apr 2025"],
+            ].map(([l, v]) => (
+              <div className="flex justify-between text-[0.58rem]" key={l}>
+                <span className="text-muted">{l}</span>
+                <span className="font-semibold text-plum">{v}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 rounded-xl bg-mint-soft px-3 py-2 text-[0.58rem] font-semibold text-keeper">
+            Replacement threshold not yet reached
+          </div>
+        </div>
+      </WireCard>
+    ),
+  },
+  {
+    label: "Manager sees live portfolio health",
+    desc: "Open work orders, spend vs budget, repeat failures — all live. No Excel exports, no waiting for month-end.",
+    card: (
+      <WireCard>
+        <WireBrowser path="keeper.plotfolio.ai / dashboard" />
+        <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
+          <span className="font-display text-xs font-semibold text-plum">Portfolio Health</span>
+          <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">99.1% uptime</span>
+        </div>
+        <div className="p-4 space-y-2.5">
+          <div className="grid grid-cols-3 gap-1.5">
+            {[["Open WOs", "3"], ["Closed / wk", "12"], ["Assets due PM", "2"]].map(([l, v]) => (
+              <div className="rounded-xl bg-surface p-2 text-center" key={l}>
+                <p className="font-display text-lg font-semibold text-keeper">{v}</p>
+                <p className="text-[0.52rem] text-muted leading-tight mt-0.5">{l}</p>
+              </div>
+            ))}
+          </div>
+          {[
+            ["Spend", "₹2.1 L", "70%", "bg-violet"],
+            ["Budget", "₹3 L", "100%", "bg-plum/15"],
+          ].map(([l, amt, pct, color]) => (
+            <div key={l}>
+              <div className="mb-1 flex justify-between text-[0.58rem]">
+                <span className="text-muted">{l}</span>
+                <span className="font-semibold text-plum">{amt}</span>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-plum/8">
+                <div className={`h-full rounded-full ${color}`} style={{ width: pct }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </WireCard>
+    ),
+  },
+]
+
+const pipelineData = {
+  milestone: [
+    {
+      num: "01",
+      icon: <Map className="size-4" />,
+      title: "Plan",
+      body: "Define project phases, upload approvals and set payment schedules. Your whole team works from the same source of truth before a brick is laid.",
+    },
+    {
+      num: "02",
+      icon: <BarChart2 className="size-4" />,
+      title: "Track progress",
+      body: "Mark construction stages complete, attach site photos and push instant updates to every buyer. Milestone logs every change with a timestamp.",
+    },
+    {
+      num: "03",
+      icon: <IndianRupee className="size-4" />,
+      title: "Collect payments",
+      body: "Demand letters are auto-generated the moment a stage is signed off. Track receipts, flag overdues and reconcile against your bank all in one place.",
+    },
+  ],
+  keeper: [
+    {
+      num: "01",
+      icon: <KeyRound className="size-4" />,
+      title: "Receive handover",
+      body: "Every document, asset register and cost record passes from Milestone automatically. Keeper starts with the full property history from day one.",
+    },
+    {
+      num: "02",
+      icon: <Wrench className="size-4" />,
+      title: "Maintain assets",
+      body: "Residents raise issues, vendors pick them up and the full service history of every gate, pump and lift is always a click away.",
+    },
+    {
+      num: "03",
+      icon: <LineChart className="size-4" />,
+      title: "Report & improve",
+      body: "Uptime, resolution times and cost per asset across your entire portfolio. Spot which properties need attention before residents have to ask.",
+    },
+  ],
+}
+
 export default function Home() {
   const [activeProduct, setActiveProduct] = useState<"milestone" | "keeper">(
     "milestone",
   )
+  const [activePipeline, setActivePipeline] = useState<"milestone" | "keeper">(
+    "milestone",
+  )
+  const [flowStep, setFlowStep] = useState(0)
+  const [billingAnnual, setBillingAnnual] = useState(false)
   const product = suiteData[activeProduct]
+
+  useEffect(() => { setFlowStep(0) }, [activePipeline])
+
+  useEffect(() => {
+    const flow = activePipeline === "milestone" ? milestoneFlow : keeperFlow
+    const t = setInterval(() => setFlowStep(s => (s + 1) % flow.length), 4200)
+    return () => clearInterval(t)
+  }, [activePipeline])
 
   const scrollToSuite = () =>
     document.getElementById("suite")?.scrollIntoView({ behavior: "smooth" })
@@ -270,21 +797,11 @@ export default function Home() {
       <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-10">
         <Logo />
         <nav className="hidden items-center gap-8 text-sm font-medium text-muted lg:flex">
-          <a className="transition hover:text-plum" href="#suite">
-            Products
-          </a>
-          <a className="transition hover:text-plum" href="#workflow">
-            How it works
-          </a>
-          <a className="transition hover:text-plum" href="#integrations">
-            Integrations
-          </a>
-          <a className="transition hover:text-plum" href="#stories">
-            Customers
-          </a>
-          <a className="transition hover:text-plum" href="#company">
-            Company
-          </a>
+          <a className="transition hover:text-plum" href="#suite">Products</a>
+          <a className="transition hover:text-plum" href="#workflow">How it works</a>
+          <a className="transition hover:text-plum" href="#integrations">Integrations</a>
+          <a className="transition hover:text-plum" href="#stories">Pricing</a>
+          <a className="transition hover:text-plum" href="#company">Contact</a>
         </nav>
         <Button onClick={scrollToSuite}>Book a walkthrough</Button>
       </header>
@@ -454,58 +971,152 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-white py-24 md:py-32" id="workflow">
-          <div className="mx-auto max-w-7xl px-5 md:px-10">
-            <Kicker mint>The journey</Kicker>
-            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+        <section className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32" id="workflow">
+          <div className="grid items-end gap-8 lg:grid-cols-2">
+            <div>
+              <Kicker mint>How it works</Kicker>
               <h2 className="font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
-                Built around the people who make projects happen.
+                One pipeline, from the first brick to the last work order.
               </h2>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {[
-                  [
-                    "01",
-                    "Plan",
-                    "Survey data, approvals, and budgets in one place, so everyone starts from the same facts.",
-                  ],
-                  [
-                    "02",
-                    "Build & sell",
-                    "Share progress, send payment requests, and keep buyers in the loop. No back-and-forth.",
-                  ],
-                  [
-                    "03",
-                    "Hand over",
-                    "Every asset, document, and cost record passes cleanly from the site team to the facilities team.",
-                  ],
-                  [
-                    "04",
-                    "Run & care",
-                    "Maintenance, vendors, and resident requests stay organised long after the last unit is sold.",
-                  ],
-                ].map(([number, title, body], index) => (
-                  <div
-                    className={`rounded-2xl p-6 ${
-                      index === 0
-                        ? "bg-lime"
-                        : index === 3
-                          ? "bg-mint-soft"
-                          : "bg-surface"
-                    }`}
-                    key={number}
-                  >
-                    <span className="font-display text-sm font-semibold text-violet">
-                      {number}
-                    </span>
-                    <p className="mt-9 font-display text-lg font-semibold text-plum">
-                      {title}
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-muted">{body}</p>
-                  </div>
-                ))}
-              </div>
             </div>
+            <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
+              Milestone handles everything while you build. Keeper takes over
+              the moment you hand the keys. Together they keep the full
+              property record in one place.
+            </p>
           </div>
+
+          {/* Product selector */}
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            <button
+              className={`rounded-[2rem] p-6 text-left transition-all md:p-8 ${
+                activePipeline === "milestone"
+                  ? "bg-lime text-plum shadow-soft"
+                  : "border border-plum/10 bg-white text-plum hover:border-violet/40"
+              }`}
+              onClick={() => setActivePipeline("milestone")}
+              type="button"
+            >
+              <div className="flex items-start justify-between">
+                <span className="font-display text-2xl font-semibold">Milestone</span>
+                <span className="grid size-10 place-items-center rounded-full bg-plum font-display text-lg text-lime">01</span>
+              </div>
+              <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
+                Plan your project, track every stage and collect payments the
+                moment a milestone is signed off.
+              </p>
+            </button>
+            <button
+              className={`rounded-[2rem] p-6 text-left transition-all md:p-8 ${
+                activePipeline === "keeper"
+                  ? "bg-mint text-plum shadow-soft"
+                  : "border border-plum/10 bg-white text-plum hover:border-keeper/40"
+              }`}
+              onClick={() => setActivePipeline("keeper")}
+              type="button"
+            >
+              <div className="flex items-start justify-between">
+                <span className="font-display text-2xl font-semibold">Keeper</span>
+                <span className="grid size-10 place-items-center rounded-full bg-plum font-display text-lg text-mint">02</span>
+              </div>
+              <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
+                Receive the full handover record, manage every asset and report
+                across your entire portfolio.
+              </p>
+            </button>
+          </div>
+
+          {/* Animated wireframe player */}
+          {(() => {
+            const flow = activePipeline === "milestone" ? milestoneFlow : keeperFlow
+            const accent = activePipeline === "keeper" ? "text-mint" : "text-lime"
+            const accentBg = activePipeline === "keeper" ? "bg-mint" : "bg-lime"
+            const accentDot = activePipeline === "keeper" ? "bg-mint" : "bg-lime"
+            const step = flow[flowStep]
+            return (
+              <div className="mt-5 rounded-[2.5rem] bg-plum p-6 text-white md:p-10 lg:p-14">
+                <div className="grid gap-10 lg:grid-cols-[240px_1fr]">
+                  {/* Step list — desktop sidebar */}
+                  <div className="hidden lg:block">
+                    <p className={`mb-5 text-[0.6rem] font-bold uppercase tracking-[0.18em] ${accent}`}>
+                      {activePipeline === "keeper" ? "Run & care" : "Build & sell"}
+                    </p>
+                    <div className="relative space-y-1">
+                      <div className="absolute left-[6px] top-2 h-[calc(100%-1rem)] w-px bg-white/10" />
+                      {flow.map((s, i) => (
+                        <button
+                          className={`relative flex w-full items-start gap-3 rounded-xl px-2 py-2 text-left transition-colors ${
+                            i === flowStep ? "bg-white/8" : "hover:bg-white/5"
+                          }`}
+                          key={i}
+                          onClick={() => setFlowStep(i)}
+                          type="button"
+                        >
+                          <span
+                            className={`relative z-10 mt-0.5 flex size-3.5 shrink-0 items-center justify-center rounded-full border ${
+                              i === flowStep
+                                ? `${accentBg} border-transparent`
+                                : i < flowStep
+                                  ? "border-white/30 bg-white/20"
+                                  : "border-white/15 bg-transparent"
+                            }`}
+                          />
+                          <span
+                            className={`text-[0.65rem] leading-4 ${
+                              i === flowStep ? "font-semibold text-white" : "text-white/40"
+                            }`}
+                          >
+                            {s.label}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Wireframe card + label */}
+                  <div>
+                    {/* Mobile step pills */}
+                    <div className="mb-6 flex flex-wrap gap-1.5 lg:hidden">
+                      {flow.map((_, i) => (
+                        <button
+                          className={`h-1.5 rounded-full transition-all ${
+                            i === flowStep ? `w-8 ${accentBg}` : "w-1.5 bg-white/20"
+                          }`}
+                          key={i}
+                          onClick={() => setFlowStep(i)}
+                          type="button"
+                        />
+                      ))}
+                    </div>
+
+                    {/* Wireframe card */}
+                    <div className="card-enter" key={`${activePipeline}-${flowStep}`}>
+                      <div className="max-w-sm">{step.card}</div>
+                    </div>
+
+                    {/* Step label + description */}
+                    <div className="mt-6">
+                      <p className={`text-[0.6rem] font-bold uppercase tracking-[0.16em] ${accent}`}>
+                        Step {flowStep + 1} of {flow.length}
+                      </p>
+                      <p className="mt-1 font-display text-lg font-semibold leading-snug text-white">
+                        {step.label}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-white/55">{step.desc}</p>
+                    </div>
+
+                    {/* Progress bar */}
+                    <div className="mt-6 h-px w-full overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className={`step-progress h-full rounded-full ${accentDot}`}
+                        key={`${activePipeline}-${flowStep}-bar`}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
         </section>
 
         <section className="bg-plum py-24 text-white md:py-32" id="integrations">
@@ -526,165 +1137,115 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {(
-                [
-                  {
-                    icon: <Receipt className="size-5" />,
-                    name: "Tally",
-                    description: "Accounting & ledger sync",
-                    tone: "bg-violet-soft text-violet",
-                    wide: false,
-                  },
-                  {
-                    icon: <Layers className="size-5" />,
-                    name: "SAP",
-                    description: "ERP & project finance",
-                    tone: "bg-lime-soft text-olive",
-                    wide: false,
-                  },
-                  {
-                    icon: <Users className="size-5" />,
-                    name: "Zoho + Salesforce",
-                    description: "CRM & buyer journeys",
-                    tone: "bg-mint-soft text-keeper",
-                    wide: false,
-                  },
-                  {
-                    icon: <Banknote className="size-5" />,
-                    name: "Razorpay + banks",
-                    description: "Payments & virtual accounts",
-                    tone: "bg-white text-plum",
-                    wide: false,
-                  },
+            {/* Integration hub wireframe */}
+            <div className="mt-12 overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10 lg:p-14">
+              {/* Mobile: 2-col card grid */}
+              <div className="grid grid-cols-2 gap-3 lg:hidden">
+                {[
+                  { icon: <Receipt className="size-4" />, name: "Tally", desc: "Accounting" },
+                  { icon: <Layers className="size-4" />, name: "SAP", desc: "ERP" },
+                  { icon: <Users className="size-4" />, name: "Zoho", desc: "CRM" },
+                  { icon: <Banknote className="size-4" />, name: "Razorpay", desc: "Payments" },
+                  { icon: <Globe className="size-4" />, name: "Portals", desc: "Listings" },
+                  { icon: <Cpu className="size-4" />, name: "IoT / BMS", desc: "Sensors" },
                   {
                     icon: (
-                      <svg viewBox="0 0 24 24" className="size-5" fill="currentColor">
+                      <svg viewBox="0 0 24 24" className="size-4" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                       </svg>
                     ),
-                    name: "WhatsApp Business",
-                    description: "Automated buyer updates",
-                    tone: "bg-mint-soft text-keeper",
-                    wide: false,
+                    name: "WhatsApp",
+                    desc: "Updates",
                   },
-                  {
-                    icon: <Globe className="size-5" />,
-                    name: "Property portals",
-                    description: "Inventory & listing sync",
-                    tone: "bg-violet-soft text-violet",
-                    wide: false,
-                  },
-                  {
-                    icon: <Cpu className="size-5" />,
-                    name: "IoT + BMS sensors",
-                    description: "Meters, assets & alerts",
-                    tone: "bg-lime-soft text-olive",
-                    wide: true,
-                  },
-                ] as const
-              ).map(({ icon, name, description, tone, wide }) => (
-                <div
-                  className={`group rounded-2xl border border-white/10 bg-white/5 p-5 transition-all hover:-translate-y-1 hover:bg-white/10 ${
-                    wide ? "sm:col-span-2 lg:col-span-2" : ""
-                  }`}
-                  key={name}
-                >
-                  <div className={`grid size-11 place-items-center rounded-xl ${tone}`}>
-                    {icon}
+                ].map((item) => (
+                  <div className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/5 px-3 py-3" key={item.name}>
+                    <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/10 text-white">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-white">{item.name}</p>
+                      <p className="text-[0.6rem] text-white/40">{item.desc}</p>
+                    </div>
                   </div>
-                  <p className="mt-8 font-display text-base font-semibold">{name}</p>
-                  <p className="mt-2 text-sm text-white/50">{description}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5 grid gap-5 lg:grid-cols-2">
-              <div className="overflow-hidden rounded-[2rem] bg-violet p-7 md:p-10">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-lime">
-                      Plotfolio API
-                    </p>
-                    <h3 className="mt-3 font-display text-2xl font-semibold md:text-3xl">
-                      Connect your tools to every property event.
-                    </h3>
-                  </div>
-                  <span className="rounded-full border border-white/20 px-3 py-1.5 text-xs font-semibold text-white/70">
-                    REST + webhooks
-                  </span>
-                </div>
-                <p className="mt-4 max-w-xl leading-7 text-white/65">
-                  Create projects, sync units and assets, trigger payment
-                  workflows, or get notified when milestones and work orders
-                  change. Build what your team needs on a reliable property
-                  record.
-                </p>
-                <div className="mt-8 rounded-2xl bg-plum p-5 font-mono text-xs leading-6 text-white/60">
-                  <p>
-                    <span className="text-lime">POST</span>{" "}
-                    /v1/projects/green-acres/milestones
-                  </p>
-                  <p>
-                    <span className="text-mint">EVENT</span>{" "}
-                    payment.collection_ready
-                  </p>
-                  <p>
-                    <span className="text-violet-soft">WEBHOOK</span>{" "}
-                    work_order.resolved
-                  </p>
-                </div>
-                <div className="mt-7">
-                  <Button
-                    tone="lime"
-                    onClick={() =>
-                      document
-                        .getElementById("company")
-                        ?.scrollIntoView({ behavior: "smooth" })
-                    }
-                  >
-                    Explore the API
-                  </Button>
-                </div>
+                ))}
               </div>
 
-              <div className="rounded-[2rem] bg-mint-soft p-7 text-plum md:p-10">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-keeper">
-                  Partner network
-                </p>
-                <h3 className="mt-3 max-w-lg font-display text-2xl font-semibold md:text-3xl">
-                  Work with us to serve your clients better.
-                </h3>
-                <p className="mt-4 max-w-xl leading-7 text-plum/60">
-                  We partner with the people who sell, launch, maintain, and
-                  improve real estate, and give them the tools to do it well.
-                </p>
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {[
-                    ["Channel partners", "Bring Plotfolio AI to the developers and promoters you already work with."],
-                    ["FM vendors", "Manage SLAs, asset care, and field teams from one view."],
-                    ["System integrators", "Connect enterprise systems to a live property record."],
-                    ["Proptech builders", "Build specialised tools on top of our API."],
-                  ].map(([title, description]) => (
-                    <div className="rounded-2xl bg-white/70 p-4" key={title}>
-                      <span className="mb-5 block size-2.5 rounded-full bg-keeper" />
-                      <p className="font-display text-sm font-semibold">{title}</p>
-                      <p className="mt-2 text-xs leading-5 text-plum/55">
-                        {description}
-                      </p>
+              {/* Desktop: animated hub */}
+              <div className="hidden items-center justify-between gap-6 lg:flex">
+                {/* Left integrations */}
+                <div className="flex flex-col gap-5">
+                  {([
+                    { icon: <Receipt className="size-4" />, name: "Tally", desc: "Accounting & ledger sync", delay: "0s" },
+                    { icon: <Layers className="size-4" />, name: "SAP", desc: "ERP & project finance", delay: "0.7s" },
+                    { icon: <Users className="size-4" />, name: "Zoho + Salesforce", desc: "CRM & buyer journeys", delay: "1.4s" },
+                    {
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="size-4" fill="currentColor">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                      ),
+                      name: "WhatsApp Business",
+                      desc: "Automated buyer updates",
+                      delay: "2.1s",
+                    },
+                  ] as const).map((item) => (
+                    <div className="flex items-center gap-3" key={item.name}>
+                      <div className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/8 px-4 py-3">
+                        <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/10 text-white">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-white">{item.name}</p>
+                          <p className="text-[0.6rem] text-white/40">{item.desc}</p>
+                        </div>
+                      </div>
+                      <div className="relative h-px w-24 shrink-0 bg-white/15">
+                        <div className="dot-right" style={{ animationDelay: item.delay }} />
+                        <div className="dot-right-2" style={{ animationDelay: `calc(${item.delay} + 1.4s)` }} />
+                      </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-7">
-                  <Button
-                    onClick={() =>
-                      document
-                        .getElementById("company")
-                        ?.scrollIntoView({ behavior: "smooth" })
-                    }
-                  >
-                    Become a partner
-                  </Button>
+
+                {/* Center hub */}
+                <div className="hub-pulse flex shrink-0 flex-col items-center gap-3 rounded-[1.75rem] border border-white/20 bg-white/8 px-8 py-6">
+                  <div className="flex items-center gap-2">
+                    <span className="grid size-8 place-items-center rounded-xl bg-lime">
+                      <span className="size-3 rounded-[0.2rem] border-[0.2rem] border-plum" />
+                    </span>
+                    <span className="font-display text-base font-semibold text-white">
+                      Plotfolio <span className="text-lime">AI</span>
+                    </span>
+                  </div>
+                  <div className="flex gap-1.5">
+                    <span className="rounded-full bg-lime/15 px-2 py-0.5 text-[0.6rem] font-bold text-lime">Milestone</span>
+                    <span className="rounded-full bg-mint/15 px-2 py-0.5 text-[0.6rem] font-bold text-mint">Keeper</span>
+                  </div>
+                </div>
+
+                {/* Right integrations */}
+                <div className="flex flex-col gap-5">
+                  {([
+                    { icon: <Banknote className="size-4" />, name: "Razorpay + banks", desc: "Payments & virtual accounts", delay: "0.35s" },
+                    { icon: <Globe className="size-4" />, name: "Property portals", desc: "Inventory & listing sync", delay: "1.05s" },
+                    { icon: <Cpu className="size-4" />, name: "IoT + BMS sensors", desc: "Meters, assets & alerts", delay: "1.75s" },
+                  ] as const).map((item) => (
+                    <div className="flex items-center gap-3" key={item.name}>
+                      <div className="relative h-px w-24 shrink-0 bg-white/15">
+                        <div className="dot-left" style={{ animationDelay: item.delay }} />
+                        <div className="dot-left-2" style={{ animationDelay: `calc(${item.delay} + 1.4s)` }} />
+                      </div>
+                      <div className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/8 px-4 py-3">
+                        <div className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/10 text-white">
+                          {item.icon}
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-white">{item.name}</p>
+                          <p className="text-[0.6rem] text-white/40">{item.desc}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -695,40 +1256,180 @@ export default function Home() {
           className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32"
           id="stories"
         >
-          <div className="grid gap-5 lg:grid-cols-3">
-            <div className="rounded-[2rem] bg-violet p-8 text-white lg:col-span-2 md:p-12">
-              <div className="flex size-12 items-center justify-center rounded-full bg-lime font-display text-xl font-bold text-plum">
-                &ldquo;
-              </div>
-              <blockquote className="mt-16 max-w-3xl font-display text-3xl font-medium leading-tight tracking-[-0.025em] md:text-4xl">
-                We sell plots in one town and run a mall in another. For years
-                it felt like two different companies. With Plotfolio AI, it
-                finally feels like one team.
-              </blockquote>
-              <div className="mt-10 border-t border-white/15 pt-6">
-                <p className="font-semibold">Meera Iyer</p>
-                <p className="mt-1 text-sm text-white/55">
-                  Founder, Sunfield Realty
-                </p>
-              </div>
+          <div className="mb-12 grid items-end gap-6 lg:grid-cols-2">
+            <div>
+              <Kicker>Pricing</Kicker>
+              <h2 className="font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
+                Start free. Scale when you are ready.
+              </h2>
             </div>
-            <div className="flex flex-col justify-between rounded-[2rem] bg-lime p-8 text-plum md:p-10">
-              <p className="text-xs font-bold uppercase tracking-[0.16em]">
-                Made for real people
-              </p>
-              <div className="py-14">
-                <p className="font-display text-6xl font-semibold tracking-tight">
-                  42%
-                </p>
-                <p className="mt-3 max-w-xs leading-6 text-plum/65">
-                  faster payment follow-up reported across active projects.
-                </p>
-              </div>
-              <p className="text-sm font-semibold">
-                Built for teams on the ground.
-              </p>
+            <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
+              No setup fees, no long contracts. Try Plotfolio AI on a real project
+              and pay only when it works for you.
+            </p>
+          </div>
+
+          {/* Billing toggle */}
+          <div className="mb-10 flex justify-center">
+            <div className="inline-flex items-center gap-1 rounded-full border border-plum/10 bg-white p-1 shadow-soft">
+              <button
+                className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                  !billingAnnual ? "bg-plum text-white shadow-sm" : "text-muted hover:text-plum"
+                }`}
+                onClick={() => setBillingAnnual(false)}
+                type="button"
+              >
+                Monthly
+              </button>
+              <button
+                className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                  billingAnnual ? "bg-plum text-white shadow-sm" : "text-muted hover:text-plum"
+                }`}
+                onClick={() => setBillingAnnual(true)}
+                type="button"
+              >
+                Annual
+                <span className={`rounded-full px-2 py-0.5 text-[0.6rem] font-bold transition-colors ${
+                  billingAnnual ? "bg-lime text-plum" : "bg-lime-soft text-olive"
+                }`}>
+                  Save 20%
+                </span>
+              </button>
             </div>
           </div>
+
+          <div className="grid gap-5 lg:grid-cols-3">
+            {/* Free trial — lime, mirrors the stats card from client review */}
+            <div className="relative flex flex-col rounded-[2rem] bg-lime p-8 text-plum transition-transform duration-200 hover:-translate-y-1 md:p-10">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-olive">Free trial</p>
+                  <p className="mt-2 font-display text-3xl font-semibold">Starter</p>
+                </div>
+                <span className="rounded-full bg-plum px-3 py-1 text-[0.6rem] font-bold text-lime">No card needed</span>
+              </div>
+              <div className="mt-6 border-t border-plum/10 pt-6">
+                <p className="font-display text-5xl font-semibold">₹0</p>
+                <p className="mt-1 text-sm text-plum/55">Free — includes credits</p>
+              </div>
+              <ul className="mt-6 flex-1 space-y-3">
+                {[
+                  "500 free AI credits included",
+                  "1 active project",
+                  "Up to 50 buyer records",
+                  "Milestone tracking and proof upload",
+                  "Auto demand letter generation",
+                  "WhatsApp updates to buyers",
+                ].map((item) => (
+                  <li className="flex items-start gap-2.5 text-sm" key={item}>
+                    <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-plum text-[0.55rem] font-bold text-lime">✓</span>
+                    <span className="text-plum/75">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <button
+                  className="w-full rounded-full bg-plum py-3 text-sm font-semibold text-lime transition hover:-translate-y-0.5"
+                  type="button"
+                >
+                  Start for free
+                </button>
+              </div>
+            </div>
+
+            {/* Growth — violet, mirrors the testimonial card from client review */}
+            <div className="relative flex flex-col rounded-[2rem] bg-violet p-8 text-white ring-2 ring-lime ring-offset-2 ring-offset-canvas transition-transform duration-200 hover:-translate-y-1 md:p-10 lg:-my-4 lg:rounded-[2.25rem] lg:shadow-dashboard">
+              <div className="absolute right-6 top-6 rounded-full bg-lime px-3 py-1.5 text-[0.6rem] font-bold text-plum">
+                Recommended
+              </div>
+              <div>
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-lime">Growth</p>
+                <p className="mt-2 font-display text-3xl font-semibold">Pro</p>
+              </div>
+              <div className="mt-6 border-t border-white/15 pt-6">
+                <div className="flex items-end gap-2">
+                  <p className="font-display text-5xl font-semibold text-lime">
+                    {billingAnnual ? "₹3,999" : "₹4,999"}
+                  </p>
+                  {billingAnnual && (
+                    <p className="mb-1 text-sm text-white/35 line-through">₹4,999</p>
+                  )}
+                </div>
+                <p className="mt-1 text-sm text-white/50">
+                  {billingAnnual ? "per project / month, billed annually" : "per project / month"}
+                </p>
+                {billingAnnual && (
+                  <p className="mt-1.5 text-xs font-semibold text-lime">
+                    You save ₹12,000 per project per year
+                  </p>
+                )}
+              </div>
+              <ul className="mt-6 flex-1 space-y-3">
+                {[
+                  "Everything in Starter",
+                  "Unlimited projects and buyers",
+                  "Architect certification workflow",
+                  "Bank disbursal tracking",
+                  "Payment reconciliation",
+                  "Team roles and permissions",
+                  "Priority support",
+                ].map((item) => (
+                  <li className="flex items-start gap-2.5 text-sm" key={item}>
+                    <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-lime text-[0.55rem] font-bold text-plum">✓</span>
+                    <span className="text-white/75">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <button
+                  className="w-full rounded-full bg-lime py-3 text-sm font-semibold text-plum transition hover:-translate-y-0.5"
+                  type="button"
+                >
+                  Start 14-day free trial
+                </button>
+              </div>
+            </div>
+
+            {/* Enterprise — plum, consistent with the dark panel language */}
+            <div className="flex flex-col rounded-[2rem] bg-plum p-8 text-white transition-transform duration-200 hover:-translate-y-1 md:p-10">
+              <div>
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-mint">Enterprise</p>
+                <p className="mt-2 font-display text-3xl font-semibold">Suite</p>
+              </div>
+              <div className="mt-6 border-t border-white/10 pt-6">
+                <p className="font-display text-3xl font-semibold">Custom</p>
+                <p className="mt-1 text-sm text-white/45">Milestone + Keeper, tailored</p>
+              </div>
+              <ul className="mt-6 flex-1 space-y-3">
+                {[
+                  "Everything in Pro",
+                  "Keeper facility management",
+                  "Full handover automation",
+                  "ERP and CRM integrations",
+                  "IoT and BMS sensor sync",
+                  "Dedicated onboarding team",
+                  "SLA-backed uptime guarantee",
+                ].map((item) => (
+                  <li className="flex items-start gap-2.5 text-sm" key={item}>
+                    <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-mint-soft text-[0.55rem] font-bold text-keeper">✓</span>
+                    <span className="text-white/60">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <button
+                  className="w-full rounded-full border border-white/20 py-3 text-sm font-semibold text-white transition hover:border-mint/60 hover:-translate-y-0.5"
+                  type="button"
+                >
+                  Talk to us
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-6 text-center text-xs text-muted">
+            All plans include a shared property record that carries across Milestone and Keeper.
+          </p>
         </section>
 
         <section className="bg-plum" id="company">
