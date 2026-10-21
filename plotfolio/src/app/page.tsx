@@ -29,17 +29,7 @@ function Button({ children, tone = "plum", onClick }: ButtonProps) {
 function Logo({ inverse = false }: { inverse?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <span
-        className={`grid size-8 place-items-center rounded-xl ${
-          inverse ? "bg-lime" : "bg-violet"
-        }`}
-      >
-        <span
-          className={`size-3 rounded-[0.2rem] border-[0.2rem] ${
-            inverse ? "border-plum" : "border-white"
-          }`}
-        />
-      </span>
+      <img src="/images/plotfolio-ai-app-icon.svg" alt="" className="size-8" />
       <span
         className={`font-display text-lg font-semibold ${
           inverse ? "text-white" : "text-plum"
@@ -60,13 +50,13 @@ function Kicker({
   mint?: boolean
 }) {
   return (
-    <div
-      className={`mb-4 inline-flex rounded-full px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.15em] ${
-        mint ? "bg-mint-soft text-keeper" : "bg-violet-soft text-violet"
+    <p
+      className={`mb-4 font-script text-xl ${
+        mint ? "text-keeper" : "text-violet"
       }`}
     >
       {children}
-    </div>
+    </p>
   )
 }
 
@@ -902,9 +892,7 @@ export default function Home() {
                 <span className="font-display text-2xl font-semibold">
                   Milestone
                 </span>
-                <span className="grid size-10 place-items-center rounded-full bg-plum text-lg text-lime">
-                  01
-                </span>
+                <img src="/images/milestone-app-icon.svg" alt="Milestone" className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Track construction progress, send payment requests, and keep
@@ -924,9 +912,7 @@ export default function Home() {
                 <span className="font-display text-2xl font-semibold">
                   Keeper
                 </span>
-                <span className="grid size-10 place-items-center rounded-full bg-plum text-lg text-mint">
-                  02
-                </span>
+                <img src="/images/keeper-app-icon.svg" alt="Keeper" className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Look after every gate, pump, lift, and shed. Know what
@@ -937,8 +923,13 @@ export default function Home() {
 
           <div className="mt-5 grid items-center gap-10 rounded-[2.5rem] bg-plum p-6 text-white md:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:p-14">
             <div>
+              <img
+                src={`/images/${activeProduct}-logo-on-tint.svg`}
+                alt={activeProduct === "keeper" ? "Keeper" : "Milestone"}
+                className="mb-5 h-16 w-auto"
+              />
               <p
-                className={`text-xs font-bold uppercase tracking-[0.16em] ${
+                className={`font-script text-xl ${
                   activeProduct === "keeper" ? "text-mint" : "text-lime"
                 }`}
               >
@@ -999,7 +990,7 @@ export default function Home() {
             >
               <div className="flex items-start justify-between">
                 <span className="font-display text-2xl font-semibold">Milestone</span>
-                <span className="grid size-10 place-items-center rounded-full bg-plum font-display text-lg text-lime">01</span>
+                <img src="/images/milestone-app-icon.svg" alt="Milestone" className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Plan your project, track every stage and collect payments the
@@ -1017,7 +1008,7 @@ export default function Home() {
             >
               <div className="flex items-start justify-between">
                 <span className="font-display text-2xl font-semibold">Keeper</span>
-                <span className="grid size-10 place-items-center rounded-full bg-plum font-display text-lg text-mint">02</span>
+                <img src="/images/keeper-app-icon.svg" alt="Keeper" className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Receive the full handover record, manage every asset and report
@@ -1038,7 +1029,7 @@ export default function Home() {
                 <div className="grid gap-10 lg:grid-cols-[240px_1fr]">
                   {/* Step list — desktop sidebar */}
                   <div className="hidden lg:block">
-                    <p className={`mb-5 text-[0.6rem] font-bold uppercase tracking-[0.18em] ${accent}`}>
+                    <p className={`mb-5 font-script text-xl ${accent}`}>
                       {activePipeline === "keeper" ? "Run & care" : "Build & sell"}
                     </p>
                     <div className="relative space-y-1">
@@ -1123,9 +1114,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-5 md:px-10">
             <div className="grid items-end gap-8 lg:grid-cols-[1fr_0.75fr]">
               <div>
-                <div className="mb-4 inline-flex rounded-full bg-white/10 px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.15em] text-lime">
-                  Integrations & ecosystem
-                </div>
+                <p className="mb-4 font-script text-xl text-lime">Integrations & ecosystem</p>
                 <h2 className="max-w-3xl font-display text-4xl font-semibold leading-tight tracking-[-0.035em] md:text-5xl">
                   Works with the tools your teams already rely on.
                 </h2>
@@ -1210,16 +1199,14 @@ export default function Home() {
                 {/* Center hub */}
                 <div className="hub-pulse flex shrink-0 flex-col items-center gap-3 rounded-[1.75rem] border border-white/20 bg-white/8 px-8 py-6">
                   <div className="flex items-center gap-2">
-                    <span className="grid size-8 place-items-center rounded-xl bg-lime">
-                      <span className="size-3 rounded-[0.2rem] border-[0.2rem] border-plum" />
-                    </span>
+                    <img src="/images/plotfolio-ai-app-icon.svg" alt="" className="size-8" />
                     <span className="font-display text-base font-semibold text-white">
                       Plotfolio <span className="text-lime">AI</span>
                     </span>
                   </div>
-                  <div className="flex gap-1.5">
-                    <span className="rounded-full bg-lime/15 px-2 py-0.5 text-[0.6rem] font-bold text-lime">Milestone</span>
-                    <span className="rounded-full bg-mint/15 px-2 py-0.5 text-[0.6rem] font-bold text-mint">Keeper</span>
+                  <div className="flex flex-col gap-2">
+                    <img src="/images/milestone-logo-on-plum.svg" alt="Milestone" className="h-14 w-auto" />
+                    <img src="/images/keeper-logo-on-plum.svg" alt="Keeper" className="h-14 w-auto" />
                   </div>
                 </div>
 
@@ -1435,9 +1422,7 @@ export default function Home() {
         <section className="bg-plum" id="company">
           <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-20 md:px-10 md:py-24 lg:grid-cols-[1fr_auto]">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-lime">
-                Ready when you are
-              </p>
+              <p className="font-script text-xl text-lime">Ready when you are</p>
               <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-white md:text-5xl">
                 Tell us about your project. We'll listen first.
               </h2>

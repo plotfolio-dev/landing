@@ -3,6 +3,7 @@
 @theme {
   --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
   --font-display: var(--font-poppins), 'Poppins', sans-serif;
+  --font-script: var(--font-caveat), cursive;
 
   --color-canvas: #f7f5f0;
   --color-surface: #f1eef4;
