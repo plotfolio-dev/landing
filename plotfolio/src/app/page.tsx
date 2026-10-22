@@ -1434,10 +1434,7 @@ export default function Home() {
           <div className="grid gap-5 lg:grid-cols-3">
             {/* Starter */}
             <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-plum/10 bg-white p-8 transition-transform duration-200 hover:-translate-y-1 md:p-10">
-              <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-[0.6rem] font-bold uppercase tracking-wider text-muted">
-                <span className="size-1.5 animate-pulse rounded-full bg-violet" />
-                Coming soon
-              </div>
+              <Kicker>Coming soon</Kicker>
               <div>
                 <div className="flex items-center gap-2">
                   <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
@@ -1496,10 +1493,7 @@ export default function Home() {
 
             {/* Pro */}
             <div className="relative flex flex-col overflow-hidden rounded-[2rem] bg-plum p-8 ring-2 ring-lime ring-offset-2 ring-offset-canvas transition-transform duration-200 hover:-translate-y-1 md:p-10 lg:-my-4 lg:rounded-[2.25rem] lg:shadow-dashboard">
-              <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[0.6rem] font-bold uppercase tracking-wider text-lime">
-                <span className="size-1.5 animate-pulse rounded-full bg-lime" />
-                Coming soon
-              </div>
+              <div className="[&>p]:text-lime"><Kicker>Coming soon</Kicker></div>
               <div>
                 <div className="flex items-center gap-2">
                   <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
@@ -1556,10 +1550,7 @@ export default function Home() {
 
             {/* Suite */}
             <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-plum/10 bg-white p-8 transition-transform duration-200 hover:-translate-y-1 md:p-10">
-              <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-[0.6rem] font-bold uppercase tracking-wider text-muted">
-                <span className="size-1.5 animate-pulse rounded-full bg-keeper" />
-                Coming soon
-              </div>
+              <Kicker mint>Coming soon</Kicker>
               <div>
                 <div className="flex items-center gap-1.5">
                   <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
