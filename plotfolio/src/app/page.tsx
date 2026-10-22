@@ -725,41 +725,65 @@ const pipelineData = {
   milestone: [
     {
       num: "01",
-      icon: <img src="/images/svg/land-and-plots.svg" alt="" className="size-5" />,
+      icon: <img src="/images/icons/land-and-plots.svg" alt="" className="size-5" />,
       title: "Plan",
       body: "Define project phases, upload approvals and set payment schedules. Your whole team works from the same source of truth before a brick is laid.",
+      tools: [
+        { src: "/images/milestone-integration/google-maps.svg", name: "Google Maps" },
+        { src: "/images/milestone-integration/google-sheets.svg", name: "Google Sheets" },
+      ],
     },
     {
       num: "02",
-      icon: <img src="/images/svg/site-progress.svg" alt="" className="size-5" />,
+      icon: <img src="/images/icons/site-progress.svg" alt="" className="size-5" />,
       title: "Track progress",
       body: "Mark construction stages complete, attach site photos and push instant updates to every buyer. Milestone logs every change with a timestamp.",
+      tools: [
+        { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp" },
+        { src: "/images/milestone-integration/openai.svg", name: "OpenAI" },
+      ],
     },
     {
       num: "03",
-      icon: <img src="/images/svg/payments.svg" alt="" className="size-5" />,
+      icon: <img src="/images/icons/payments.svg" alt="" className="size-5" />,
       title: "Collect payments",
       body: "Demand letters are auto-generated the moment a stage is signed off. Track receipts, flag overdues and reconcile against your bank all in one place.",
+      tools: [
+        { src: "/images/milestone-integration/razorpay.svg", name: "Razorpay" },
+        { src: "/images/milestone-integration/hdfc-bank.svg", name: "HDFC Bank" },
+      ],
     },
   ],
   keeper: [
     {
       num: "01",
-      icon: <img src="/images/svg/handover.svg" alt="" className="size-5" />,
+      icon: <img src="/images/icons/handover.svg" alt="" className="size-5" />,
       title: "Receive handover",
       body: "Every document, asset register and cost record passes from Milestone automatically. Keeper starts with the full property history from day one.",
+      tools: [
+        { src: "/images/milestone-integration/google-drive.svg", name: "Google Drive" },
+        { src: "/images/milestone-integration/microsoft-sharepoint.svg", name: "SharePoint" },
+      ],
     },
     {
       num: "02",
-      icon: <img src="/images/svg/work-orders.svg" alt="" className="size-5" />,
+      icon: <img src="/images/icons/work-orders.svg" alt="" className="size-5" />,
       title: "Maintain assets",
       body: "Residents raise issues, vendors pick them up and the full service history of every gate, pump and lift is always a click away.",
+      tools: [
+        { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp" },
+        { src: "/images/milestone-integration/sendgrid.svg", name: "SendGrid" },
+      ],
     },
     {
       num: "03",
-      icon: <img src="/images/svg/assets.svg" alt="" className="size-5" />,
+      icon: <img src="/images/icons/assets.svg" alt="" className="size-5" />,
       title: "Report & improve",
       body: "Uptime, resolution times and cost per asset across your entire portfolio. Spot which properties need attention before residents have to ask.",
+      tools: [
+        { src: "/images/milestone-integration/power-bi.svg", name: "Power BI" },
+        { src: "/images/milestone-integration/microsoft-excel.svg", name: "Excel" },
+      ],
     },
   ],
 }
@@ -943,10 +967,10 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
               {[
-                { src: "/images/plotfolio-ai-apartments.svg", label: "Apartments" },
-                { src: "/images/plotfolio-ai-villas-and-homes.svg", label: "Villas & Homes" },
-                { src: "/images/plotfolio-ai-commercial.svg", label: "Commercial" },
-                { src: "/images/plotfolio-ai-warehouses.svg", label: "Warehouses & Plots" },
+                { src: "/images/icons/plotfolio-ai-apartments.svg", label: "Apartments" },
+                { src: "/images/icons/plotfolio-ai-villas-and-homes.svg", label: "Villas & Homes" },
+                { src: "/images/icons/plotfolio-ai-commercial.svg", label: "Commercial" },
+                { src: "/images/icons/plotfolio-ai-warehouses.svg", label: "Warehouses & Plots" },
               ].map(({ src, label }) => (
                 <div className="flex flex-col items-center gap-4" key={label}>
                   <img src={src} alt={label} className="size-24" />
@@ -1056,23 +1080,58 @@ export default function Home() {
               </div>
               <div className="mt-8 flex flex-wrap gap-2">
                 {(activeProduct === "milestone" ? [
-                  { src: "/images/milestone-site-progress.svg", label: "Site progress" },
-                  { src: "/images/milestone-payments.svg", label: "Payments" },
-                  { src: "/images/milestone-demand-letter.svg", label: "Demand letters" },
-                  { src: "/images/milestone-whatsapp-updates.svg", label: "WhatsApp updates" },
-                  { src: "/images/milestone-land-and-plots.svg", label: "Land & plots" },
+                  { src: "/images/icons/milestone-site-progress.svg", label: "Site progress" },
+                  { src: "/images/icons/milestone-payments.svg", label: "Payments" },
+                  { src: "/images/icons/milestone-demand-letter.svg", label: "Demand letters" },
+                  { src: "/images/icons/milestone-whatsapp-updates.svg", label: "WhatsApp updates" },
+                  { src: "/images/icons/milestone-land-and-plots.svg", label: "Land & plots" },
                 ] : [
-                  { src: "/images/keeper-assets.svg", label: "Asset register" },
-                  { src: "/images/keeper-work-orders.svg", label: "Work orders" },
-                  { src: "/images/keeper-alerts.svg", label: "Alerts" },
-                  { src: "/images/keeper-audit-ready.svg", label: "Audit-ready" },
-                  { src: "/images/keeper-qr-asset-tags.svg", label: "QR asset tags" },
+                  { src: "/images/icons/keeper-assets.svg", label: "Asset register" },
+                  { src: "/images/icons/keeper-work-orders.svg", label: "Work orders" },
+                  { src: "/images/icons/keeper-alerts.svg", label: "Alerts" },
+                  { src: "/images/icons/keeper-audit-ready.svg", label: "Audit-ready" },
+                  { src: "/images/icons/keeper-qr-asset-tags.svg", label: "QR asset tags" },
                 ]).map(({ src, label }) => (
                   <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/8 px-3 py-1.5" key={label}>
                     <img src={src} alt="" className="size-3.5" />
                     <span className="text-[0.68rem] font-medium text-white/70">{label}</span>
                   </div>
                 ))}
+              </div>
+
+              {/* Works with — integration brand logos */}
+              <div className="mt-6 border-t border-white/10 pt-5">
+                <p className="mb-3 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white/30">Works with</p>
+                <div className="flex flex-wrap gap-2">
+                  {(activeProduct === "milestone" ? [
+                    { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp" },
+                    { src: "/images/milestone-integration/razorpay.svg", name: "Razorpay" },
+                    { src: "/images/milestone-integration/google-maps.svg", name: "Google Maps" },
+                    { src: "/images/milestone-integration/hdfc-bank.svg", name: "HDFC" },
+                    { src: "/images/milestone-integration/icici-bank.svg", name: "ICICI" },
+                    { src: "/images/milestone-integration/openai.svg", name: "OpenAI" },
+                    { src: "/images/milestone-integration/sendgrid.svg", name: "SendGrid" },
+                    { src: "/images/milestone-integration/amazon-ses.svg", name: "Amazon SES" },
+                  ] : [
+                    { src: "/images/milestone-integration/aws.svg", name: "AWS" },
+                    { src: "/images/milestone-integration/oracle.svg", name: "Oracle" },
+                    { src: "/images/milestone-integration/power-bi.svg", name: "Power BI" },
+                    { src: "/images/milestone-integration/microsoft-azure.svg", name: "Azure" },
+                    { src: "/images/milestone-integration/google-drive.svg", name: "Google Drive" },
+                    { src: "/images/milestone-integration/microsoft-sharepoint.svg", name: "SharePoint" },
+                    { src: "/images/milestone-integration/microsoft-excel.svg", name: "Excel" },
+                    { src: "/images/milestone-integration/google-cloud.svg", name: "Google Cloud" },
+                  ]).map(({ src, name }) => (
+                    <div
+                      className="group flex items-center gap-1.5 rounded-full border border-white/10 bg-white/6 px-2.5 py-1.5 transition-all duration-200 hover:border-white/25 hover:bg-white/12"
+                      key={name}
+                      title={name}
+                    >
+                      <img src={src} alt={name} className="size-4 opacity-70 transition group-hover:opacity-100" />
+                      <span className="text-[0.62rem] font-medium text-white/45 transition group-hover:text-white/70">{name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
             <ProductPreview product={activeProduct} />
@@ -1137,7 +1196,7 @@ export default function Home() {
           {/* Pipeline steps */}
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {pipelineData[activePipeline].map((step) => (
-              <div className="rounded-[1.5rem] border border-plum/8 bg-white p-6" key={step.num}>
+              <div className="flex flex-col rounded-[1.5rem] border border-plum/8 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft" key={step.num}>
                 <div className={`mb-4 flex size-10 items-center justify-center rounded-xl ${activePipeline === "keeper" ? "bg-mint-soft" : "bg-lime-soft"}`}>
                   {step.icon}
                 </div>
@@ -1145,7 +1204,18 @@ export default function Home() {
                   Step {step.num}
                 </p>
                 <p className="font-display text-base font-semibold text-plum">{step.title}</p>
-                <p className="mt-2 text-sm leading-6 text-muted">{step.body}</p>
+                <p className="mt-2 flex-1 text-sm leading-6 text-muted">{step.body}</p>
+                {step.tools && (
+                  <div className="mt-4 flex items-center gap-2 border-t border-plum/8 pt-4">
+                    <span className="text-[0.58rem] font-medium uppercase tracking-wider text-muted/60">via</span>
+                    {step.tools.map(({ src, name }) => (
+                      <div className="flex items-center gap-1 rounded-full border border-plum/8 bg-surface px-2 py-1" key={name} title={name}>
+                        <img src={src} alt={name} className="size-3.5" />
+                        <span className="text-[0.58rem] font-medium text-plum/50">{name}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -1244,6 +1314,172 @@ export default function Home() {
         </section>
 
 
+        {/* ── Integrations & Tools ─────────────────────────────────── */}
+        <section className="overflow-hidden bg-surface py-24" id="integrations">
+          <div className="mx-auto max-w-7xl px-5 md:px-10">
+            <div className="mb-14 text-center">
+              <Kicker>Integrations & Tools</Kicker>
+              <h2 className="mx-auto max-w-2xl font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
+                Built to connect with every tool your team already uses.
+              </h2>
+              <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted">
+                From Indian banking rails to global cloud infrastructure — Plotfolio AI slots in without replacing what already works.
+              </p>
+            </div>
+          </div>
+
+          {/* Two-row infinite marquee */}
+          <div className="space-y-3">
+            {/* Row 1 — scrolls left */}
+            <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+              <div className="marquee-track">
+                {[
+                  { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp" },
+                  { src: "/images/milestone-integration/razorpay.svg", name: "Razorpay" },
+                  { src: "/images/milestone-integration/google-maps.svg", name: "Google Maps" },
+                  { src: "/images/milestone-integration/openai.svg", name: "OpenAI" },
+                  { src: "/images/milestone-integration/hdfc-bank.svg", name: "HDFC Bank" },
+                  { src: "/images/milestone-integration/icici-bank.svg", name: "ICICI Bank" },
+                  { src: "/images/milestone-integration/aws.svg", name: "AWS" },
+                  { src: "/images/milestone-integration/sendgrid.svg", name: "SendGrid" },
+                  { src: "/images/milestone-integration/power-bi.svg", name: "Power BI" },
+                  { src: "/images/milestone-integration/google-sheets.svg", name: "Google Sheets" },
+                  /* duplicate for seamless loop */
+                  { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp-2" },
+                  { src: "/images/milestone-integration/razorpay.svg", name: "Razorpay-2" },
+                  { src: "/images/milestone-integration/google-maps.svg", name: "Google Maps-2" },
+                  { src: "/images/milestone-integration/openai.svg", name: "OpenAI-2" },
+                  { src: "/images/milestone-integration/hdfc-bank.svg", name: "HDFC Bank-2" },
+                  { src: "/images/milestone-integration/icici-bank.svg", name: "ICICI Bank-2" },
+                  { src: "/images/milestone-integration/aws.svg", name: "AWS-2" },
+                  { src: "/images/milestone-integration/sendgrid.svg", name: "SendGrid-2" },
+                  { src: "/images/milestone-integration/power-bi.svg", name: "Power BI-2" },
+                  { src: "/images/milestone-integration/google-sheets.svg", name: "Google Sheets-2" },
+                ].map(({ src, name }) => (
+                  <div
+                    className="mx-2 flex shrink-0 items-center gap-2.5 rounded-2xl border border-plum/8 bg-white px-5 py-3 shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-violet/20 hover:shadow-md"
+                    key={name}
+                  >
+                    <img src={src} alt={name.replace(/-\d$/, "")} className="size-6" />
+                    <span className="whitespace-nowrap text-sm font-medium text-plum/65">{name.replace(/-\d$/, "")}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Row 2 — scrolls right */}
+            <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+              <div className="marquee-track-reverse">
+                {[
+                  { src: "/images/milestone-integration/microsoft-azure.svg", name: "Microsoft Azure" },
+                  { src: "/images/milestone-integration/oracle.svg", name: "Oracle" },
+                  { src: "/images/milestone-integration/google-cloud.svg", name: "Google Cloud" },
+                  { src: "/images/milestone-integration/microsoft-excel.svg", name: "Microsoft Excel" },
+                  { src: "/images/milestone-integration/meta.svg", name: "Meta" },
+                  { src: "/images/milestone-integration/amazon-ses.svg", name: "Amazon SES" },
+                  { src: "/images/milestone-integration/axis-bank.svg", name: "Axis Bank" },
+                  { src: "/images/milestone-integration/microsoft-sharepoint.svg", name: "SharePoint" },
+                  { src: "/images/milestone-integration/google-drive.svg", name: "Google Drive" },
+                  { src: "/images/milestone-integration/resend.svg", name: "Resend" },
+                  /* duplicate for seamless loop */
+                  { src: "/images/milestone-integration/microsoft-azure.svg", name: "Microsoft Azure-2" },
+                  { src: "/images/milestone-integration/oracle.svg", name: "Oracle-2" },
+                  { src: "/images/milestone-integration/google-cloud.svg", name: "Google Cloud-2" },
+                  { src: "/images/milestone-integration/microsoft-excel.svg", name: "Microsoft Excel-2" },
+                  { src: "/images/milestone-integration/meta.svg", name: "Meta-2" },
+                  { src: "/images/milestone-integration/amazon-ses.svg", name: "Amazon SES-2" },
+                  { src: "/images/milestone-integration/axis-bank.svg", name: "Axis Bank-2" },
+                  { src: "/images/milestone-integration/microsoft-sharepoint.svg", name: "SharePoint-2" },
+                  { src: "/images/milestone-integration/google-drive.svg", name: "Google Drive-2" },
+                  { src: "/images/milestone-integration/resend.svg", name: "Resend-2" },
+                ].map(({ src, name }) => (
+                  <div
+                    className="mx-2 flex shrink-0 items-center gap-2.5 rounded-2xl border border-plum/8 bg-white px-5 py-3 shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-keeper/20 hover:shadow-md"
+                    key={name}
+                  >
+                    <img src={src} alt={name.replace(/-\d$/, "")} className="size-6" />
+                    <span className="whitespace-nowrap text-sm font-medium text-plum/65">{name.replace(/-\d$/, "")}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Category breakdown */}
+          <div className="mx-auto mt-16 max-w-7xl px-5 md:px-10">
+            <div className="grid gap-5 md:grid-cols-3">
+              {[
+                {
+                  accent: "bg-lime-soft text-olive",
+                  kicker: "Payments & Banking",
+                  title: "Collect faster with Indian rails.",
+                  body: "UPI, NEFT, RTGS, and bank-linked demand letters — connected directly to HDFC, ICICI, Axis and Razorpay so collections arrive and reconcile automatically.",
+                  logos: [
+                    { src: "/images/milestone-integration/razorpay.svg", name: "Razorpay" },
+                    { src: "/images/milestone-integration/hdfc-bank.svg", name: "HDFC Bank" },
+                    { src: "/images/milestone-integration/icici-bank.svg", name: "ICICI Bank" },
+                    { src: "/images/milestone-integration/axis-bank.svg", name: "Axis Bank" },
+                  ],
+                },
+                {
+                  accent: "bg-mint-soft text-keeper",
+                  kicker: "Communication & AI",
+                  title: "Updates through channels buyers open.",
+                  body: "Send milestone notifications, demand letters and work-order status over WhatsApp, email, and SMS. OpenAI powers OCR, transcription and smart document parsing.",
+                  logos: [
+                    { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp" },
+                    { src: "/images/milestone-integration/sendgrid.svg", name: "SendGrid" },
+                    { src: "/images/milestone-integration/amazon-ses.svg", name: "Amazon SES" },
+                    { src: "/images/milestone-integration/openai.svg", name: "OpenAI" },
+                    { src: "/images/milestone-integration/meta.svg", name: "Meta" },
+                    { src: "/images/milestone-integration/resend.svg", name: "Resend" },
+                  ],
+                },
+                {
+                  accent: "bg-violet-soft text-violet",
+                  kicker: "Cloud & Enterprise",
+                  title: "Your data, your infrastructure.",
+                  body: "Export to Excel, sync to SharePoint, push to Power BI or keep everything in Google Drive. Run on AWS, Azure, GCP or Oracle Cloud — your call.",
+                  logos: [
+                    { src: "/images/milestone-integration/aws.svg", name: "AWS" },
+                    { src: "/images/milestone-integration/microsoft-azure.svg", name: "Azure" },
+                    { src: "/images/milestone-integration/google-cloud.svg", name: "Google Cloud" },
+                    { src: "/images/milestone-integration/oracle.svg", name: "Oracle" },
+                    { src: "/images/milestone-integration/power-bi.svg", name: "Power BI" },
+                    { src: "/images/milestone-integration/microsoft-excel.svg", name: "Excel" },
+                    { src: "/images/milestone-integration/microsoft-sharepoint.svg", name: "SharePoint" },
+                    { src: "/images/milestone-integration/google-drive.svg", name: "Drive" },
+                    { src: "/images/milestone-integration/google-sheets.svg", name: "Sheets" },
+                    { src: "/images/milestone-integration/google-maps.svg", name: "Maps" },
+                  ],
+                },
+              ].map(({ accent, kicker, title, body, logos }) => (
+                <div
+                  className="fade-up flex flex-col rounded-[2rem] border border-plum/8 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft"
+                  key={kicker}
+                >
+                  <span className={`inline-flex w-fit rounded-full px-3 py-1 text-[0.62rem] font-bold uppercase tracking-wider ${accent}`}>
+                    {kicker}
+                  </span>
+                  <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-plum">{title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-6 text-muted">{body}</p>
+                  <div className="mt-6 flex flex-wrap gap-2 border-t border-plum/8 pt-5">
+                    {logos.map(({ src, name }) => (
+                      <div
+                        className="group flex items-center gap-1.5 rounded-full border border-plum/8 bg-surface px-2.5 py-1.5 transition-all duration-200 hover:border-plum/20 hover:bg-white"
+                        key={name}
+                      >
+                        <img src={src} alt={name} className="size-4 opacity-60 transition group-hover:opacity-100" />
+                        <span className="text-[0.62rem] font-medium text-plum/50 transition group-hover:text-plum/80">{name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section
           className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32"
           id="stories"
@@ -1256,7 +1492,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
-              Pricing launches with the product. Here's what we're planning.
+              Start free for 15 days, then pay only for what you need. Milestone and Keeper are priced separately so you're never paying for tools you don't use.
             </p>
           </div>
 
@@ -1269,15 +1505,25 @@ export default function Home() {
                 Coming soon
               </div>
               <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-olive">Free trial</p>
-                <p className="mt-2 font-display text-3xl font-semibold text-plum">Starter</p>
+                <div className="flex items-center gap-2">
+                  <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-5 rounded-md" />
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-olive">Milestone · Starter</p>
+                </div>
+                <p className="mt-2 font-display text-3xl font-semibold text-plum">Free Trial</p>
               </div>
               <div className="mt-6 border-t border-plum/8 pt-6">
-                <p className="font-display text-5xl font-semibold text-plum">₹0</p>
-                <p className="mt-1 text-sm text-muted">Free to get started</p>
+                <div className="flex items-end gap-2">
+                  <p className="font-display text-5xl font-semibold text-plum">₹0</p>
+                  <p className="mb-1.5 text-sm text-muted">for 15 days</p>
+                </div>
+                <div className="mt-3 flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5">
+                  <span className="text-[0.65rem] text-muted">Then</span>
+                  <span className="font-display text-lg font-semibold text-plum">₹1,499</span>
+                  <span className="text-[0.65rem] text-muted">/ month</span>
+                </div>
               </div>
               <ul className="mt-6 space-y-3">
-                {["1 active project", "Up to 10 buyer records", "Milestone tracking & proof upload", "Auto demand letter generation"].map((item) => (
+                {["1 active project", "Up to 50 buyer records", "Milestone tracking & proof upload", "Auto demand letter generation"].map((item) => (
                   <li className="flex items-start gap-2.5 text-sm" key={item}>
                     <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-soft text-[0.55rem] font-bold text-olive">✓</span>
                     <span className="text-muted">{item}</span>
@@ -1316,15 +1562,21 @@ export default function Home() {
                 Coming soon
               </div>
               <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-lime">Most popular</p>
-                <p className="mt-2 font-display text-3xl font-semibold text-white">Pro</p>
+                <div className="flex items-center gap-2">
+                  <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-5 rounded-md" />
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-lime">Milestone · Pro</p>
+                </div>
+                <p className="mt-2 font-display text-3xl font-semibold text-white">Growth</p>
               </div>
               <div className="mt-6 border-t border-white/10 pt-6">
-                <p className="font-display text-5xl font-semibold text-lime">₹4,999</p>
-                <p className="mt-1 text-sm text-white/50">per project / month</p>
+                <div className="flex items-end gap-2">
+                  <p className="font-display text-5xl font-semibold text-lime">₹4,999</p>
+                  <p className="mb-1.5 text-sm text-white/50">/ project / month</p>
+                </div>
+                <p className="mt-2 text-[0.68rem] text-white/35">Unlimited buyers · All Milestone features</p>
               </div>
               <ul className="mt-6 space-y-3">
-                {["Everything in Starter", "Unlimited projects and buyers", "Architect certification workflow", "Bank disbursal tracking", "Payment reconciliation", "Team roles and permissions"].map((item) => (
+                {["Everything in Free Trial", "Unlimited projects & buyers", "Architect certification workflow", "Bank disbursal tracking", "Payment reconciliation", "Team roles and permissions"].map((item) => (
                   <li className="flex items-start gap-2.5 text-sm" key={item}>
                     <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-lime text-[0.55rem] font-bold text-plum">✓</span>
                     <span className="text-white/70">{item}</span>
@@ -1365,15 +1617,26 @@ export default function Home() {
                 Coming soon
               </div>
               <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-keeper">Enterprise</p>
+                <div className="flex items-center gap-1.5">
+                  <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-5 rounded-md" />
+                  <span className="text-[0.6rem] font-bold text-muted/50">+</span>
+                  <img src="/images/logos/keeper-app-icon.svg" alt="Keeper" className="size-5 rounded-md" />
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-keeper">Milestone + Keeper</p>
+                </div>
                 <p className="mt-2 font-display text-3xl font-semibold text-plum">Suite</p>
               </div>
               <div className="mt-6 border-t border-plum/8 pt-6">
-                <p className="font-display text-3xl font-semibold text-plum">Custom</p>
-                <p className="mt-1 text-sm text-muted">Milestone + Keeper, tailored</p>
+                <div className="flex items-end gap-2">
+                  <p className="font-display text-4xl font-semibold text-plum">₹9,999</p>
+                  <p className="mb-1 text-sm text-muted">/ month</p>
+                </div>
+                <div className="mt-3 flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5">
+                  <span className="text-[0.65rem] text-muted">Enterprise pricing available</span>
+                  <span className="ml-auto text-[0.65rem] font-semibold text-keeper">Talk to us →</span>
+                </div>
               </div>
               <ul className="mt-6 space-y-3">
-                {["Everything in Pro", "Keeper facility management", "Full handover automation", "Dedicated onboarding team", "SLA-backed uptime guarantee"].map((item) => (
+                {["Everything in Growth", "Keeper facility management", "Full handover & asset automation", "Dedicated onboarding team", "SLA-backed uptime guarantee"].map((item) => (
                   <li className="flex items-start gap-2.5 text-sm" key={item}>
                     <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-mint-soft text-[0.55rem] font-bold text-keeper">✓</span>
                     <span className="text-muted">{item}</span>

@@ -136,3 +136,36 @@
 .hub-pulse {
   animation: hub-ring 2.4s ease-in-out infinite;
 }
+
+/* Infinite-scroll marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 52s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track-reverse { animation-play-state: paused; }
+}
+
+/* Staggered fade-up entrances */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up   { animation: fade-up 0.55s ease-out forwards; }
+.fade-up-2 { animation: fade-up 0.55s 0.12s ease-out both; }
+.fade-up-3 { animation: fade-up 0.55s 0.24s ease-out both; }
