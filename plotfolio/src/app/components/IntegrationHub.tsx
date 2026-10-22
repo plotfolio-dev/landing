@@ -14,6 +14,11 @@ const NODES: HNode[] = [
   { id: "gcloud",    label: "Google Cloud", angle: -135 },
 ]
 const CX = 250, CY = 195, RI = 48, RO = 150
+const LOGO_FILES: Record<string, string> = {
+  razorpay: "razorpay", hdfc: "hdfc-bank", whatsapp: "whatsapp",
+  openai: "openai", aws: "aws", "power-bi": "power-bi",
+  azure: "microsoft-azure", gcloud: "google-cloud",
+}
 const rad = (d: number) => (d * Math.PI) / 180
 const np = (ang: number, r = RO) => ({ x: CX + r * Math.cos(rad(ang)), y: CY + r * Math.sin(rad(ang)) })
 const dist = (a: {x:number;y:number}, b: {x:number;y:number}) => Math.hypot(b.x - a.x, b.y - a.y)
@@ -74,17 +79,17 @@ export function IntegrationHub() {
                 strokeDasharray={len} strokeDashoffset={vis ? 0 : len}
                 style={{ transition: reduced ? "none" : `stroke-dashoffset 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 0.11}s` }}
               />
-              <circle cx={outer.x} cy={outer.y} r={22} fill="white"
+              <circle cx={outer.x} cy={outer.y} r={30} fill="white"
                 stroke="rgba(40,18,61,0.08)" strokeWidth="1"
                 style={{ opacity: vis ? 1 : 0, filter: "drop-shadow(0 2px 8px rgba(40,18,61,0.07))", transition: reduced ? "none" : `opacity 0.3s ease ${i * 0.11 + 0.35}s` }}
               />
-              {(() => { const lp = np(node.angle, RO + 30); return (
-                <text x={lp.x} y={lp.y} textAnchor="middle" dominantBaseline="middle" fontSize="9.5"
-                  fontFamily="ui-monospace,SFMono-Regular,Menlo,monospace" fill="rgba(40,18,61,0.45)"
-                  style={{ opacity: vis ? 1 : 0, transition: reduced ? "none" : `opacity 0.3s ease ${i * 0.11 + 0.5}s` }}>
-                  {node.label}
-                </text>
-              )})()}
+              <image
+                href={`/images/milestone-integration/${LOGO_FILES[node.id]}.svg`}
+                x={outer.x - 23} y={outer.y - 20} width={46} height={40}
+                preserveAspectRatio="xMidYMid meet"
+                style={{ opacity: vis ? 1 : 0, transition: reduced ? "none" : `opacity 0.3s ease ${i * 0.11 + 0.35}s` }}
+              />
+
             </g>
           )
         })}

@@ -8,10 +8,16 @@ const MONO = { fontFamily: "ui-monospace,SFMono-Regular,Menlo,monospace" } as co
 const PHASES = [
   { label: "Foundation", pct: "10%" },
   { label: "Structure",  pct: "20%" },
-  { label: "MEP",        pct: "25%" },
+  { label: "Building services",        pct: "25%" },
   { label: "Finishing",  pct: "45%" },
 ]
-export function PlanMicroUI() {
+export function PlanMicroUI({ product = "milestone" }: { product?: "milestone" | "keeper" }) {
+  const phases = product === "keeper" ? [
+    { label: "Asset register", pct: "Received" },
+    { label: "Warranty documents", pct: "Verified" },
+    { label: "Service contracts", pct: "Received" },
+    { label: "Handover checklist", pct: "Complete" },
+  ] : PHASES
   const [ref, inView] = useInView<HTMLDivElement>()
   const reduced = usePrefersReducedMotion()
   const [count, setCount] = useState(0)
@@ -26,9 +32,9 @@ export function PlanMicroUI() {
   }, [inView, reduced])
   return (
     <div ref={ref} aria-hidden="true" className="mt-4 rounded-xl bg-surface p-3">
-      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-wider text-violet" style={MONO}>Phase schedule</p>
+      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-wider text-violet" style={MONO}>{product === "keeper" ? "Handover records" : "Phase schedule"}</p>
       <div className="space-y-1.5">
-        {PHASES.slice(0, count).map(({ label, pct }) => (
+        {phases.slice(0, count).map(({ label, pct }) => (
           <div key={label} className="flex items-center justify-between text-[0.75rem]">
             <span className="text-plum/70">{label}</span>
             <span className="font-semibold text-violet" style={MONO}>{pct}</span>
@@ -47,10 +53,15 @@ export function PlanMicroUI() {
 // ── 02 TRACK: monospace log stream + buyers count-up ────────────────────
 const LOG = [
   { t: "10:42", txt: "Slab cast · Block B · 3 photos" },
-  { t: "10:51", txt: "MEP rough-in · Level 4 · approved" },
+  { t: "10:51", txt: "Mechanical, electrical and plumbing installation · Level 4 · approved" },
   { t: "11:03", txt: "Plaster · Wing A · in progress", hi: true },
 ]
-export function TrackMicroUI() {
+export function TrackMicroUI({ product = "milestone" }: { product?: "milestone" | "keeper" }) {
+  const log = product === "keeper" ? [
+    { t: "10:42", txt: "Lift inspection · Tower B · completed" },
+    { t: "10:51", txt: "Water pump · vendor assigned" },
+    { t: "11:03", txt: "Gate repair · resident updated", hi: true },
+  ] : LOG
   const [ref, inView] = useInView<HTMLDivElement>()
   const reduced = usePrefersReducedMotion()
   const [count, setCount] = useState(0)
@@ -76,9 +87,9 @@ export function TrackMicroUI() {
   }, [inView, reduced])
   return (
     <div ref={ref} aria-hidden="true" className="mt-4 rounded-xl bg-surface p-3">
-      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-wider text-keeper" style={MONO}>Site log</p>
+      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-wider text-keeper" style={MONO}>{product === "keeper" ? "Service log" : "Site log"}</p>
       <div className="space-y-1">
-        {LOG.slice(0, count).map(({ t, txt, hi }) => (
+        {log.slice(0, count).map(({ t, txt, hi }) => (
           <div key={t} className={`flex gap-2 rounded px-2 py-1 text-[0.75rem] ${hi ? "bg-lime/20 font-semibold text-olive" : "text-plum/60"}`} style={MONO}>
             <span className="shrink-0 text-muted">[{t}]</span><span>{txt}</span>
           </div>
@@ -86,7 +97,7 @@ export function TrackMicroUI() {
       </div>
       {count === LOG.length && buyers > 0 && (
         <div className="mt-2 rounded-lg bg-lime/15 px-2 py-1 text-[0.75rem] font-semibold text-olive" style={MONO}>
-          Buyers notified · {buyers}
+          {product === "keeper" ? "Residents notified" : "Buyers notified"} · {buyers}
         </div>
       )}
     </div>
@@ -95,7 +106,8 @@ export function TrackMicroUI() {
 
 // ── 03 COLLECT: ticking checklist → receipt slides in ───────────────────
 const CHECKS = ["Stage signed off", "Demand letter generated", "Sent on WhatsApp"]
-export function CollectMicroUI() {
+export function CollectMicroUI({ product = "milestone" }: { product?: "milestone" | "keeper" }) {
+  const checks = product === "keeper" ? ["Service records updated", "Asset costs calculated", "Portfolio report exported"] : CHECKS
   const [ref, inView] = useInView<HTMLDivElement>()
   const reduced = usePrefersReducedMotion()
   const [ticked, setTicked] = useState(0)
@@ -111,7 +123,7 @@ export function CollectMicroUI() {
   return (
     <div ref={ref} aria-hidden="true" className="mt-4 rounded-xl bg-surface p-3">
       <div className="space-y-1.5">
-        {CHECKS.map((label, i) => (
+        {checks.map((label, i) => (
           <div key={label} className="flex items-center gap-2 text-[0.75rem]">
             <span className={`flex size-4 shrink-0 items-center justify-center rounded-full transition-colors duration-300 text-[0.6rem] font-bold ${i < ticked ? "bg-lime text-plum" : "border border-plum/15 text-transparent"}`}>✓</span>
             <span className={i < ticked ? "text-plum" : "text-muted"}>{label}</span>
@@ -120,8 +132,8 @@ export function CollectMicroUI() {
       </div>
       {receipt && (
         <div className="mt-2 flex items-center gap-2 rounded-lg border border-keeper/20 bg-mint-soft px-2 py-1.5 text-[0.75rem] font-medium text-keeper" style={{ ...MONO, opacity: 1, transition: "opacity 0.4s ease" }}>
-          <span>Received ₹12.4 L · NEFT · reconciled</span>
-          <span className="ml-auto rounded-full bg-keeper px-2 py-0.5 text-[0.7rem] font-bold text-white">Paid</span>
+          <span>{product === "keeper" ? "Portfolio report ready · All properties included" : "Received ₹12.4 lakh · Bank transfer · reconciled"}</span>
+          <span className="ml-auto rounded-full bg-keeper px-2 py-0.5 text-[0.7rem] font-bold text-white">{product === "keeper" ? "Ready" : "Paid"}</span>
         </div>
       )}
     </div>
