@@ -169,3 +169,21 @@
 .fade-up   { animation: fade-up 0.55s ease-out forwards; }
 .fade-up-2 { animation: fade-up 0.55s 0.12s ease-out both; }
 .fade-up-3 { animation: fade-up 0.55s 0.24s ease-out both; }
+
+/* ── Motion system ─────────────────────────────── */
+
+/* Numbered eyebrow (monospace) */
+.eyebrow-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(40, 18, 61, 0.3);
+  margin-bottom: 0.35rem;
+}
+.eyebrow-mono.on-plum {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Shared-edge grid cells */
+.wf-cell-border-r { border-right: 1px solid rgba(40, 18, 61, 0.08); }

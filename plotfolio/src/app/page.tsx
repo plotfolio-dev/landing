@@ -1,7 +1,15 @@
 "use client";
 import { useState, useEffect, useRef, type ReactNode } from "react"
+import Image from "next/image"
 import { Mic, MicOff, PhoneOff } from "lucide-react"
 import Vapi from "@vapi-ai/web"
+import { Reveal } from "./components/Reveal"
+import { CountUp } from "./components/CountUp"
+import { WfDivider, WfGrid3, WfCell } from "./components/Wireframe"
+import { LifecycleRail } from "./components/LifecycleRail"
+import { PlanMicroUI, TrackMicroUI, CollectMicroUI } from "./components/WorkflowMicroUI"
+import { IntegrationHub } from "./components/IntegrationHub"
+import { PaymentsMicroUI, CommsMicroUI, CloudMicroUI } from "./components/IntegrationMicroUI"
 
 const VAPI_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY ?? ""
 const VAPI_ASSISTANT_ID = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID ?? ""
@@ -33,7 +41,7 @@ function Button({ children, tone = "plum", onClick }: ButtonProps) {
 function Logo({ inverse = false }: { inverse?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <img src="/images/logos/plotfolio-ai-app-icon.svg" alt="" className="size-8" />
+      <Image src="/images/logos/plotfolio-ai-app-icon.svg" alt="" width={32} height={32} unoptimized className="size-8" />
       <span
         className={`font-display text-lg font-semibold ${
           inverse ? "text-white" : "text-plum"
@@ -725,7 +733,7 @@ const pipelineData = {
   milestone: [
     {
       num: "01",
-      icon: <img src="/images/icons/land-and-plots.svg" alt="" className="size-5" />,
+      icon: <Image src="/images/icons/land-and-plots.svg" alt="" width={20} height={20} unoptimized className="size-5" />,
       title: "Plan",
       body: "Define project phases, upload approvals and set payment schedules. Your whole team works from the same source of truth before a brick is laid.",
       tools: [
@@ -735,7 +743,7 @@ const pipelineData = {
     },
     {
       num: "02",
-      icon: <img src="/images/icons/site-progress.svg" alt="" className="size-5" />,
+      icon: <Image src="/images/icons/site-progress.svg" alt="" width={20} height={20} unoptimized className="size-5" />,
       title: "Track progress",
       body: "Mark construction stages complete, attach site photos and push instant updates to every buyer. Milestone logs every change with a timestamp.",
       tools: [
@@ -745,7 +753,7 @@ const pipelineData = {
     },
     {
       num: "03",
-      icon: <img src="/images/icons/payments.svg" alt="" className="size-5" />,
+      icon: <Image src="/images/icons/payments.svg" alt="" width={20} height={20} unoptimized className="size-5" />,
       title: "Collect payments",
       body: "Demand letters are auto-generated the moment a stage is signed off. Track receipts, flag overdues and reconcile against your bank all in one place.",
       tools: [
@@ -757,7 +765,7 @@ const pipelineData = {
   keeper: [
     {
       num: "01",
-      icon: <img src="/images/icons/handover.svg" alt="" className="size-5" />,
+      icon: <Image src="/images/icons/handover.svg" alt="" width={20} height={20} unoptimized className="size-5" />,
       title: "Receive handover",
       body: "Every document, asset register and cost record passes from Milestone automatically. Keeper starts with the full property history from day one.",
       tools: [
@@ -767,7 +775,7 @@ const pipelineData = {
     },
     {
       num: "02",
-      icon: <img src="/images/icons/work-orders.svg" alt="" className="size-5" />,
+      icon: <Image src="/images/icons/work-orders.svg" alt="" width={20} height={20} unoptimized className="size-5" />,
       title: "Maintain assets",
       body: "Residents raise issues, vendors pick them up and the full service history of every gate, pump and lift is always a click away.",
       tools: [
@@ -777,7 +785,7 @@ const pipelineData = {
     },
     {
       num: "03",
-      icon: <img src="/images/icons/assets.svg" alt="" className="size-5" />,
+      icon: <Image src="/images/icons/assets.svg" alt="" width={20} height={20} unoptimized className="size-5" />,
       title: "Report & improve",
       body: "Uptime, resolution times and cost per asset across your entire portfolio. Spot which properties need attention before residents have to ask.",
       tools: [
@@ -889,7 +897,7 @@ export default function Home() {
   const [earlyAccessSubmitted, setEarlyAccessSubmitted] = useState(false)
   const product = suiteData[activeProduct]
 
-  useEffect(() => { setFlowStep(0) }, [activePipeline])
+  useEffect(() => { setTimeout(() => setFlowStep(0), 0) }, [activePipeline])
 
   useEffect(() => {
     const flow = activePipeline === "milestone" ? milestoneFlow : keeperFlow
@@ -973,7 +981,7 @@ export default function Home() {
                 { src: "/images/icons/plotfolio-ai-warehouses.svg", label: "Warehouses & Plots" },
               ].map(({ src, label }) => (
                 <div className="flex flex-col items-center gap-4" key={label}>
-                  <img src={src} alt={label} className="size-24" />
+                  <Image src={src} alt={label} width={96} height={96} unoptimized className="size-24" />
                   <p className="text-sm font-semibold text-plum">{label}</p>
                 </div>
               ))}
@@ -1013,7 +1021,7 @@ export default function Home() {
                 <span className="font-display text-2xl font-semibold">
                   Milestone
                 </span>
-                <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-10 rounded-2xl" />
+                <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={40} height={40} unoptimized className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Track construction progress, send payment requests, and keep
@@ -1033,7 +1041,7 @@ export default function Home() {
                 <span className="font-display text-2xl font-semibold">
                   Keeper
                 </span>
-                <img src="/images/logos/keeper-app-icon.svg" alt="Keeper" className="size-10 rounded-2xl" />
+                <Image src="/images/logos/keeper-app-icon.svg" alt="Keeper" width={40} height={40} unoptimized className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Look after every gate, pump, lift, and shed. Know what
@@ -1042,11 +1050,14 @@ export default function Home() {
             </button>
           </div>
 
+          <LifecycleRail product={activeProduct} />
+
           <div className="mt-5 grid items-center gap-10 rounded-[2.5rem] bg-plum p-6 text-white md:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:p-14">
             <div>
-              <img
+              <Image
                 src={`/images/logos/${activeProduct}-logo-on-tint.svg`}
                 alt={activeProduct === "keeper" ? "Keeper" : "Milestone"}
+                width={160} height={64} unoptimized
                 className="mb-5 h-16 w-auto"
               />
               <p
@@ -1070,7 +1081,7 @@ export default function Home() {
                         activeProduct === "keeper" ? "text-mint" : "text-lime"
                       }`}
                     >
-                      {value}
+                      <CountUp value={value} />
                     </p>
                     <p className="mt-1 text-[0.65rem] leading-4 text-white/45">
                       {label}
@@ -1093,7 +1104,7 @@ export default function Home() {
                   { src: "/images/icons/keeper-qr-asset-tags.svg", label: "QR asset tags" },
                 ]).map(({ src, label }) => (
                   <div className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/8 px-3 py-1.5" key={label}>
-                    <img src={src} alt="" className="size-3.5" />
+                    <Image src={src} alt="" width={14} height={14} unoptimized className="size-3.5" />
                     <span className="text-[0.68rem] font-medium text-white/70">{label}</span>
                   </div>
                 ))}
@@ -1127,7 +1138,7 @@ export default function Home() {
                       key={name}
                       title={name}
                     >
-                      <img src={src} alt={name} className="size-4 opacity-70 transition group-hover:opacity-100" />
+                      <Image src={src} alt={name} width={16} height={16} unoptimized className="size-4 opacity-70 transition group-hover:opacity-100" />
                       <span className="text-[0.62rem] font-medium text-white/45 transition group-hover:text-white/70">{name}</span>
                     </div>
                   ))}
@@ -1136,6 +1147,8 @@ export default function Home() {
             </div>
             <ProductPreview product={activeProduct} />
           </div>
+
+          <WfDivider className="mt-8" />
         </section>
 
         <section className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32" id="workflow">
@@ -1166,7 +1179,7 @@ export default function Home() {
             >
               <div className="flex items-start justify-between">
                 <span className="font-display text-2xl font-semibold">Milestone</span>
-                <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-10 rounded-2xl" />
+                <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={40} height={40} unoptimized className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Plan your project, track every stage and collect payments the
@@ -1184,7 +1197,7 @@ export default function Home() {
             >
               <div className="flex items-start justify-between">
                 <span className="font-display text-2xl font-semibold">Keeper</span>
-                <img src="/images/logos/keeper-app-icon.svg" alt="Keeper" className="size-10 rounded-2xl" />
+                <Image src="/images/logos/keeper-app-icon.svg" alt="Keeper" width={40} height={40} unoptimized className="size-10 rounded-2xl" />
               </div>
               <p className="mt-14 max-w-sm text-sm leading-6 text-plum/70">
                 Receive the full handover record, manage every asset and report
@@ -1194,31 +1207,44 @@ export default function Home() {
           </div>
 
           {/* Pipeline steps */}
-          <div className="mt-5 grid gap-4 md:grid-cols-3">
-            {pipelineData[activePipeline].map((step) => (
-              <div className="flex flex-col rounded-[1.5rem] border border-plum/8 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft" key={step.num}>
-                <div className={`mb-4 flex size-10 items-center justify-center rounded-xl ${activePipeline === "keeper" ? "bg-mint-soft" : "bg-lime-soft"}`}>
-                  {step.icon}
-                </div>
-                <p className={`mb-1 text-[0.6rem] font-bold uppercase tracking-wider ${activePipeline === "keeper" ? "text-keeper" : "text-violet"}`}>
-                  Step {step.num}
-                </p>
-                <p className="font-display text-base font-semibold text-plum">{step.title}</p>
-                <p className="mt-2 flex-1 text-sm leading-6 text-muted">{step.body}</p>
-                {step.tools && (
-                  <div className="mt-4 flex items-center gap-2 border-t border-plum/8 pt-4">
-                    <span className="text-[0.58rem] font-medium uppercase tracking-wider text-muted/60">via</span>
-                    {step.tools.map(({ src, name }) => (
-                      <div className="flex items-center gap-1 rounded-full border border-plum/8 bg-surface px-2 py-1" key={name} title={name}>
-                        <img src={src} alt={name} className="size-3.5" />
-                        <span className="text-[0.58rem] font-medium text-plum/50">{name}</span>
-                      </div>
-                    ))}
+          <WfGrid3 className="mt-5">
+            {pipelineData[activePipeline].map((step, idx) => (
+              <WfCell
+                key={step.num}
+                className={`flex flex-col transition-all duration-300 ${idx < 2 ? "wf-cell-border-r" : ""}`}
+              >
+                <Reveal delay={idx * 120}>
+                  <div className={`mb-4 flex size-10 items-center justify-center rounded-xl ${activePipeline === "keeper" ? "bg-mint-soft" : "bg-lime-soft"}`}>
+                    {step.icon}
                   </div>
-                )}
-              </div>
+                  <p className={`mb-1 text-[0.75rem] font-bold uppercase tracking-wider ${activePipeline === "keeper" ? "text-keeper" : "text-violet"}`} style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,monospace" }}>
+                    {step.num} · {step.title}
+                  </p>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted">{step.body}</p>
+                  {step.tools && (
+                    <div className="mt-4 flex items-center gap-2 border-t border-plum/8 pt-4">
+                      <span className="text-[0.75rem] font-medium uppercase tracking-wider text-muted">via</span>
+                      {step.tools.map(({ src, name }) => (
+                        <div className="flex items-center gap-1 rounded-full border border-plum/8 bg-surface px-2 py-1" key={name} title={name}>
+                          <Image src={src} alt={name} width={14} height={14} unoptimized className="size-3.5" />
+                          <span className="text-[0.75rem] font-medium text-plum/60">{name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {/* Micro-UI */}
+                  {activePipeline === "milestone" && step.num === "01" && <PlanMicroUI />}
+                  {activePipeline === "milestone" && step.num === "02" && <TrackMicroUI />}
+                  {activePipeline === "milestone" && step.num === "03" && <CollectMicroUI />}
+                  {activePipeline === "keeper" && step.num === "01" && <PlanMicroUI />}
+                  {activePipeline === "keeper" && step.num === "02" && <TrackMicroUI />}
+                  {activePipeline === "keeper" && step.num === "03" && <CollectMicroUI />}
+                </Reveal>
+              </WfCell>
             ))}
-          </div>
+          </WfGrid3>
+
+          <WfDivider className="mt-0" />
 
           {/* Animated wireframe player */}
           {(() => {
@@ -1317,15 +1343,18 @@ export default function Home() {
         {/* ── Integrations & Tools ─────────────────────────────────── */}
         <section className="overflow-hidden bg-surface py-24" id="integrations">
           <div className="mx-auto max-w-7xl px-5 md:px-10">
-            <div className="mb-14 text-center">
-              <Kicker>Integrations & Tools</Kicker>
-              <h2 className="mx-auto max-w-2xl font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
-                Built to connect with every tool your team already uses.
-              </h2>
-              <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted">
+            <div className="mb-14 grid items-end gap-8 lg:grid-cols-2">
+              <div>
+                <Kicker>Integrations & Tools</Kicker>
+                <h2 className="font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
+                  Built to connect with every tool your team already uses.
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
                 From Indian banking rails to global cloud infrastructure — Plotfolio AI slots in without replacing what already works.
               </p>
             </div>
+            <IntegrationHub />
           </div>
 
           {/* Two-row infinite marquee */}
@@ -1360,7 +1389,7 @@ export default function Home() {
                     className="mx-2 flex shrink-0 items-center gap-2.5 rounded-2xl border border-plum/8 bg-white px-5 py-3 shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-violet/20 hover:shadow-md"
                     key={name}
                   >
-                    <img src={src} alt={name.replace(/-\d$/, "")} className="size-6" />
+                    <Image src={src} alt={name.replace(/-\d$/, "")} width={24} height={24} unoptimized className="size-6" />
                     <span className="whitespace-nowrap text-sm font-medium text-plum/65">{name.replace(/-\d$/, "")}</span>
                   </div>
                 ))}
@@ -1397,7 +1426,7 @@ export default function Home() {
                     className="mx-2 flex shrink-0 items-center gap-2.5 rounded-2xl border border-plum/8 bg-white px-5 py-3 shadow-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-keeper/20 hover:shadow-md"
                     key={name}
                   >
-                    <img src={src} alt={name.replace(/-\d$/, "")} className="size-6" />
+                    <Image src={src} alt={name.replace(/-\d$/, "")} width={24} height={24} unoptimized className="size-6" />
                     <span className="whitespace-nowrap text-sm font-medium text-plum/65">{name.replace(/-\d$/, "")}</span>
                   </div>
                 ))}
@@ -1406,12 +1435,13 @@ export default function Home() {
           </div>
 
           {/* Category breakdown */}
-          <div className="mx-auto mt-16 max-w-7xl px-5 md:px-10">
-            <div className="grid gap-5 md:grid-cols-3">
+          <div className="mx-auto mt-12 max-w-7xl px-5 md:px-10">
+            <WfGrid3>
               {[
                 {
                   accent: "bg-lime-soft text-olive",
                   kicker: "Payments & Banking",
+                  eyebrow: "01 · Payments",
                   title: "Collect faster with Indian rails.",
                   body: "UPI, NEFT, RTGS, and bank-linked demand letters — connected directly to HDFC, ICICI, Axis and Razorpay so collections arrive and reconcile automatically.",
                   logos: [
@@ -1420,10 +1450,12 @@ export default function Home() {
                     { src: "/images/milestone-integration/icici-bank.svg", name: "ICICI Bank" },
                     { src: "/images/milestone-integration/axis-bank.svg", name: "Axis Bank" },
                   ],
+                  MicroUI: PaymentsMicroUI,
                 },
                 {
                   accent: "bg-mint-soft text-keeper",
                   kicker: "Communication & AI",
+                  eyebrow: "02 · Communication",
                   title: "Updates through channels buyers open.",
                   body: "Send milestone notifications, demand letters and work-order status over WhatsApp, email, and SMS. OpenAI powers OCR, transcription and smart document parsing.",
                   logos: [
@@ -1434,10 +1466,12 @@ export default function Home() {
                     { src: "/images/milestone-integration/meta.svg", name: "Meta" },
                     { src: "/images/milestone-integration/resend.svg", name: "Resend" },
                   ],
+                  MicroUI: CommsMicroUI,
                 },
                 {
                   accent: "bg-violet-soft text-violet",
                   kicker: "Cloud & Enterprise",
+                  eyebrow: "03 · Cloud",
                   title: "Your data, your infrastructure.",
                   body: "Export to Excel, sync to SharePoint, push to Power BI or keep everything in Google Drive. Run on AWS, Azure, GCP or Oracle Cloud — your call.",
                   logos: [
@@ -1452,31 +1486,33 @@ export default function Home() {
                     { src: "/images/milestone-integration/google-sheets.svg", name: "Sheets" },
                     { src: "/images/milestone-integration/google-maps.svg", name: "Maps" },
                   ],
+                  MicroUI: CloudMicroUI,
                 },
-              ].map(({ accent, kicker, title, body, logos }) => (
-                <div
-                  className="fade-up flex flex-col rounded-[2rem] border border-plum/8 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft"
+              ].map(({ kicker, title, body, logos, MicroUI }, idx) => (
+                <WfCell
                   key={kicker}
+                  className={`flex flex-col ${idx < 2 ? "wf-cell-border-r" : ""}`}
                 >
-                  <span className={`inline-flex w-fit rounded-full px-3 py-1 text-[0.62rem] font-bold uppercase tracking-wider ${accent}`}>
-                    {kicker}
-                  </span>
-                  <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-plum">{title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-6 text-muted">{body}</p>
-                  <div className="mt-6 flex flex-wrap gap-2 border-t border-plum/8 pt-5">
-                    {logos.map(({ src, name }) => (
-                      <div
-                        className="group flex items-center gap-1.5 rounded-full border border-plum/8 bg-surface px-2.5 py-1.5 transition-all duration-200 hover:border-plum/20 hover:bg-white"
-                        key={name}
-                      >
-                        <img src={src} alt={name} className="size-4 opacity-60 transition group-hover:opacity-100" />
-                        <span className="text-[0.62rem] font-medium text-plum/50 transition group-hover:text-plum/80">{name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  <Reveal delay={idx * 100}>
+                    <Kicker>{kicker}</Kicker>
+                    <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-plum">{title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-muted">{body}</p>
+                    {kicker === "Communication & AI" && (
+                      <>{/* TODO(content): add one-line data-handling statement for OpenAI usage */}</>
+                    )}
+                    <MicroUI />
+                    <div className="mt-6 flex flex-wrap gap-2 border-t border-plum/8 pt-5">
+                      {logos.map(({ src, name }) => (
+                        <div className="group flex items-center gap-1.5 rounded-full border border-plum/8 bg-surface px-2.5 py-1.5 transition-all duration-200 hover:border-plum/20 hover:bg-white" key={name}>
+                          <Image src={src} alt={name} width={16} height={16} unoptimized className="size-4 opacity-60 transition group-hover:opacity-100" />
+                          <span className="text-[0.75rem] font-medium text-plum/60 transition group-hover:text-plum/80">{name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </Reveal>
+                </WfCell>
               ))}
-            </div>
+            </WfGrid3>
           </div>
         </section>
 
@@ -1492,7 +1528,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
-              Start free for 15 days, then pay only for what you need. Milestone and Keeper are priced separately so you're never paying for tools you don't use.
+              Start free for 15 days, then pay only for what you need. Milestone and Keeper are priced separately so you&apos;re never paying for tools you don&apos;t use.
             </p>
           </div>
 
@@ -1506,7 +1542,7 @@ export default function Home() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-5 rounded-md" />
+                  <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
                   <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-olive">Milestone · Starter</p>
                 </div>
                 <p className="mt-2 font-display text-3xl font-semibold text-plum">Free Trial</p>
@@ -1563,7 +1599,7 @@ export default function Home() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-5 rounded-md" />
+                  <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
                   <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-lime">Milestone · Pro</p>
                 </div>
                 <p className="mt-2 font-display text-3xl font-semibold text-white">Growth</p>
@@ -1618,9 +1654,9 @@ export default function Home() {
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <img src="/images/logos/milestone-app-icon.svg" alt="Milestone" className="size-5 rounded-md" />
+                  <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
                   <span className="text-[0.6rem] font-bold text-muted/50">+</span>
-                  <img src="/images/logos/keeper-app-icon.svg" alt="Keeper" className="size-5 rounded-md" />
+                  <Image src="/images/logos/keeper-app-icon.svg" alt="Keeper" width={20} height={20} unoptimized className="size-5 rounded-md" />
                   <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-keeper">Milestone + Keeper</p>
                 </div>
                 <p className="mt-2 font-display text-3xl font-semibold text-plum">Suite</p>
@@ -1687,7 +1723,7 @@ export default function Home() {
               {earlyAccessSubmitted ? (
                 <div className="flex shrink-0 items-center gap-2.5 rounded-2xl border border-lime/25 bg-lime/10 px-5 py-3">
                   <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-lime text-[0.55rem] font-bold text-plum">✓</span>
-                  <p className="text-sm font-semibold text-white">You're on the list!</p>
+                  <p className="text-sm font-semibold text-white">You&apos;re on the list!</p>
                 </div>
               ) : (
                 <form
@@ -1722,7 +1758,7 @@ export default function Home() {
             <div>
               <p className="font-script text-xl text-lime">Ready when you are</p>
               <h2 className="mt-4 max-w-3xl font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-white md:text-5xl">
-                Tell us about your project. We'll listen first.
+                Tell us about your project. We&apos;ll listen first.
               </h2>
             </div>
             <VapiCallButton />
