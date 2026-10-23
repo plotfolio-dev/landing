@@ -1,23 +1,32 @@
 import type { Metadata } from "next";
-import { DM_Sans, Poppins, Caveat } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import ElevenLabsProvider from "./components/ElevenLabsProvider";
 
-const dmSans = DM_Sans({
+const dmSans = localFont({
+  src: "./fonts/dm-sans.ttf",
   variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: "100 1000",
+  style: "normal",
+  display: "swap",
 });
 
-const poppins = Poppins({
+const poppins = localFont({
+  src: [
+    { path: "./fonts/poppins-500.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/poppins-600.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/poppins-700.ttf", weight: "700", style: "normal" },
+  ],
   variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  display: "swap",
 });
 
-const caveat = Caveat({
+const caveat = localFont({
+  src: "./fonts/caveat.ttf",
   variable: "--font-caveat",
-  subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: "400 700",
+  style: "normal",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -33,7 +42,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${poppins.variable} ${caveat.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ElevenLabsProvider>{children}</ElevenLabsProvider>
+      </body>
     </html>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect, useRef, type ReactNode } from "react"
+import { useState, useEffect, type ReactNode } from "react"
 import Image from "next/image"
 import { Mic, MicOff, PhoneOff } from "lucide-react"
-import Vapi from "@vapi-ai/web"
+import { useConversation } from "@elevenlabs/react"
 import { Reveal } from "./components/Reveal"
 import { CountUp } from "./components/CountUp"
 import { WfDivider, WfGrid3, WfCell } from "./components/Wireframe"
@@ -10,8 +10,7 @@ import { LifecycleRail } from "./components/LifecycleRail"
 import { PlanMicroUI, TrackMicroUI, CollectMicroUI } from "./components/WorkflowMicroUI"
 import { PaymentsMicroUI, CommsMicroUI, CloudMicroUI } from "./components/IntegrationMicroUI"
 
-const VAPI_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY ?? ""
-const VAPI_ASSISTANT_ID = process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID ?? ""
+const ELEVENLABS_AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? ""
 
 type ButtonProps = {
   children: ReactNode
@@ -790,42 +789,32 @@ const pipelineData = {
   ],
 }
 
-type CallStatus = "idle" | "connecting" | "active" | "ending"
-
 function VapiCallButton() {
-  const vapiRef = useRef<Vapi | null>(null)
-  const [status, setStatus] = useState<CallStatus>("idle")
-  const [isMuted, setIsMuted] = useState(false)
+  const conversation = useConversation({
+    onError: (err) => {
+      const msg = typeof err === "string" ? err : (err as { message?: string })?.message ?? ""
+      if (!msg.toLowerCase().includes("signal stream")) {
+        console.error("ElevenLabs error:", err)
+      }
+    },
+  })
 
-  useEffect(() => {
-    if (!VAPI_PUBLIC_KEY) return
-    const vapi = new Vapi(VAPI_PUBLIC_KEY)
-    vapiRef.current = vapi
-
-    vapi.on("call-start", () => setStatus("active"))
-    vapi.on("call-end", () => { setStatus("idle"); setIsMuted(false) })
-    vapi.on("error", () => setStatus("idle"))
-
-    return () => { vapi.stop() }
-  }, [])
-
-  const startCall = () => {
-    if (!VAPI_PUBLIC_KEY || !VAPI_ASSISTANT_ID) return
-    setStatus("connecting")
-    vapiRef.current?.start(VAPI_ASSISTANT_ID)
+  const startCall = async () => {
+    await navigator.mediaDevices.getUserMedia({ audio: true })
+    conversation.startSession({ agentId: ELEVENLABS_AGENT_ID, connectionType: "webrtc" })
   }
 
   const endCall = () => {
-    setStatus("ending")
-    vapiRef.current?.stop()
+    conversation.endSession()
   }
 
   const toggleMute = () => {
-    vapiRef.current?.setMuted(!isMuted)
-    setIsMuted((m) => !m)
+    conversation.setMuted(!conversation.isMuted)
   }
 
-  if (status === "active") {
+  const { status, isMuted } = conversation
+
+  if (status === "connected") {
     return (
       <div className="flex items-center gap-3">
         <button
@@ -852,7 +841,7 @@ function VapiCallButton() {
     )
   }
 
-  if (status === "connecting" || status === "ending") {
+  if (status === "connecting") {
     return (
       <button
         className="flex cursor-wait items-center gap-2 rounded-full bg-lime/70 px-6 py-3 text-sm font-semibold text-plum"
@@ -860,7 +849,7 @@ function VapiCallButton() {
         type="button"
       >
         <span className="size-2 animate-ping rounded-full bg-plum/50" />
-        {status === "connecting" ? "Connecting…" : "Ending…"}
+        Connecting…
       </button>
     )
   }
@@ -868,9 +857,9 @@ function VapiCallButton() {
   return (
     <button
       className="flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-sm font-semibold text-plum transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
-      disabled={!VAPI_PUBLIC_KEY || !VAPI_ASSISTANT_ID}
+      disabled={!ELEVENLABS_AGENT_ID}
       onClick={startCall}
-      title={!VAPI_PUBLIC_KEY ? "Add NEXT_PUBLIC_VAPI_PUBLIC_KEY and NEXT_PUBLIC_VAPI_ASSISTANT_ID to .env.local" : undefined}
+      title={!ELEVENLABS_AGENT_ID ? "Set NEXT_PUBLIC_ELEVENLABS_AGENT_ID in .env.local" : undefined}
       type="button"
     >
       <Mic className="size-4" />
