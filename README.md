@@ -1,39 +1,45 @@
 # Plotfolio AI
 
-Landing page for Plotfolio AI — AI software for every stage of a built asset's life.
+Software for the people who build, hand over, and manage properties.
 
-## Products
+Plotfolio AI brings construction progress and property operations into a clearer, connected record. Its two products, Milestone and Keeper, serve distinct teams across the life of a property.
 
-**Milestone** — helps builders turn construction progress into collected payments. Captures field updates, ties them to milestones, and unlocks invoices without the paperwork chase.
+## Milestone
 
-**Keeper** — helps facility teams keep assets running with less downtime and clear costs. Turns work orders, complaints, and repairs into records owners can act on.
+**From construction progress to collected payments.**
 
-Both products are coming soon.
+Milestone helps developers and builders coordinate project stages, keep buyers informed, and follow collections with greater clarity.
 
-## Stack
+- Plan project phases and payment schedules.
+- Track construction progress with supporting records.
+- Coordinate milestone reviews and approvals.
+- Keep buyers updated as work moves forward.
+- Follow payment requests, receipts, and outstanding balances.
 
-- [Next.js 16](https://nextjs.org/) (App Router)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- Deployed on [Vercel](https://vercel.com/)
+## Keeper
 
-## Development
+**From property handover to everyday care.**
 
-```bash
-cd plotfolio
-npm install
-npm run dev
-```
+Keeper helps property and facility teams organise asset information, coordinate maintenance, and understand performance across their properties.
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+- Organise handover documents and asset records.
+- Manage resident requests and maintenance work.
+- Coordinate vendors and preserve service histories.
+- Keep residents informed about service updates.
+- Review asset performance and property operating costs.
 
-## Deploy
+## Built for distinct teams
 
-Push to `main` — Vercel auto-deploys on every commit.
+Milestone focuses on construction delivery and buyer collections. Keeper focuses on property operations and asset care. Together, they support continuity as a property moves from development into ongoing management.
 
-To deploy manually:
+## Product availability
 
-```bash
-cd plotfolio
-npx vercel
-```
+Milestone and Keeper are coming soon. The website includes illustrative product previews; features, integrations, and pricing remain subject to confirmation at launch.
+
+## Support
+
+Use the support agent on the Plotfolio AI website for product questions and guidance.
+
+## Ownership
+
+Plotfolio AI is proprietary software. This repository is private and is not offered under an open-source license.
