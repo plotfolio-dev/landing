@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect, type ReactNode } from "react"
+import { useState, useEffect, useRef, type ReactNode } from "react"
 import Image from "next/image"
 import { Mic, MicOff, PhoneOff } from "lucide-react"
 import { useConversation } from "@elevenlabs/react"
 import { Reveal } from "./components/Reveal"
+import { ProjectEnquiry } from "./components/ProjectEnquiry"
+import { PlanComparison } from "./components/PlanComparison"
 import { CountUp } from "./components/CountUp"
 import { WfDivider, WfGrid3, WfCell } from "./components/Wireframe"
 import { LifecycleRail } from "./components/LifecycleRail"
@@ -889,8 +891,13 @@ export default function Home() {
     return () => clearInterval(t)
   }, [activePipeline])
 
-  const scrollToSuite = () =>
-    document.getElementById("suite")?.scrollIntoView({ behavior: "smooth" })
+  const demoDialog = useRef<HTMLDialogElement>(null)
+  const demoVideo = useRef<HTMLVideoElement>(null)
+  const openDemo = () => {
+    demoDialog.current?.showModal()
+    void demoVideo.current?.play().catch(() => {})
+  }
+  const closeDemo = () => demoDialog.current?.close()
 
   return (
     <div className="min-h-screen overflow-hidden bg-canvas text-ink">
@@ -902,8 +909,30 @@ export default function Home() {
           <a className="transition hover:text-plum" href="#stories">Pricing</a>
           <a className="transition hover:text-plum" href="#company">Contact</a>
         </nav>
-        <Button onClick={scrollToSuite}>Demo</Button>
+        <Button onClick={openDemo}>Demo</Button>
       </header>
+
+      <dialog
+        ref={demoDialog}
+        aria-labelledby="demo-title"
+        className="fixed inset-0 m-auto w-[calc(100%-2rem)] max-w-5xl max-h-[90dvh] overflow-auto rounded-2xl border border-plum/10 bg-plum p-0 text-white shadow-dashboard backdrop:bg-ink/75"
+        onClose={() => demoVideo.current?.pause()}
+        onClick={(event) => {
+          if (event.target === event.currentTarget) {
+            const bounds = event.currentTarget.getBoundingClientRect()
+            if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) closeDemo()
+          }
+        }}
+      >
+        <div className="flex items-center justify-between gap-4 px-5 py-4">
+          <h2 id="demo-title" className="font-display text-lg font-semibold">Milestone product tour</h2>
+          <button type="button" onClick={closeDemo} autoFocus className="rounded-full border border-white/20 px-4 py-2 text-sm font-medium">Close</button>
+        </div>
+        <video ref={demoVideo} className="aspect-video w-full bg-black object-contain" controls playsInline preload="none" aria-label="Milestone product tour with voiceover">
+          <source src="/videos/Milestone_product_tour_voiceover.mp4" type="video/mp4" />
+          Your browser does not support video playback. <a href="/videos/Milestone_product_tour_voiceover.mp4">Download the Milestone product tour.</a>
+        </video>
+      </dialog>
 
       <main className="flex flex-col gap-6 md:gap-10">
         <section className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-24 pt-16 md:px-10 md:pb-32 md:pt-24 lg:grid-cols-[1.02fr_0.98fr]">
@@ -921,7 +950,7 @@ export default function Home() {
               building.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button onClick={() => document.getElementById("company")?.scrollIntoView({ behavior: "smooth" })}>Tell us about your project</Button>
+              <ProjectEnquiry />
               <Button
                 tone="ghost"
                 onClick={() =>
@@ -1133,6 +1162,8 @@ export default function Home() {
 
           <WfDivider className="mt-8" />
         </section>
+
+
 
         <section className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32" id="workflow">
           <div className="grid items-end gap-8 lg:grid-cols-2">
@@ -1415,7 +1446,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
-              Start free for 15 days, then pay only for what you need. Milestone and Keeper are priced separately so you&apos;re never paying for tools you don&apos;t use.
+              Start with a 15-day free trial on Starter, then choose the plan that fits your team. Use Milestone for construction and collections, or add Keeper with Suite for property operations.
             </p>
           </div>
 
@@ -1427,14 +1458,14 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-2">
                   <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-olive">Milestone · Starter</p>
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-olive">Milestone</p>
                 </div>
-                <p className="mt-2 font-display text-3xl font-semibold text-plum">Free Trial</p>
+                <p className="mt-2 font-display text-3xl font-semibold text-plum">Starter</p>
               </div>
               <div className="mt-6 border-t border-plum/8 pt-6">
                 <div className="flex items-end gap-2">
                   <p className="font-display text-5xl font-semibold text-plum">₹0</p>
-                  <p className="mb-1.5 text-sm text-muted">for 15 days</p>
+                  <p className="mb-1.5 text-sm text-muted">15-day free trial</p>
                 </div>
                 <div className="mt-3 flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5">
                   <span className="text-[0.65rem] text-muted">Then</span>
@@ -1486,7 +1517,7 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-2">
                   <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-lime">Milestone · Pro</p>
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-lime">Milestone</p>
                 </div>
                 <p className="mt-2 font-display text-3xl font-semibold text-white">Growth</p>
               </div>
@@ -1498,7 +1529,7 @@ export default function Home() {
                 <p className="mt-2 text-[0.68rem] text-white/35">Unlimited buyers · All Milestone features</p>
               </div>
               <ul className="mt-6 space-y-3">
-                {["Everything in Free Trial", "Unlimited projects & buyers", "Architect certification workflow", "Bank disbursal tracking", "Payment reconciliation", "Team roles and permissions"].map((item) => (
+                {["Everything in Starter", "Unlimited projects & buyers", "Architect certification workflow", "Bank disbursal tracking", "Payment reconciliation", "Team roles and permissions"].map((item) => (
                   <li className="flex items-start gap-2.5 text-sm" key={item}>
                     <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-lime text-[0.55rem] font-bold text-plum">✓</span>
                     <span className="text-white/70">{item}</span>
@@ -1600,6 +1631,8 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <PlanComparison />
 
           {/* Not integrable note */}
           <p className="mt-5 text-center text-xs text-muted">
