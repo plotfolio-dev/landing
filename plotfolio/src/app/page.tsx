@@ -925,12 +925,12 @@ export default function Home() {
         }}
       >
         <div className="flex items-center justify-between gap-4 px-5 py-4">
-          <h2 id="demo-title" className="font-display text-lg font-semibold">Milestone product tour</h2>
+          <h2 id="demo-title" className="font-display text-lg font-semibold">Plotfolio AI product tour</h2>
           <button type="button" onClick={closeDemo} autoFocus className="rounded-full border border-white/20 px-4 py-2 text-sm font-medium">Close</button>
         </div>
-        <video ref={demoVideo} className="aspect-video w-full bg-black object-contain" controls playsInline preload="none" aria-label="Milestone product tour with voiceover">
+        <video ref={demoVideo} className="aspect-video w-full bg-black object-contain" controls playsInline preload="none" aria-label="Plotfolio AI product tour with voiceover">
           <source src="/videos/plotfolio.mp4" type="video/mp4" />
-          Your browser does not support video playback. <a href="/videos/plotfolio.mp4">Download the Milestone product tour.</a>
+          Your browser does not support video playback. <a href="/videos/plotfolio.mp4">Download the Plotfolio AI product tour.</a>
         </video>
       </dialog>
 
