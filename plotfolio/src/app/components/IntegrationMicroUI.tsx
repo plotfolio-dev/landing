@@ -63,7 +63,7 @@ export function CommsMicroUI({ product = "milestone" }: { product?: "milestone" 
       )}
       {phase >= 2 && (
         <div className="rounded-2xl rounded-bl-sm bg-white px-3 py-2 text-[0.75rem] shadow-soft">
-          <p className="leading-5 text-plum">{product === "keeper" ? "Tower B lift serviced. service report attached" : "Slab casting done for Tower B . photos attached"}</p>
+          <p className="leading-5 text-plum">{product === "keeper" ? "Tower B lift serviced. service report attached" : "Slab casting done for Tower B · photos attached"}</p>
           {phase >= 3 && <div className="mt-1 flex justify-end text-[0.7rem] text-keeper">✓✓</div>}
         </div>
       )}

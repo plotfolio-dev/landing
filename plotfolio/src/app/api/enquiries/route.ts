@@ -1,8 +1,9 @@
+import { isSameOrigin } from "@/lib/submission-origin"
 import nodemailer from "nodemailer"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
-  if (request.headers.get("origin") !== request.nextUrl.origin) {
+  if (!isSameOrigin(request)) {
     return NextResponse.json({ error: "Submission not allowed." }, { status: 403 })
   }
   if (Number(request.headers.get("content-length")) > 16000) {
@@ -16,11 +17,11 @@ export async function POST(request: NextRequest) {
   } catch {
     return NextResponse.json({ error: "Please check your enquiry and try again." }, { status: 400 })
   }
-  const limits = { name: 120, email: 254, company: 160, product: 20, projectType: 40, size: 160, message: 3000, phone: 40 }
+  const limits = { name: 120, email: 254, company: 160, product: 20, projectType: 40, size: 160, message: 3000, phone: 40, plan: 20 }
   const enquiry: Record<string, string> = {}
   for (const [field, limit] of Object.entries(limits)) {
     const value = typeof data[field] === "string" ? data[field].trim() : ""
-    if ((field !== "phone" && !value) || value.length > limit) {
+    if ((!["phone", "plan"].includes(field) && !value) || value.length > limit) {
       return NextResponse.json({ error: "Please complete all required fields within the allowed length." }, { status: 400 })
     }
     enquiry[field] = value
@@ -57,6 +58,7 @@ export async function POST(request: NextRequest) {
         `Email: ${enquiry.email}`,
         `Company: ${enquiry.company}`,
         `Interested in: ${enquiry.product}`,
+        `Plan: ${enquiry.plan || "Not selected"}`,
         `Project type: ${enquiry.projectType}`,
         `Project size: ${enquiry.size}`,
         `Phone: ${enquiry.phone || "Not provided"}`,

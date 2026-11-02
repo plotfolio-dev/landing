@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@elevenlabs/client": "^1.30.0",
     "@elevenlabs/react": "^1.19.1",
     "@vapi-ai/web": "^2.7.1",
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.61.0",
     "next": "16.4.1",
     "nodemailer": "^10.2.1",
@@ -19,6 +21,7 @@
     "simple-icons": "^16.35.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.2",

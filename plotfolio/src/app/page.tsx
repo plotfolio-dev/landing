@@ -1,18 +1,16 @@
 "use client";
 import { useState, useEffect, useRef, type ReactNode } from "react"
 import Image from "next/image"
-import { Mic, MicOff, PhoneOff } from "lucide-react"
-import { useConversation } from "@elevenlabs/react"
+import { VoiceAssistant } from "./components/VoiceAssistant"
+import { Waitlist } from "./components/Waitlist"
+import { track } from "@vercel/analytics"
 import { Reveal } from "./components/Reveal"
 import { ProjectEnquiry } from "./components/ProjectEnquiry"
 import { PlanComparison } from "./components/PlanComparison"
-import { CountUp } from "./components/CountUp"
 import { WfDivider, WfGrid3, WfCell } from "./components/Wireframe"
 import { LifecycleRail } from "./components/LifecycleRail"
 import { PlanMicroUI, TrackMicroUI, CollectMicroUI } from "./components/WorkflowMicroUI"
 import { PaymentsMicroUI, CommsMicroUI, CloudMicroUI } from "./components/IntegrationMicroUI"
-
-const ELEVENLABS_AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? ""
 
 type ButtonProps = {
   children: ReactNode
@@ -161,22 +159,12 @@ const suiteData = {
     eyebrow: "Build & sell",
     title: "Progress tracked. Invoices sent. Collections done.",
     body: "Share progress, send payment requests, and keep buyers happy without awkward calls. Every stage is logged, so when anyone asks, you have the answer.",
-    stats: [
-      ["₹2,400 crore", "Collections tracked"],
-      ["5 minutes", "Setup per project"],
-      ["42%", "Faster collections"],
-    ],
   },
   keeper: {
     label: "Keeper",
     eyebrow: "Run & care",
     title: "Run what you've built, properly.",
     body: "Residents raise issues, vendors pick them up, and nothing gets lost. Keeper keeps the full history of every asset, from installation to its last service date.",
-    stats: [
-      ["99.1%", "Asset uptime"],
-      ["18 hours", "Average resolution"],
-      ["57%", "Fewer repeat calls"],
-    ],
   },
 }
 
@@ -427,7 +415,7 @@ const milestoneFlow: { label: string; desc: string; card: ReactNode }[] = [
             ["Buyer", "Sharma Family · Unit 4B"],
             ["Milestone", "Foundation Complete"],
             ["Amount due", "₹24,60,000"],
-            ["Due date", "15 Nov 2024"],
+            ["Due date", "15 Nov (example)"],
           ].map(([label, value]) => (
             <div className="flex items-center justify-between border-b border-plum/6 pb-1.5" key={label}>
               <span className="text-[0.58rem] text-muted">{label}</span>
@@ -443,7 +431,7 @@ const milestoneFlow: { label: string; desc: string; card: ReactNode }[] = [
     ),
   },
   {
-    label: "Buyer pays. bank disbursal tracked",
+    label: "Buyer pays. Bank disbursal tracked",
     desc: "Payment is logged the moment it arrives. If a loan is involved, Milestone tracks the bank query and disbursal too.",
     card: (
       <WireCard>
@@ -459,7 +447,7 @@ const milestoneFlow: { label: string; desc: string; card: ReactNode }[] = [
             <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/10 pt-3 text-[0.58rem]">
               <div><span className="text-white/45">Mode</span><br /><span className="font-semibold">Bank transfer</span></div>
               <div><span className="text-white/45">Ref</span><br /><span className="font-semibold">TXN9283742</span></div>
-              <div><span className="text-white/45">Date</span><br /><span className="font-semibold">12 Nov 2024</span></div>
+              <div><span className="text-white/45">Date</span><br /><span className="font-semibold">12 Nov (example)</span></div>
               <div><span className="text-white/45">Receipt</span><br /><span className="font-semibold text-lime">Auto-issued ✓</span></div>
             </div>
           </div>
@@ -474,7 +462,7 @@ const milestoneFlow: { label: string; desc: string; card: ReactNode }[] = [
       <WireCard>
         <WireBrowser path="milestone.plotfolio.ai / dashboard" />
         <div className="flex items-center justify-between border-b border-plum/8 px-4 py-2">
-          <span className="font-display text-xs font-semibold text-plum">Collection Overview · Nov 2024</span>
+          <span className="font-display text-xs font-semibold text-plum">Collection Overview · November (example)</span>
           <span className="rounded-full bg-lime-soft px-2 py-0.5 text-[0.52rem] font-bold text-olive">9/10 on track</span>
         </div>
         <div className="p-4 space-y-2.5">
@@ -646,7 +634,7 @@ const keeperFlow: { label: string; desc: string; card: ReactNode }[] = [
             </div>
           ))}
           <div className="flex gap-1.5 pt-1">
-            <div className="flex-1 rounded-lg bg-keeper py-1.5 text-center text-[0.58rem] font-bold text-white">Approve payment</div>
+            <div className="flex-1 rounded-lg bg-keeper py-1.5 text-center text-[0.58rem] font-bold text-plum">Approve payment</div>
             <div className="flex-1 rounded-lg border border-plum/10 py-1.5 text-center text-[0.58rem] font-semibold text-muted">Dispute</div>
           </div>
         </div>
@@ -791,85 +779,6 @@ const pipelineData = {
   ],
 }
 
-function VapiCallButton() {
-  const conversation = useConversation({
-    onError: (err) => {
-      const msg = typeof err === "string" ? err : (err as { message?: string })?.message ?? ""
-      if (!msg.toLowerCase().includes("signal stream")) {
-        console.error("ElevenLabs error:", err)
-      }
-    },
-  })
-
-  const startCall = async () => {
-    await navigator.mediaDevices.getUserMedia({ audio: true })
-    conversation.startSession({ agentId: ELEVENLABS_AGENT_ID, connectionType: "webrtc" })
-  }
-
-  const endCall = () => {
-    conversation.endSession()
-  }
-
-  const toggleMute = () => {
-    conversation.setMuted(!conversation.isMuted)
-  }
-
-  const { status, isMuted } = conversation
-
-  if (status === "connected") {
-    return (
-      <div className="flex items-center gap-3">
-        <button
-          className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-white/40"
-          onClick={toggleMute}
-          type="button"
-        >
-          {isMuted ? <MicOff className="size-4" /> : <Mic className="size-4" />}
-          {isMuted ? "Unmute" : "Mute"}
-        </button>
-        <button
-          className="flex items-center gap-2 rounded-full bg-coral px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-          onClick={endCall}
-          type="button"
-        >
-          <PhoneOff className="size-4" />
-          End call
-        </button>
-        <span className="flex items-center gap-1.5 text-xs text-white/50">
-          <span className="size-1.5 rounded-full bg-lime animate-pulse" />
-          Live
-        </span>
-      </div>
-    )
-  }
-
-  if (status === "connecting") {
-    return (
-      <button
-        className="flex cursor-wait items-center gap-2 rounded-full bg-lime/70 px-6 py-3 text-sm font-semibold text-plum"
-        disabled
-        type="button"
-      >
-        <span className="size-2 animate-ping rounded-full bg-plum/50" />
-        Connecting…
-      </button>
-    )
-  }
-
-  return (
-    <button
-      className="flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-sm font-semibold text-plum transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
-      disabled={!ELEVENLABS_AGENT_ID}
-      onClick={startCall}
-      title={!ELEVENLABS_AGENT_ID ? "Set NEXT_PUBLIC_ELEVENLABS_AGENT_ID in .env.local" : undefined}
-      type="button"
-    >
-      <Mic className="size-4" />
-      Talk to us
-    </button>
-  )
-}
-
 export default function Home() {
   const [activeProduct, setActiveProduct] = useState<"milestone" | "keeper">(
     "milestone",
@@ -879,21 +788,33 @@ export default function Home() {
   )
   const [activeIntegrations, setActiveIntegrations] = useState<"milestone" | "keeper">("milestone")
   const [flowStep, setFlowStep] = useState(0)
-  const [earlyAccessEmail, setEarlyAccessEmail] = useState("")
-  const [earlyAccessSubmitted, setEarlyAccessSubmitted] = useState(false)
+  const [year, setYear] = useState<number | null>(null)
+  useEffect(() => setYear(new Date().getFullYear()), [])
+  const [paused, setPaused] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuButton = useRef<HTMLButtonElement>(null)
+  useEffect(() => {
+    const query = matchMedia("(prefers-reduced-motion: reduce)")
+    const update = () => setReducedMotion(query.matches)
+    update(); query.addEventListener("change", update)
+    return () => query.removeEventListener("change", update)
+  }, [])
   const product = suiteData[activeProduct]
 
   useEffect(() => { setTimeout(() => setFlowStep(0), 0) }, [activePipeline])
 
   useEffect(() => {
+    if (paused || reducedMotion) return
     const flow = activePipeline === "milestone" ? milestoneFlow : keeperFlow
     const t = setInterval(() => setFlowStep(s => (s + 1) % flow.length), 4200)
     return () => clearInterval(t)
-  }, [activePipeline])
+  }, [activePipeline, paused, reducedMotion])
 
   const demoDialog = useRef<HTMLDialogElement>(null)
   const demoVideo = useRef<HTMLVideoElement>(null)
   const openDemo = () => {
+    track("cta_click", { cta: "watch_tour" })
     demoDialog.current?.showModal()
     void demoVideo.current?.play().catch(() => {})
   }
@@ -901,7 +822,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen overflow-hidden bg-canvas text-ink">
-      <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-10">
+      <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between gap-2 px-5 py-5 md:px-10" onKeyDown={e => { if (e.key === "Escape" && menuOpen) { setMenuOpen(false); menuButton.current?.focus() } }}>
         <Logo />
         <nav className="hidden items-center gap-8 text-sm font-medium text-muted lg:flex">
           <a className="transition hover:text-plum" href="#suite">Products</a>
@@ -909,7 +830,11 @@ export default function Home() {
           <a className="transition hover:text-plum" href="#stories">Pricing</a>
           <a className="transition hover:text-plum" href="#company">Contact</a>
         </nav>
-        <Button onClick={openDemo}>Demo</Button>
+        <div className="flex items-center gap-2"><div className="hidden sm:block"><Button onClick={openDemo}>Watch tour</Button></div>
+        <button ref={menuButton} type="button" className="rounded-full border border-plum/20 px-4 py-3 text-sm lg:hidden" aria-expanded={menuOpen} aria-controls="mobile-nav" onClick={() => setMenuOpen(!menuOpen)}>Menu</button></div>
+        <nav id="mobile-nav" hidden={!menuOpen} className="absolute left-5 right-5 top-full rounded-2xl border border-plum/10 bg-canvas p-4 shadow-soft lg:hidden" onKeyDown={e => { if (e.key === "Escape") { setMenuOpen(false); menuButton.current?.focus() } }}>
+          {[["Products", "suite"], ["How it works", "workflow"], ["Pricing", "stories"], ["Contact", "company"]].map(([label, id]) => <a key={id} href={`#${id}`} className="block rounded-lg px-4 py-3" onClick={() => setMenuOpen(false)}>{label}</a>)}
+        </nav>
       </header>
 
       <dialog
@@ -928,52 +853,22 @@ export default function Home() {
           <h2 id="demo-title" className="font-display text-lg font-semibold">Plotfolio AI product tour</h2>
           <button type="button" onClick={closeDemo} autoFocus className="rounded-full border border-white/20 px-4 py-2 text-sm font-medium">Close</button>
         </div>
-        <video ref={demoVideo} className="aspect-video w-full bg-black object-contain" controls playsInline preload="none" aria-label="Plotfolio AI product tour with voiceover">
+        <video ref={demoVideo} className="aspect-video w-full bg-black object-contain" controls playsInline preload="none" poster="/tour-poster.svg" aria-label="Plotfolio AI product tour with voiceover">
           <source src="/videos/plotfolio.mp4" type="video/mp4" />
+          <track kind="captions" src="/videos/plotfolio.en.vtt" srcLang="en" label="English" default />
           Your browser does not support video playback. <a href="/videos/plotfolio.mp4">Download the Plotfolio AI product tour.</a>
         </video>
       </dialog>
 
       <main className="flex flex-col gap-6 md:gap-10">
-        <section className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-24 pt-16 md:px-10 md:pb-32 md:pt-24 lg:grid-cols-[1.02fr_0.98fr]">
+        <section className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-3 md:px-10 md:pb-32 md:pt-24 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="relative z-10">
-            <Kicker>For developers, builders, and property teams</Kicker>
-            <h1 className="max-w-3xl font-display text-5xl font-semibold leading-[0.97] tracking-[-0.045em] text-plum sm:text-6xl lg:text-7xl">
-              From the first brick
-              <br />
-              <span className="text-violet">to the last work order.</span>
-            </h1>
-            <p className="mt-7 max-w-xl text-base leading-7 text-muted md:text-lg">
-              Selling plots, building villas, or running a warehouse park?
-              Plotfolio AI keeps your team, your buyers, and your numbers on the
-              same page, so you spend less time chasing and more time
-              building.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ProjectEnquiry />
-              <Button
-                tone="ghost"
-                onClick={() =>
-                  document
-                    .getElementById("workflow")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-              >
-                See how it works
-              </Button>
-            </div>
-            <div className="mt-7 flex items-center gap-3 text-xs text-muted">
-              <div className="flex -space-x-1.5">
-                {["bg-violet", "bg-lime", "bg-keeper", "bg-coral"].map(
-                  (color) => (
-                    <span
-                      className={`size-6 rounded-full border-2 border-canvas ${color}`}
-                      key={color}
-                    />
-                  ),
-                )}
-              </div>
-              <span>Trusted across 300+ properties</span>
+            <p className="mb-2 font-script text-lg leading-6 text-violet md:mb-4 md:text-2xl">For developers, builders, and property teams</p>
+            <h1 className="max-w-3xl font-display text-[2.125rem] font-semibold leading-[1.08] tracking-[-0.045em] text-plum sm:text-5xl lg:text-6xl">From the first brick to the last work order.</h1>
+            <p className="mt-3 max-w-xl text-sm leading-5 text-muted md:mt-5 md:text-lg md:leading-7">Selling plots, building villas, or running a warehouse park? Plotfolio AI keeps your team, your buyers, and your numbers on the same page, so you spend less time chasing and more time building.</p>
+            <div className="mt-4 flex flex-wrap gap-2 [&>button]:py-2.5 md:mt-6 md:gap-3">
+              <ProjectEnquiry label="Join early access" />
+              <Button tone="ghost" onClick={openDemo}>Watch the 3-min tour</Button>
             </div>
           </div>
           <HeroDashboard />
@@ -994,7 +889,7 @@ export default function Home() {
                 { src: "/images/icons/plotfolio-ai-warehouses.svg", label: "Warehouses & Plots" },
               ].map(({ src, label }) => (
                 <div className="flex flex-col items-center gap-4" key={label}>
-                  <Image src={src} alt={label} width={96} height={96} unoptimized className="size-24" />
+                  <Image src={src} alt="" width={96} height={96} unoptimized className="size-24" />
                   <p className="text-sm font-semibold text-plum">{label}</p>
                 </div>
               ))}
@@ -1086,22 +981,6 @@ export default function Home() {
               <p className="mt-5 max-w-lg leading-7 text-white/60">
                 {product.body}
               </p>
-              <div className="mt-8 grid grid-cols-3 gap-3">
-                {product.stats.map(([value, label]) => (
-                  <div className="border-t border-white/15 pt-4" key={label}>
-                    <p
-                      className={`font-display text-xl font-semibold md:text-2xl ${
-                        activeProduct === "keeper" ? "text-mint" : "text-lime"
-                      }`}
-                    >
-                      <CountUp value={value} />
-                    </p>
-                    <p className="mt-1 text-[0.65rem] leading-4 text-white/45">
-                      {label}
-                    </p>
-                  </div>
-                ))}
-              </div>
               <div className="mt-8 flex flex-wrap gap-2">
                 {(activeProduct === "milestone" ? [
                   { src: "/images/icons/milestone-site-progress.svg", label: "Site progress" },
@@ -1168,7 +1047,7 @@ export default function Home() {
         <section className="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32" id="workflow">
           <div className="grid items-end gap-8 lg:grid-cols-2">
             <div>
-              <Kicker mint>How it works</Kicker>
+              <Kicker>How it works</Kicker>
               <h2 className="font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
                 One pipeline, from the first brick to the last work order.
               </h2>
@@ -1278,17 +1157,19 @@ export default function Home() {
                       <h3 className="max-w-md font-display text-2xl font-semibold leading-tight tracking-tight text-plum md:text-3xl">{step.label}</h3>
                       <p className="mt-4 max-w-md text-sm leading-7 text-muted">{step.desc}</p>
                     </div>
+                    <button type="button" className="mt-5 rounded-full border border-plum/20 px-4 py-2 text-sm" onClick={() => setPaused(!paused)} aria-pressed={paused || reducedMotion} disabled={reducedMotion}>{paused || reducedMotion ? "Play" : "Pause"} steps</button>
                     <div className="mt-8 grid gap-1" aria-label="Workflow steps">
                       {flow.map((item, i) => (
                         <button
                           key={item.label}
                           type="button"
+                          aria-label={`Step ${i + 1}: ${item.label}`}
                           aria-current={i === flowStep ? "step" : undefined}
                           onClick={() => setFlowStep(i)}
                           className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-xs leading-5 transition-colors ${i === flowStep ? isKeeper ? "bg-mint-soft font-semibold text-keeper" : "bg-lime-soft font-semibold text-plum" : "text-muted hover:bg-surface"}`}
                         >
-                          <span className={`flex size-5 shrink-0 items-center justify-center rounded border font-mono text-[0.65rem] ${i === flowStep ? "border-current" : "border-plum/10"}`}>
-                            {i < flowStep ? "✓" : i + 1}
+                          <span className={`flex shrink-0 items-center justify-center rounded border px-1.5 py-0.5 font-mono text-[0.65rem] ${i === flowStep ? "border-current" : "border-plum/10"}`}>
+                            Step {i + 1}:
                           </span>
                           {item.label}
                         </button>
@@ -1311,7 +1192,7 @@ export default function Home() {
                       <span>Activity recorded automatically</span>
                     </div>
                     <div className="mt-4 h-0.5 overflow-hidden rounded-full bg-plum/8">
-                      <div className={`step-progress h-full ${isKeeper ? "bg-keeper" : "bg-violet"}`} key={`${activePipeline}-${flowStep}-bar`} />
+                      <div style={{ animationPlayState: paused || reducedMotion ? "paused" : "running" }} className={`step-progress h-full ${isKeeper ? "bg-keeper" : "bg-violet"}`} key={`${activePipeline}-${flowStep}-bar`} />
                     </div>
                   </div>
                 </div>
@@ -1446,7 +1327,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
-              Start with a 15-day free trial on Starter, then choose the plan that fits your team. Use Milestone for construction and collections, or add Keeper with Suite for property operations.
+              At launch, start with a 15-day free trial on Starter, then choose the plan that fits your team. Use Milestone for construction and collections, or add Keeper with Suite for property operations.
             </p>
           </div>
 
@@ -1505,9 +1386,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8">
-                <button className="w-full cursor-not-allowed rounded-full border border-plum/15 py-3 text-sm font-semibold text-muted" disabled type="button">
-                  Available at launch
-                </button>
+                <ProjectEnquiry label="Join early access" plan="Starter" className="w-44 max-w-full" />
               </div>
             </div>
 
@@ -1529,7 +1408,7 @@ export default function Home() {
                 <p className="mt-2 text-[0.68rem] text-white/35">Unlimited buyers · All Milestone features</p>
               </div>
               <ul className="mt-6 space-y-3">
-                {["Everything in Starter", "Unlimited projects & buyers", "Architect certification workflow", "Bank disbursal tracking", "Payment reconciliation", "Team roles and permissions"].map((item) => (
+                {["Everything in Starter", "Unlimited buyers; billed per active project", "Architect certification workflow", "Bank disbursal tracking", "Payment reconciliation", "Team roles and permissions"].map((item) => (
                   <li className="flex items-start gap-2.5 text-sm" key={item}>
                     <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-lime text-[0.55rem] font-bold text-plum">✓</span>
                     <span className="text-white/70">{item}</span>
@@ -1543,7 +1422,7 @@ export default function Home() {
                     { cat: "Artificial intelligence", name: "Speech-to-text", logo: "openai", brand: "OpenAI" },
                     { cat: "Accounting", name: "Tally sync", logo: null, brand: "" },
                     { cat: "Payments", name: "Virtual accounts", logo: "razorpay", brand: "Razorpay" },
-                    { cat: "Tax", name: "Goods and services tax and electronic invoicing", logo: null, brand: "" },
+                    { cat: "Tax", name: "GST & e-invoicing", logo: null, brand: "" },
                     { cat: "Documents", name: "eSign & e-stamping", logo: null, brand: "" },
                     { cat: "Identity verification", name: "Buyer identity verification", logo: null, brand: "" },
                     { cat: "Banking", name: "Connected banking", logo: "hdfc-bank", brand: "HDFC Bank" },
@@ -1562,15 +1441,13 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8">
-                <button className="w-full cursor-not-allowed rounded-full border border-white/20 py-3 text-sm font-semibold text-white/50" disabled type="button">
-                  Available at launch
-                </button>
+                <ProjectEnquiry label="Join early access" plan="Growth" className="w-44 max-w-full border border-lime" />
               </div>
             </div>
 
             {/* Suite */}
             <div className="relative flex flex-col overflow-hidden rounded-[2rem] border border-plum/10 bg-white p-8 transition-transform duration-200 hover:-translate-y-1 md:p-10">
-              <Kicker mint>Coming soon</Kicker>
+              <Kicker>Coming soon</Kicker>
               <div>
                 <div className="flex items-center gap-1.5">
                   <Image src="/images/logos/milestone-app-icon.svg" alt="Milestone" width={20} height={20} unoptimized className="size-5 rounded-md" />
@@ -1585,9 +1462,9 @@ export default function Home() {
                   <p className="font-display text-4xl font-semibold text-plum">₹9,999</p>
                   <p className="mb-1 text-sm text-muted">/ month</p>
                 </div>
-                <div className="mt-3 flex items-center gap-2 rounded-xl bg-surface px-4 py-2.5">
+                <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl bg-surface px-4 py-2.5">
                   <span className="text-[0.65rem] text-muted">Enterprise pricing available</span>
-                  <span className="ml-auto text-[0.65rem] font-semibold text-keeper">Talk to us →</span>
+                  <ProjectEnquiry label="Talk to us →" plan="Suite" className="w-44 max-w-full shrink-0 whitespace-nowrap" />
                 </div>
               </div>
               <ul className="mt-6 space-y-3">
@@ -1603,7 +1480,7 @@ export default function Home() {
                 <div className="flex flex-wrap gap-1.5">
                   {[
                     { cat: "Human resources", name: "Payroll & labour", logo: null, brand: "" },
-                    { cat: "Sales", name: "Customer relationship management", logo: null, brand: "" },
+                    { cat: "Sales", name: "CRM", logo: null, brand: "" },
                     { cat: "Sales", name: "Property portals", logo: null, brand: "" },
                     { cat: "Planning", name: "Project schedules", logo: null, brand: "" },
                     { cat: "Finance", name: "Embedded finance", logo: null, brand: "" },
@@ -1625,9 +1502,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8">
-                <button className="w-full cursor-not-allowed rounded-full border border-plum/15 py-3 text-sm font-semibold text-muted" disabled type="button">
-                  Available at launch
-                </button>
+                <ProjectEnquiry label="Join early access" plan="Suite" className="w-44 max-w-full" />
               </div>
             </div>
           </div>
@@ -1636,7 +1511,7 @@ export default function Home() {
 
           {/* Not integrable note */}
           <p className="mt-5 text-center text-xs text-muted">
-            Buyer tax deducted at source (Form 26QB) and Real Estate Regulatory Authority portal submissions require manual handling. These cannot be automated through an application programming interface.
+            Buyer tax deducted at source (Form 26QB) and RERA portal submissions require manual handling. These cannot be automated through an API.
           </p>
 
           {/* Early access bar */}
@@ -1646,35 +1521,7 @@ export default function Home() {
                 <p className="font-display text-lg font-semibold text-white">Get early access pricing.</p>
                 <p className="mt-1 text-sm text-white/50">Be first in line when we launch.</p>
               </div>
-              {earlyAccessSubmitted ? (
-                <div className="flex shrink-0 items-center gap-2.5 rounded-2xl border border-lime/25 bg-lime/10 px-5 py-3">
-                  <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-lime text-[0.55rem] font-bold text-plum">✓</span>
-                  <p className="text-sm font-semibold text-white">You&apos;re on the list!</p>
-                </div>
-              ) : (
-                <form
-                  className="flex w-full max-w-sm flex-col gap-2.5 sm:flex-row"
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    if (earlyAccessEmail) setEarlyAccessSubmitted(true)
-                  }}
-                >
-                  <input
-                    className="flex-1 rounded-full border border-white/15 bg-white/8 px-5 py-2.5 text-sm text-white placeholder-white/35 outline-none transition focus:border-lime/50 focus:bg-white/12"
-                    onChange={(e) => setEarlyAccessEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    required
-                    type="email"
-                    value={earlyAccessEmail}
-                  />
-                  <button
-                    className="shrink-0 rounded-full bg-lime px-6 py-2.5 text-sm font-semibold text-plum transition hover:-translate-y-0.5"
-                    type="submit"
-                  >
-                    Notify me
-                  </button>
-                </form>
-              )}
+              <Waitlist />
             </div>
           </div>
         </section>
@@ -1687,12 +1534,13 @@ export default function Home() {
                 Questions about Plotfolio? Ask our support agent.
               </h2>
             </div>
-            <VapiCallButton />
+            <VoiceAssistant />
           </div>
           <footer className="mx-auto flex max-w-7xl flex-col gap-8 border-t border-white/10 px-5 py-8 md:flex-row md:items-center md:justify-between md:px-10">
             <Logo inverse />
+            <div className="flex flex-wrap gap-4 text-sm text-white"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@plotfolioai.com">hello@plotfolioai.com</a></div>
             <p className="text-xs text-white/40">
-              © 2025 Plotfolio AI.
+              © {year} Plotfolio AI.
             </p>
           </footer>
         </section>

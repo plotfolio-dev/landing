@@ -2,9 +2,9 @@ const groups = [
   {
     title: "Plans and limits",
     rows: [
-      ["Price", "₹1,499 per month after a 15-day free trial", "₹4,999 per project per month", "₹9,999 per month"],
+      ["Price", "At launch, ₹1,499 per month after a 15-day free trial", "₹4,999 per project per month", "₹9,999 per month"],
       ["Products", "Milestone", "Milestone", "Milestone and Keeper"],
-      ["Active projects", "1", "Unlimited", "Unlimited"],
+      ["Active projects", "1", "Billed per active project", "Unlimited"],
       ["Buyer records", "Up to 50", "Unlimited", "Unlimited"],
     ],
   },

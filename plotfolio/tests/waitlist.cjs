@@ -1,0 +1,20 @@
+const fs = require('fs');
+const vm = require('vm');
+const root = require('node:path').resolve(__dirname, '..');
+const ts = require(root + '/node_modules/typescript');
+const assert = require('node:assert/strict');
+let sent = [], mode = 'ok';
+const response = { json: (body, init = {}) => ({ body, status: init.status || 200 }) };
+const source = ts.transpileModule(fs.readFileSync(root + '/src/app/api/waitlist/route.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true } }).outputText;
+const context = { exports: {}, process: { env: { GOOGLE_WORKSPACE_EMAIL: 'sender@example.com', GOOGLE_WORKSPACE_APP_PASSWORD: 'test' } }, require: name => name === '@/lib/submission-origin' ? { isSameOrigin: r => r.headers.get('origin') === 'https://' + r.headers.get('host') } : name === 'next/server' ? { NextResponse: response } : { createTransport: () => ({ sendMail: async record => { if (mode === 'fail') throw Error(); sent.push(record); return { accepted: ['recipient@example.com'] } }, close() {} }) } };
+vm.runInNewContext(source, context);
+const request = (data, origin = 'https://example.com') => ({ headers: new Headers({ origin, host: "example.com" }), nextUrl: { origin: 'https://example.com' }, json: async () => data });
+(async () => {
+ assert.equal((await context.exports.POST(request({ email:'test@example.com', source:'pricing', plan:'Growth' }))).status, 201);
+ assert.equal(JSON.parse(sent[0].text).plan, 'Growth');
+ assert.equal(JSON.parse(sent[0].text).email, 'test@example.com');
+ assert.equal((await context.exports.POST(request({email:'bad',source:'pricing'}))).status,400);
+ assert.equal((await context.exports.POST(request({email:'test@example.com',source:'pricing'},'https://evil.example'))).status,403);
+ mode='fail'; assert.equal((await context.exports.POST(request({email:'test@example.com',source:'pricing'}))).status,502);
+ console.log('Waitlist: accepted record, plan, invalid input, cross-origin, SMTP failure passed (mock SMTP).');
+})().catch(e => { console.error(e); process.exitCode=1 });

@@ -133,7 +133,7 @@ export function CollectMicroUI({ product = "milestone" }: { product?: "milestone
       {receipt && (
         <div className="mt-2 flex items-center gap-2 rounded-lg border border-keeper/20 bg-mint-soft px-2 py-1.5 text-[0.75rem] font-medium text-keeper" style={{ ...MONO, opacity: 1, transition: "opacity 0.4s ease" }}>
           <span>{product === "keeper" ? "Portfolio report ready · All properties included" : "Received ₹12.4 lakh · Bank transfer · reconciled"}</span>
-          <span className="ml-auto rounded-full bg-keeper px-2 py-0.5 text-[0.7rem] font-bold text-white">{product === "keeper" ? "Ready" : "Paid"}</span>
+          <span className="ml-auto rounded-full bg-keeper px-2 py-0.5 text-[0.7rem] font-bold text-plum">{product === "keeper" ? "Ready" : "Paid"}</span>
         </div>
       )}
     </div>
