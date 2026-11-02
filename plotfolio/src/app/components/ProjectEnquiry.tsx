@@ -1,16 +1,21 @@
 "use client"
 
-import { track } from "@vercel/analytics"
-import { useId, useRef, useState, type FormEvent } from "react"
+import { track } from "@/lib/analytics"
+import { useEffect, useId, useRef, useState, type FormEvent } from "react"
 
 const fieldClass = "mt-2 w-full rounded-xl border border-plum/15 bg-white px-4 py-3 text-sm text-plum outline-none focus:border-violet focus:ring-2 focus:ring-violet/15"
 
-export function ProjectEnquiry({ label = "Tell us about your project", plan, className = "" }: { label?: string; plan?: string; className?: string }) {
+export function ProjectEnquiry({ plan, onClose }: { plan?: string; onClose: () => void }) {
   const id = useId()
   const dialog = useRef<HTMLDialogElement>(null)
   const controller = useRef<AbortController | null>(null)
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
   const [error, setError] = useState("")
+
+  useEffect(() => {
+    dialog.current?.showModal()
+    return () => controller.current?.abort()
+  }, [])
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -38,8 +43,7 @@ export function ProjectEnquiry({ label = "Tell us about your project", plan, cla
 
   return (
     <>
-      <button type="button" onClick={() => { track("cta_click", { cta: label, plan: plan || "unspecified" }); dialog.current?.showModal() }} className={`rounded-full bg-plum px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-violet ${className}`}>{label}</button>
-      <dialog ref={dialog} aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`} className="fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-[2rem] border border-plum/10 bg-canvas p-0 text-plum shadow-dashboard backdrop:bg-ink/75">
+      <dialog ref={dialog} onClose={onClose} aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`} className="fixed inset-0 m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-[2rem] border border-plum/10 bg-canvas p-0 text-plum shadow-dashboard backdrop:bg-ink/75">
         <div className="p-6 md:p-9">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -71,7 +75,7 @@ export function ProjectEnquiry({ label = "Tell us about your project", plan, cla
                 <label className="text-sm font-medium sm:col-span-2">Phone number <span className="font-normal text-muted">(optional)</span><input type="tel" autoComplete="tel" name="phone" maxLength={40} className={fieldClass} /></label>
               </fieldset>
               {error && <p id={`${id}-error`} role="alert" className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">{error}</p>}
-              <p className="mt-5 text-xs leading-5 text-muted">We’ll use these details to respond to your enquiry. See our <a href="/privacy" className="underline">Privacy policy</a> and <a href="/terms" className="underline">Terms</a>.</p>
+              <p className="mt-5 text-xs leading-5 text-muted">We’ll use these details to respond to your enquiry.</p>
               <button type="submit" disabled={status === "sending"} className="mt-4 rounded-full bg-plum px-6 py-3 text-sm font-semibold text-white disabled:cursor-wait disabled:opacity-60">{status === "sending" ? "Sending enquiry…" : "Request a callback"}</button>
             </form>
           )}

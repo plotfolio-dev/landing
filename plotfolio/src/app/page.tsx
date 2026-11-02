@@ -2,10 +2,10 @@
 import { useState, useEffect, useRef, type ReactNode } from "react"
 import Image from "next/image"
 import { VoiceAssistant } from "./components/VoiceAssistant"
-import { Waitlist } from "./components/Waitlist"
-import { track } from "@vercel/analytics"
+import { AccessFlow, AccessButton } from "./components/AccessFlow"
+import { landing } from "@/lib/landing-config"
+import { track } from "@/lib/analytics"
 import { Reveal } from "./components/Reveal"
-import { ProjectEnquiry } from "./components/ProjectEnquiry"
 import { PlanComparison } from "./components/PlanComparison"
 import { WfDivider, WfGrid3, WfCell } from "./components/Wireframe"
 import { LifecycleRail } from "./components/LifecycleRail"
@@ -89,7 +89,7 @@ function Progress({
 
 function HeroDashboard() {
   return (
-    <div className="relative mx-auto w-full max-w-xl">
+    <div data-hero-dashboard className="relative mx-auto w-full max-w-xl">
       <div className="absolute -right-7 -top-7 size-40 rounded-[2.5rem] bg-lime" />
       <div className="absolute -bottom-8 -left-8 size-36 rounded-[2.5rem] bg-mint" />
       <div className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white p-4 shadow-dashboard">
@@ -149,6 +149,7 @@ function HeroDashboard() {
           </div>
         </div>
       </div>
+      <p className="relative mt-4 text-center text-xs text-muted">Sample data</p>
     </div>
   )
 }
@@ -821,6 +822,7 @@ export default function Home() {
   const closeDemo = () => demoDialog.current?.close()
 
   return (
+    <AccessFlow>
     <div className="min-h-screen overflow-hidden bg-canvas text-ink">
       <header className="relative z-20 mx-auto flex max-w-7xl items-center justify-between gap-2 px-5 py-5 md:px-10" onKeyDown={e => { if (e.key === "Escape" && menuOpen) { setMenuOpen(false); menuButton.current?.focus() } }}>
         <Logo />
@@ -830,9 +832,10 @@ export default function Home() {
           <a className="transition hover:text-plum" href="#stories">Pricing</a>
           <a className="transition hover:text-plum" href="#company">Contact</a>
         </nav>
-        <div className="flex items-center gap-2"><div className="hidden sm:block"><Button onClick={openDemo}>Watch tour</Button></div>
+        <div className="flex items-center gap-2"><div className="hidden sm:block"><AccessButton source="header" /></div>
         <button ref={menuButton} type="button" className="rounded-full border border-plum/20 px-4 py-3 text-sm lg:hidden" aria-expanded={menuOpen} aria-controls="mobile-nav" onClick={() => setMenuOpen(!menuOpen)}>Menu</button></div>
         <nav id="mobile-nav" hidden={!menuOpen} className="absolute left-5 right-5 top-full rounded-2xl border border-plum/10 bg-canvas p-4 shadow-soft lg:hidden" onKeyDown={e => { if (e.key === "Escape") { setMenuOpen(false); menuButton.current?.focus() } }}>
+          <AccessButton source="header" className="mb-2" />
           {[["Products", "suite"], ["How it works", "workflow"], ["Pricing", "stories"], ["Contact", "company"]].map(([label, id]) => <a key={id} href={`#${id}`} className="block rounded-lg px-4 py-3" onClick={() => setMenuOpen(false)}>{label}</a>)}
         </nav>
       </header>
@@ -863,13 +866,14 @@ export default function Home() {
       <main className="flex flex-col gap-6 md:gap-10">
         <section className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-3 md:px-10 md:pb-32 md:pt-24 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="relative z-10">
-            <p className="mb-2 font-script text-lg leading-6 text-violet md:mb-4 md:text-2xl">For developers, builders, and property teams</p>
-            <h1 className="max-w-3xl font-display text-[2.125rem] font-semibold leading-[1.08] tracking-[-0.045em] text-plum sm:text-5xl lg:text-6xl">From the first brick to the last work order.</h1>
-            <p className="mt-3 max-w-xl text-sm leading-5 text-muted md:mt-5 md:text-lg md:leading-7">Selling plots, building villas, or running a warehouse park? Plotfolio AI keeps your team, your buyers, and your numbers on the same page, so you spend less time chasing and more time building.</p>
+            <p className="mb-2 font-script text-lg leading-6 text-violet md:mb-4 md:text-2xl">{landing.eyebrow}</p>
+            <h1 className="max-w-3xl font-display text-[1.875rem] font-semibold leading-[1.08] tracking-[-0.045em] text-plum sm:text-5xl lg:text-[2.5rem] xl:text-[3.25rem]">{landing.headline}</h1>
+            <p className="mt-3 max-w-xl text-sm leading-5 text-muted md:mt-5 md:text-lg md:leading-7">{landing.subheadline}</p>
             <div className="mt-4 flex flex-wrap gap-2 [&>button]:py-2.5 md:mt-6 md:gap-3">
-              <ProjectEnquiry label="Join early access" />
+              <AccessButton source="hero" />
               <Button tone="ghost" onClick={openDemo}>Watch the 3-min tour</Button>
             </div>
+            <p className="mt-3 text-xs text-muted">{landing.launchMonthYear && `Launching ${landing.launchMonthYear}. `}Starter will be ₹1,499/month after a 15-day trial. No card needed.</p>
           </div>
           <HeroDashboard />
           <div className="pointer-events-none absolute -right-56 top-0 size-[34rem] rounded-full bg-violet-soft/65 blur-3xl" />
@@ -1004,7 +1008,7 @@ export default function Home() {
 
               {/* Works with. integration brand logos */}
               <div className="mt-6 border-t border-white/10 pt-5">
-                <p className="mb-3 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white/30">Works with</p>
+                <p className="mb-3 text-[0.58rem] font-bold uppercase tracking-[0.14em] text-white/30">Planned at launch</p>
                 <div className="flex flex-wrap gap-2">
                   {(activeProduct === "milestone" ? [
                     { src: "/images/milestone-integration/whatsapp.svg", name: "WhatsApp" },
@@ -1210,11 +1214,11 @@ export default function Home() {
               <div>
                 <Kicker>Integrations & Tools</Kicker>
                 <h2 className="font-display text-4xl font-semibold leading-tight tracking-[-0.035em] text-plum md:text-5xl">
-                  Built to connect with every tool your team already uses.
+                  Planned connections for the tools your team uses.
                 </h2>
               </div>
               <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
-                From Indian banking rails to global cloud infrastructure. Plotfolio AI slots in without replacing what already works.
+                Planned at launch: connections to Indian banking rails, communication tools and cloud infrastructure. Integration previews below show intended workflows.
               </p>
             </div>
 
@@ -1234,7 +1238,7 @@ export default function Home() {
                   <Image src={`/images/logos/${product}-app-icon.svg`} alt="" width={40} height={40} unoptimized className="size-10 rounded-2xl" />
                 </div>
                 <p className="mt-6 text-sm leading-6 text-plum/70">
-                  {product === "milestone" ? "Connect buyer communications, collections and project reporting." : "Connect resident updates, maintenance payments and asset reporting."}
+                  {product === "milestone" ? "Planned at launch: buyer communications, collections and project reporting." : "Planned at launch: resident updates, maintenance payments and asset reporting."}
                 </p>
               </button>
             ))}
@@ -1247,7 +1251,7 @@ export default function Home() {
                 {
                   kicker: "Payments & Banking",
                   title: activeIntegrations === "keeper" ? "Keep maintenance payments in sync." : "Collect faster with Indian rails.",
-                  body: activeIntegrations === "keeper" ? "Track maintenance dues, match resident receipts and reconcile vendor payments through your banking tools." : "Instant payments, bank transfers, and bank-linked demand letters connect directly to HDFC, ICICI, Axis and Razorpay so collections arrive and reconcile automatically.",
+                  body: activeIntegrations === "keeper" ? "Track maintenance dues, match resident receipts and reconcile vendor payments through your banking tools." : "Planned at launch: HDFC, ICICI, Axis and Razorpay integrations for instant payments, bank transfers and bank-linked demand letters.",
                   logos: [
                     { src: "/images/milestone-integration/razorpay.svg", name: "Razorpay" },
                     { src: "/images/milestone-integration/hdfc-bank.svg", name: "HDFC Bank" },
@@ -1296,7 +1300,7 @@ export default function Home() {
                   <Reveal delay={idx * 100}>
                     <Kicker mint={activeIntegrations === "keeper"}>{kicker}</Kicker>
                     <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-plum">{title}</h3>
-                    <p className="mt-3 flex-1 text-sm leading-6 text-muted">{body}</p>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-muted">{body.startsWith("Planned at launch:") ? body : `Planned at launch: ${body}`}</p>
                     {kicker === "Communication & Intelligence" && (
                       <>{/* TODO(content): add one-line data-handling statement for OpenAI usage */}</>
                     )}
@@ -1363,7 +1367,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="mt-6 border-t border-plum/8 pt-5">
-                <p className="mb-3 text-[0.6rem] font-bold uppercase tracking-wider text-muted">Integrations included</p>
+                <p className="mb-3 text-[0.6rem] font-bold uppercase tracking-wider text-muted">Planned integrations at launch</p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
                     { cat: "Messaging", name: "WhatsApp Business", logo: "whatsapp", brand: "WhatsApp" },
@@ -1386,7 +1390,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8">
-                <ProjectEnquiry label="Join early access" plan="Starter" className="w-44 max-w-full" />
+                <AccessButton source="pricing" label="Join early access" plan="Starter" className="w-44 max-w-full" />
               </div>
             </div>
 
@@ -1416,7 +1420,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="mt-6 border-t border-white/10 pt-5">
-                <p className="mb-3 text-[0.6rem] font-bold uppercase tracking-wider text-white/40">Integrations included</p>
+                <p className="mb-3 text-[0.6rem] font-bold uppercase tracking-wider text-white/40">Planned integrations at launch</p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
                     { cat: "Artificial intelligence", name: "Speech-to-text", logo: "openai", brand: "OpenAI" },
@@ -1441,7 +1445,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8">
-                <ProjectEnquiry label="Join early access" plan="Growth" className="w-44 max-w-full border border-lime" />
+                <AccessButton source="pricing" label="Join early access" plan="Growth" className="w-44 max-w-full border border-lime" />
               </div>
             </div>
 
@@ -1464,7 +1468,7 @@ export default function Home() {
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl bg-surface px-4 py-2.5">
                   <span className="text-[0.65rem] text-muted">Enterprise pricing available</span>
-                  <ProjectEnquiry label="Talk to us →" plan="Suite" className="w-44 max-w-full shrink-0 whitespace-nowrap" />
+                  <AccessButton source="pricing" kind="enquiry" label="Talk to us →" plan="Suite" className="w-44 max-w-full shrink-0 whitespace-nowrap" />
                 </div>
               </div>
               <ul className="mt-6 space-y-3">
@@ -1476,7 +1480,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="mt-6 border-t border-plum/8 pt-5">
-                <p className="mb-3 text-[0.6rem] font-bold uppercase tracking-wider text-muted">Integrations included</p>
+                <p className="mb-3 text-[0.6rem] font-bold uppercase tracking-wider text-muted">Planned integrations at launch</p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
                     { cat: "Human resources", name: "Payroll & labour", logo: null, brand: "" },
@@ -1502,7 +1506,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-8">
-                <ProjectEnquiry label="Join early access" plan="Suite" className="w-44 max-w-full" />
+                <AccessButton source="pricing" label="Join early access" plan="Suite" className="w-44 max-w-full" />
               </div>
             </div>
           </div>
@@ -1521,7 +1525,7 @@ export default function Home() {
                 <p className="font-display text-lg font-semibold text-white">Get early access pricing.</p>
                 <p className="mt-1 text-sm text-white/50">Be first in line when we launch.</p>
               </div>
-              <Waitlist />
+              <AccessButton source="pricing" label="Notify me" className="border border-lime" />
             </div>
           </div>
         </section>
@@ -1534,17 +1538,18 @@ export default function Home() {
                 Questions about Plotfolio? Ask our support agent.
               </h2>
             </div>
-            <VoiceAssistant />
+            <div className="flex flex-col items-start gap-4"><AccessButton kind="enquiry" source="hero" label="Request a demo" className="border border-lime" /><VoiceAssistant /></div>
           </div>
           <footer className="mx-auto flex max-w-7xl flex-col gap-8 border-t border-white/10 px-5 py-8 md:flex-row md:items-center md:justify-between md:px-10">
             <Logo inverse />
-            <div className="flex flex-wrap gap-4 text-sm text-white"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:hello@plotfolioai.com">hello@plotfolioai.com</a></div>
+            <div className="flex flex-wrap gap-4 text-sm text-white"><a href="mailto:hello@plotfolioai.com">hello@plotfolioai.com</a></div>
             <p className="text-xs text-white/40">
-              © {year} Plotfolio AI.
+              © {year} {landing.legalName || "Plotfolio AI"}{landing.city && ` · ${landing.city}`}
             </p>
           </footer>
         </section>
       </main>
     </div>
+    </AccessFlow>
   )
 }

@@ -29,7 +29,7 @@ const groups = [
     ],
   },
   {
-    title: "Integrations",
+    title: "Planned integrations at launch",
     rows: [
       ["Messaging, payment links, text recognition and maps", true, true, true],
       ["Speech transcription and accounting sync", false, true, true],

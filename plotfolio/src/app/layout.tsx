@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { landing } from "@/lib/landing-config";
+import { analyticsEnabled } from "@/lib/analytics";
 import { Analytics } from "@vercel/analytics/next";
 
 const dmSans = localFont({
@@ -32,11 +34,11 @@ const caveat = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://landing-virid-phi.vercel.app"),
   alternates: { canonical: "/" },
-  openGraph: { title: "Plotfolio AI — Join early access", description: "Software for construction, collections and property operations.", images: [{ url: "/opengraph-image", width: 1200, height: 630 }] },
-  twitter: { card: "summary_large_image", title: "Plotfolio AI — Join early access", description: "Software for construction, collections and property operations.", images: ["/opengraph-image"] },
-  title: "Plotfolio AI — AI Software for Every Stage of a Built Asset's Life",
+  openGraph: { title: landing.title, description: landing.description, images: [{ url: "/opengraph-image", width: 1200, height: 630 }] },
+  twitter: { card: "summary_large_image", title: landing.title, description: landing.description, images: ["/opengraph-image"] },
+  title: landing.title,
   description:
-    "Plotfolio AI builds AI software for every stage of a built asset's life. Milestone and Keeper help developers and facility teams turn messy field updates into money and decisions.",
+    landing.description,
 };
 
 export default function RootLayout({
@@ -44,10 +46,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Extensions may inject root attributes before hydration. This escape hatch
+  // applies only to <html>; descendant hydration checks remain enabled.
   return (
-    <html lang="en" className={`${dmSans.variable} ${poppins.variable} ${caveat.variable} h-full antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${dmSans.variable} ${poppins.variable} ${caveat.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        {children}<Analytics />
+        {children}{analyticsEnabled && <Analytics />}
       </body>
     </html>
   );

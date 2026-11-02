@@ -15,6 +15,12 @@ const request = (data, origin = 'https://example.com') => ({ headers: new Header
  assert.equal(JSON.parse(sent[0].text).email, 'test@example.com');
  assert.equal((await context.exports.POST(request({email:'bad',source:'pricing'}))).status,400);
  assert.equal((await context.exports.POST(request({email:'test@example.com',source:'pricing'},'https://evil.example'))).status,403);
+ for (const source of ['header', 'hero', 'pricing']) {
+  assert.equal((await context.exports.POST(request({email:'test@example.com',source,plan:null}))).status,201);
+  assert.equal(JSON.parse(sent.at(-1).text).source,source);
+ }
+ assert.equal((await context.exports.POST(request({email:'test@example.com',source:'unknown'}))).status,400);
+ assert.equal((await context.exports.POST(request({email:'test@example.com',source:'hero',plan:'Unknown'}))).status,400);
  mode='fail'; assert.equal((await context.exports.POST(request({email:'test@example.com',source:'pricing'}))).status,502);
  console.log('Waitlist: accepted record, plan, invalid input, cross-origin, SMTP failure passed (mock SMTP).');
 })().catch(e => { console.error(e); process.exitCode=1 });

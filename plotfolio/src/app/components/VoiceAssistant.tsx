@@ -1,6 +1,6 @@
 "use client"
 import { useRef, useState } from "react"
-import { track } from "@vercel/analytics"
+import { track } from "@/lib/analytics"
 import type { Conversation } from "@elevenlabs/client"
 export function VoiceAssistant() {
   const session = useRef<Conversation | null>(null)
